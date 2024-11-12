@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:42:35 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:55:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,22 @@ typedef struct s_env_node
 	struct s_env_node	*next;
 }	t_env_node;
 
-int		exception_msg(char *str);
-int		ft_strlen(const char *str);
-char	*ft_strdup(const char *s);
+t_env_node	*create_node(char *data);
+t_env_node	*last_node(t_env_node *list);
 
-void	set_split_exp_list(t_env_node *exp_list);
-void	split_key_val(t_env_node *exp_node);
-int		check_equal_idx(char *exp_data);
+char		*ft_strdup(const char *s);
 
-int		cmp_len(char *s1, char *s2);
-int		exp_strncmp(char *s1, char *s2, size_t n);
-void	exp_bubble_sort(t_env_node *exp_node);
+int			exception_msg(char *str);
+int			ft_strlen(const char *str);
+int			check_equal_idx(char *exp_data);
+int			cmp_len(char *s1, char *s2);
+int			exp_strncmp(char *s1, char *s2, size_t n);
 
-void	free_env_val(t_env_node *list);
+void		set_split_exp_list(t_env_node *exp_list);
+void		split_key_val(t_env_node *exp_node);
+void		exp_bubble_sort(t_env_node *exp_node);
+void		free_env_val(t_env_node *list);
+void		add_node_back(t_env_node **list, t_env_node *new_node);
+void		create_list(t_env_node **list, char **envp);
+
 #endif
