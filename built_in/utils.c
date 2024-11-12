@@ -6,15 +6,15 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:12:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/06 16:51:29 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:42:21 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
-	size_t	len;
+	int	len;
 
 	if (str == 0)
 		return (0);
