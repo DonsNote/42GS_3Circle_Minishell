@@ -3,36 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/06 15:17:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:44:45 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(void)
+int	main(int ac, char **av, char **envp)
 {
-    int ret;
-    char *line;
+	(void)ac;
+	(void)av;
+	(void)envp;
 
-    signal(SIGINT, handler);
-    while (1)
-    {
-        line = readline("input> ");
-        if (line)
-        {
-            if (ret)
-                printf("output> %s\n", line);
-            add_history(line);
-            free(line);
-            line = NULL;
-        }
-        else
-        {
-            printf("ctrl + d\n");
-        }
-    }
-    return (0);
+	char *str;
+	while (1)
+	{
+		str = readline("Mini : ");
+		if (str)
+			if (check_param(str))
+				return (print_error(1));
+		else
+			break ;
+		add_history(str);
+		free(str);
+	}
+	return (0);
 }
