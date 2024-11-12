@@ -1,22 +1,43 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
+#    Updated: 2024/11/12 16:57:10 by dohyuki2         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
-RM = rm -rf
-FILES = env.c utils.c export.c free.c export_sort.c
 
-OBJS = $(FILES:.c=.o)
+CC = cc
 
-all: $(NAME)
+CFLAG = -Wall -Wextra -Werror
 
-$(NAME): $(OBJS)
-				@${CC}	${CFLAGS}	${OBJS}	-o	${NAME}
+INC = minishell.h
 
-clean:
-				$(RM)	$(OBJS)
+SRCS = minishell.c \
+		Utilities/check_param.c \
+		parse/check_param.c
 
-fclean:	clean
-				$(RM)	$(NAME)
+OBJS = $(SRCS:.c=.o)
 
-re:				fclean	all
+all : $(NAME)
 
-.PHONY: all	clean	fclean	re
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAG) -g -o $(NAME) $^ -lreadline
+
+clean :
+	rm -rf $(OBJS)
+
+fclean :
+	make clean
+	rm -rf $(NAME)
+
+re :
+	make fclean
+	make all
+
+.PHONY : all clean fclean re
