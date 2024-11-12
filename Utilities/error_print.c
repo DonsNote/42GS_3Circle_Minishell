@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/12 16:55:30 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:25:48 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,7 @@ int	print_error(int i)
 {
 	if (i == 1)
 		printf("Error!\n");
+	else
+		printf("nono");
 	return (2);
 }
