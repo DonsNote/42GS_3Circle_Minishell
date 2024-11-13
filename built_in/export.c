@@ -6,21 +6,21 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:40:50 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:03:28 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-static	void	free_exp_key_value(t_env_node *exp_node)
+static	void	free_exp_key_value(t_env_node *node)
 {
-	if (exp_node->key != NULL)
-		free(exp_node->key);
-	if (exp_node->value != NULL)
-		free(exp_node->value);
+	if (node->key != NULL)
+		free(node->key);
+	if (node->value != NULL)
+		free(node->value);
 }
 
-int	check_equal_idx(char *exp_data)
+static int	check_equal_idx(char *exp_data)
 {
 	int	i;
 

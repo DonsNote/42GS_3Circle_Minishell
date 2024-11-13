@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:54:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:02:55 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_list(t_env_node *list)
 	node = list;
 	while (node != NULL)
 	{
-		printf("%s\n",node->env_data);
+		printf("%s\n", node->env_data);
 		node = node->next;
 	}
 }

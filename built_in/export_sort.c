@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:17:58 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:23:15 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:02:36 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ int	exp_strncmp(char *s1, char *s2, size_t n)
 		return (0);
 }
 
-void	exp_bubble_sort(t_env_node *exp_node)
+void	exp_bubble_sort(t_env_node *node)
 {
 	t_env_node	*cmp_node_1;
 	t_env_node	*cmp_node_2;
 	char		*temp;
 	int			len;
 
-	cmp_node_1 = exp_node;
+	cmp_node_1 = node;
 	while (cmp_node_1 != NULL)
 	{
 		cmp_node_2 = cmp_node_1;

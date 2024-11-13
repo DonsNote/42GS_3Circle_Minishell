@@ -6,11 +6,11 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:43:37 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:58:29 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
 int	call_cmd_pwd(void) // pwd 명령어
 {
