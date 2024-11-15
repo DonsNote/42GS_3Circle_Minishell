@@ -6,11 +6,13 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/12 17:11:53 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:16:01 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	check_quote(char *param);
 
 int	check_param(char *param)
 {
@@ -28,11 +30,11 @@ int	check_quote(char *param)
 	i = 0;
 	q = 0;
 	dq = 0;
-	while (param[i] != NULL)
+	while (param[i] != '\0')
 	{
-		if (param[i] == '\'')
+		if (param[i] == 39)
 			q = q + 1;
-		if (param[i] == '\"')
+		if (param[i] == 34)
 			dq = dq + 1;
 		++i;
 	}
