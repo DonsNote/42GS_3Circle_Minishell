@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/15 23:13:32 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/16 09:46:10 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	main(int ac, char **av, char **envp)
 	{
 		str = readline("Mini : ");
 		if (str)
+		{
 			if (check_param(str))
 				return (print_error(1));
+		}
 		else
 			break ;
 		add_history(str);
