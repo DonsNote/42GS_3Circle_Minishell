@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/11/15 23:14:52 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/11/18 11:11:46 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ INC = minishell.h
 
 SRCS = minishell.c \
 		Utilities/error_print.c \
-		parse/check_param.c
+		parse/check_param.c \
+		parse/check_gramer.c \
+		parse/tokenize.c
 
 OBJS = $(SRCS:.c=.o)
 

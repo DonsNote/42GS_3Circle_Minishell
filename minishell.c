@@ -6,31 +6,48 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/16 20:20:28 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:03:01 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	input(void);
+
 int	main(int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
-	(void)envp;
+	char	*str;
 
-	char *str;
+	(void)envp;
+	if (ac != 1 || av[1] != NULL)
+		return (print_error(1));
+	if (input())
+		return (print_error(1));
+	return (0);
+}
+
+int	input(void)
+{
+	t_token	*token;
+	char	*param;
+
 	while (1)
 	{
-		str = readline("Mini : ");
-		if (str)
+		param = readline("Mini : ");
+		if (param)
 		{
-			if (check_param(str))
-				return (print_error(1));
+			token = tokenize(param);
+			if (token == NULL)
+			{
+				free(param);
+				return (1);
+			}
+			// builtin(token);
 		}
 		else
 			break ;
-		add_history(str);
-		free(str);
+		add_history(param);
+		free(param);
 	}
 	return (0);
 }
