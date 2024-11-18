@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/18 14:31:04 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:47:36 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	make_token(t_token *token, char *param)
 	while (param[i] != '\0')
 	{
 		if (is_oper(param[i]))
+
 
 		++i;
 	}
