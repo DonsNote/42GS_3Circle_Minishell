@@ -6,14 +6,14 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/06 15:17:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:58:18 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
-int exception_msg(char *str)
+int	exception_msg(char *str)
 {
-    write(1, str, ft_strlen(str));
-    return (1);
+	write(1, str, ft_strlen(str));
+	return (1);
 }
