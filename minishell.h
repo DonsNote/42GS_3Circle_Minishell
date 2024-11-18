@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 16:47:35 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:02:21 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,36 @@ typedef struct s_env_node
 	struct s_env_node	*next;
 }	t_env_node;
 
+typedef enum e_type
+{
+	E_TYPE_CMD,
+	E_TYPE_OP,
+	E_TYPE_PIPE,
+	E_TYPE_PARAM,
+	E_TYPE_IN,
+	E_TYPE_OUT,
+	E_TYPE_LESS,
+	E_TYPE_GREAT
+}	t_type;
 
+typedef struct s_token
+{
+	char			*data;
+	t_type			type;
+	struct s_token	*next;
+}	t_token;
+
+//parse
+t_token	*tokenize(char *param);
+int		check_param(char *param);
+int		check_grammer(char *param);
+
+//built_in
 int		exception_msg(char *str);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
+
+//Utilities
+int		print_error(int i);
 
 #endif
