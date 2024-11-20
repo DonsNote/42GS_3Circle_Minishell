@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 20:03:47 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:34:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,25 @@ typedef struct s_env_node
 	char				*value;
 	struct s_env_node	*next;
 }	t_env_node;
+
+typedef enum e_type
+{
+	E_TYPE_CMD,
+	E_TYPE_OP,
+	E_TYPE_PIPE,
+	E_TYPE_PARAM,
+	E_TYPE_IN,
+	E_TYPE_OUT,
+	E_TYPE_LESS,
+	E_TYPE_GREAT
+}	t_type;
+
+typedef struct s_token
+{
+	char			*data;
+	t_type			type;
+	struct s_token	*next;
+}	t_token;
 
 t_env_node	*create_node(char *data);
 t_env_node	*last_node(t_env_node *list);
