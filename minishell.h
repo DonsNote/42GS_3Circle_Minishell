@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/18 14:22:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:23:39 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_token
 
 //parse
 t_token	*tokenize(char *param);
-int		check_param(char *param);
+char	*check_param(char *param);
 int		check_grammer(char *param);
 
 //built_in
