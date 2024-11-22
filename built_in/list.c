@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:52:47 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:53:51 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:46:49 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,17 @@ void	create_list(t_env_node **list, char **envp)
 		new_node = 0;
 		i++;
 	}
+}
+
+int	check_token_size(t_token *node)
+{
+	int	size;
+
+	size = 0;
+	while (node)
+	{
+		node = node -> next;
+		size++;
+	}
+	return (size);
 }

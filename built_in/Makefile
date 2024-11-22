@@ -2,7 +2,7 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
-FILES = env.c utils.c export.c free.c export_sort.c
+FILES = env.c utils.c export.c free.c export_sort.c list.c
 
 OBJS = $(FILES:.c=.o)
 

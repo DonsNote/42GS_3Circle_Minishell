@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/18 20:34:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:15:13 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ int			exp_strncmp(char *s1, char *s2, size_t n);
 int			call_cmd_pwd(void);
 int			call_cmd_cd(void);
 int			call_cmd_ls(void);
+int			check_token_size(t_token *node);
+int			ft_strncmp(const char *s1, const char *s2, int n);
 
 void		set_split_exp_list(t_env_node *exp_list);
 void		split_key_val(t_env_node *node);
 void		exp_bubble_sort(t_env_node *node);
 void		free_env_val(t_env_node *list);
+void		free_exp_key_value(t_env_node *node);
 void		add_node_back(t_env_node **list, t_env_node *new_node);
 void		create_list(t_env_node **list, char **envp);
 

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:21 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 17:45:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:17:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,12 @@ void	free_env_val(t_env_node *list)
 			free(temp->value);
 		free(temp);
 	}
+}
+
+void	free_exp_key_value(t_env_node *node)
+{
+	if (node->key != NULL)
+		free(node->key);
+	if (node->value != NULL)
+		free(node->value);
 }
