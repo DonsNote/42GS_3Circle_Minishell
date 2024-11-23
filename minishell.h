@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/21 13:23:39 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:23:52 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int		check_grammer(char *param);
 
 //built_in
 int		exception_msg(char *str);
-size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
 
 //Utilities
 int		print_error(int i);
+int		ft_strlen(const char *str);
 
 #endif

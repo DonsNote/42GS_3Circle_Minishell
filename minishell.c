@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/18 12:03:01 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:23:10 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	input(void)
 		{
 			token = tokenize(param);
 			if (token == NULL)
-			{
-				free(param);
 				return (1);
-			}
 			// builtin(token);
 		}
 		else
