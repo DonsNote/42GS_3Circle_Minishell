@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:13 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:19:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void		create_list(t_env_node **list, char **envp);
 
 void		print_list(t_env_node *list);
 void		print_exp_list(t_env_node *list);
+
+char		*ft_strjoin(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:12:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/23 18:06:20 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,29 @@ int	ft_strncmp(const char *s1, const char *s2, int n)
 	while (i + 1 < n && s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		total_len;
+	char	*new_str;
+	int		i;
+	int		j;
+
+	if (s1 == 0)
+		return (ft_strdup(s2));
+	total_len = (int)ft_strlen(s1) + (int)ft_strlen(s2) + 1;
+	new_str = (char *)malloc(sizeof(char) * total_len);
+	if (!(new_str))
+		return (0);
+	i = -1;
+	while (++i < (int)ft_strlen(s1))
+		new_str[i] = s1[i];
+	j = 0;
+	while (j < (int)ft_strlen(s2))
+		new_str[i++] = s2[j++];
+	free (s1);
+	new_str[i] = 0;
+	s1 = 0;
+	return (new_str);
 }
