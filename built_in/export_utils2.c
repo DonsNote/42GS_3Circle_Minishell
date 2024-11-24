@@ -6,75 +6,93 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:44:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:38:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	add_exp_data(t_env_node *exp_list, char *data)
+void	check_env_data(t_env_node *env_list, char *data, char *key)
 {
-	t_env_node	*new_node;
+	int			len;
+	int			flag;
+	char		*add_data;
+	t_env_node	*node;
 
-	new_node = create_node(data);
-	if (new_node != NULL)
-		add_node_back(&exp_list, new_node);
-	split_key_val(exp_list);
-}
-
-void	add_exp_env_data(t_env_node *exp, t_env_node *env, char *data)
-{
-	t_env_node	*new_node;
-
-	new_node = create_node(data);
-	if (new_node != NULL)
+	node = env_list;
+	flag = 0;
+	add_data = create_env_data(data);
+	len = ft_strlen(key);
+	while (node != NULL)
 	{
-		add_node_back(&exp, new_node);
-		add_node_back(&env, new_node);
+		if (ft_strncmp(node->env_data, key, len) == 0)
+		{
+			free(node->env_data);
+			node->env_data = add_data;
+			flag = 1;
+			break ;
+		}
+		node = node -> next;
 	}
-	new_node = 0;
-	split_key_val(exp);
+	if (flag == 0)
+		add_new_exp_node(&env_list, data);
 }
 
-int	check_plus_operator_idx(char *data)
+void	update_exp_node(t_env_node *node, char *key, char *value)
 {
-	int	i;
+	char	*new_value;
+	char	*new_env_data;
 
-	i = 0;
-	while (data[i] != '+')
-		i++;
-	return (i);
+	new_value = ft_strjoin(node->value, value);
+	free_exp_key_value(node);
+	node->key = key;
+	node->value = new_value;
+	free(node->env_data);
+	new_env_data = ft_strjoin(node->key, '=');
+	new_env_data = ft_strjoin(new_env_data, node->value);
+	node->env_data = new_env_data;
 }
 
-char	*create_env_data(char *data)
+void	add_export(t_env_node *exp_list, t_env_node *env_list, char *data)
+{
+	add_new_exp_node(&exp_list, data);
+	add_new_exp_node(&env_list, data);
+	set_split_exp_list(exp_list);
+}
+
+char	*split_key(char *data)
 {
 	int		i;
-	int		j;
-	int		len;
-	char	*new_str;
+	int		idx;
+	char	*key;
 
-	len = ft_strlen(data);
-	new_str = (char *)malloc(sizeof(char) * len);
-	i = 0;
-	j = 0;
-	while (data[i])
-	{
-		if (data[i] == '+')
-			i++;
-		else
-			new_str[j++] = data[i++];
-	}
-	new_str[j] = 0;
-	return (new_str);
+	i = -1;
+	idx = check_plus_operator_idx(data);
+	key = (char *)malloc(sizeof(char) * (idx + 1));
+	while (++i < idx)
+		key[i] = data[i];
+	key[i] = 0;
+	return (key);
 }
 
-void	add_new_exp_node(t_env_node **exp_list, char *data)
+char	*split_value(char *data)
 {
-	char		*env_data;
-	t_env_node	*new_node;
+	int		i;
+	int		idx;
+	int		len;
+	char	*value;
 
-	env_data = create_env_data(data);
-	new_node = create_node(env_data);
-	if (new_node != NULL)
-		add_node_back(exp_list, new_node);
+	i = 0;
+	idx = check_plus_operator_idx(data);
+	len = ft_strlen(data);
+	value = (char *)malloc(sizeof(char) * (len - idx - 1));
+	idx += 2;
+	while (data[idx])
+	{
+		value[i] = data[idx];
+		i++;
+		idx++;
+	}
+	value[i] = 0;
+	return (value);
 }

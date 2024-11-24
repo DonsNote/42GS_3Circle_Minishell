@@ -6,20 +6,59 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:09:59 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:46:28 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-char	*split_key(char *data)
+void	add_new_exp_node(t_env_node **list, char *data)
+{
+	char		*env_data;
+	t_env_node	*new_node;
+
+	env_data = create_env_data(data);
+	new_node = create_node(env_data);
+	if (new_node != NULL)
+		add_node_back(list, new_node);
+}
+
+void	add_exp_env_data(t_env_node *exp, t_env_node *env, char *data)
+{
+	t_env_node	*new_node;
+	char		*key;
+	int			check;
+
+	key = get_key(data);
+	check = check_key(exp, key);
+	if (check == 1)
+		change_exp_node(exp, key, data);
+	else
+	{
+		new_node = create_node(data);
+		if (new_node != NULL)
+			add_node_back(&exp, new_node);
+		set_split_exp_list(exp);
+	}
+	check = check_key(env, key);
+	if (check == 1)
+		change_env_node(env, key, data);
+	else
+	{
+		new_node = create_node(data);
+		if (new_node != NULL)
+			add_node_back(&env, new_node);
+	}
+}
+
+char	*get_key(char *data)
 {
 	int		i;
 	int		idx;
 	char	*key;
 
 	i = -1;
-	idx = check_plus_operator_idx(data);
+	idx = check_equal_idx(data);
 	key = (char *)malloc(sizeof(char) * (idx + 1));
 	while (++i < idx)
 		key[i] = data[i];
@@ -27,67 +66,37 @@ char	*split_key(char *data)
 	return (key);
 }
 
-char	*split_value(char *data)
+int	check_key(t_env_node *list, char *key)
 {
-	int		i;
-	int		idx;
-	int		len;
-	char	*value;
-
-	i = 0;
-	idx = check_plus_operator_idx(data);
-	len = ft_strlen(data);
-	value = (char *)malloc(sizeof(char) * (len - idx - 1));
-	idx += 2;
-	while (data[idx])
-	{
-		value[i] = data[idx];
-		i++;
-		idx++;
-	}
-	value[i] = 0;
-	return (value);
-}
-
-void	add_export(t_env_node *exp_list, t_env_node *env_list, char *data)
-{
-	add_new_exp_node(&exp_list, data);
-	add_new_exp_node(&env_list, data);
-	set_split_exp_list(exp_list);
-}
-
-void	check_env_data(t_env_node *env_list, char *data)
-{
+	t_env_node	*temp;
 	int			len;
-	int			flag;
-	char		*add_data;
-	t_env_node	*node;
 
-	node = env_list;
-	flag = 0;
-	add_data = create_env_data(data);
-	len = ft_strlen(add_data);
-	while (node != NULL)
+	temp = list;
+	len = ft_strlen(key);
+	while (temp != NULL)
 	{
-		if (ft_strncmp(node->env_data, add_data, len) == 0)
-		{
-			free(node->env_data);
-			node->env_data = add_data;
-			flag = 1;
-			break ;
-		}
-		node = node -> next;
+		if (ft_strncmp(temp->env_data, key, len) == 0)
+			return (1);
+		temp = temp -> next;
 	}
-	if (flag == 0)
-		add_new_exp_node(&env_list, data);
+	return (0);
 }
 
-void	update_exp_node(t_env_node *node, char *key, char *value)
+void	change_exp_node(t_env_node *exp, char *key, char *data)
 {
-	char	*new_value;
+	t_env_node	*temp;
+	int			len;
 
-	new_value = ft_strjoin(node->value, value);
-	free_exp_key_value(node);
-	node->key = key;
-	node->value = new_value;
+	temp = exp;
+	len = ft_strlen(key);
+	while (temp != NULL)
+	{
+		if (ft_strncmp(temp->env_data, key, len) == 0)
+		{
+			free(temp->env_data);
+			temp->env_data = data;
+			split_key_val(temp);
+			return ;
+		}
+	}
 }

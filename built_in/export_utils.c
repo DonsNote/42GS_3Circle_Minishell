@@ -6,11 +6,39 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:24:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:52:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
+
+void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
+{
+	int			idx;
+	int			flag;
+	char		*key;
+	char		*value;
+	t_env_node	*node;
+
+	node = exp;
+	flag = 0;
+	idx = check_plus_operator_idx(data);
+	key = split_key(data);
+	value = split_value(data);
+	while (node != NULL)
+	{
+		if (ft_strncmp(key, node->key, idx + 1) == 0)
+		{
+			check_env_data(env, data, key);
+			update_exp_node(node, key, value);
+			flag = 1;
+			break ;
+		}
+		node = node -> next;
+	}
+	if (flag == 0)
+		add_export(exp, env, data);
+}
 
 int	check_validation(char *data)
 {
@@ -60,30 +88,12 @@ int	check_plus_operator(char *data)
 	return (0);
 }
 
-void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
+int	check_plus_operator_idx(char *data)
 {
-	int			idx;
-	int			flag;
-	char		*key;
-	char		*value;
-	t_env_node	*node;
+	int	i;
 
-	node = exp;
-	flag = 0;
-	idx = check_plus_operator_idx(data);
-	key = split_key(data);
-	value = split_value(data);
-	while (node != NULL)
-	{
-		if (ft_strncmp(key, node->key, idx + 1) == 0)
-		{
-			check_env_data(env, data);
-			update_exp_node(node, key, value);
-			flag = 1;
-			break ;
-		}
-		node = node -> next;
-	}
-	if (flag == 0)
-		add_export(exp, env, data);
+	i = 0;
+	while (data[i] != '+')
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:27:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:55:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cmd_export(t_token *node, t_env_node *env, t_env_node *exp)
 			else if (temp->type == E_TYPE_PARAM)
 			{
 				if (check_validation(temp->data) == -1)
-					print_error(1);
+					print_export_error(temp->data);
 				else if (cnt_equal(temp->data) == 0)
 					add_exp_data(exp, temp->data);
 				else if (check_plus_operator(temp->data))
@@ -41,6 +41,16 @@ void	cmd_export(t_token *node, t_env_node *env, t_env_node *exp)
 	}
 }
 
+void	add_exp_data(t_env_node *exp_list, char *data)
+{
+	t_env_node	*new_node;
+
+	new_node = create_node(data);
+	if (new_node != NULL)
+		add_node_back(&exp_list, new_node);
+	set_split_exp_list(exp_list);
+}
+
 int	check_equal_idx(char *exp_data)
 {
 	int	i;
@@ -51,39 +61,24 @@ int	check_equal_idx(char *exp_data)
 	return (i);
 }
 
-void	split_key_val(t_env_node *node)
+char	*create_env_data(char *data)
 {
 	int		i;
 	int		j;
-	int		idx;
-	char	*key_str;
-	char	*val_str;
+	int		len;
+	char	*new_str;
 
-	i = -1;
-	idx = check_equal_idx(node->env_data);
-	free_exp_key_value(node);
-	key_str = (char *)malloc(sizeof(char) * (idx + 1));
-	val_str = (char *)malloc(sizeof(char) * (ft_strlen(node->env_data) - idx));
-	while (++i < idx)
-		key_str[i] = node->env_data[i];
-	key_str[i] = 0;
-	i = idx + 1;
+	len = ft_strlen(data);
+	new_str = (char *)malloc(sizeof(char) * len);
+	i = 0;
 	j = 0;
-	while (i < ft_strlen(node->env_data))
-		val_str[j++] = node->env_data[i++];
-	val_str[j] = 0;
-	node->key = key_str;
-	node->value = val_str;
-}
-
-void	set_split_exp_list(t_env_node *exp_list)
-{
-	t_env_node	*node;
-
-	node = exp_list;
-	while (node != NULL)
+	while (data[i])
 	{
-		split_key_val(node);
-		node = node->next;
+		if (data[i] == '+')
+			i++;
+		else
+			new_str[j++] = data[i++];
 	}
+	new_str[j] = 0;
+	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:47:11 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:54:59 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,36 @@ int			exp_strncmp(char *s1, char *s2, int n);
 void		exp_bubble_sort(t_env_node *node);
 
 /*export_utils3.c*/
-char		*split_key(char *data);
-char		*split_value(char *data);
-void		add_export(t_env_node *exp_list, t_env_node *env_list, char *data);
-void		check_env_data(t_env_node *env_list, char *data);
-void		update_exp_node(t_env_node *node, char *key, char *value);
+void		add_new_exp_node(t_env_node **exp_list, char *data);
+void		add_exp_env_data(t_env_node *exp, t_env_node *env, char *data);
+char		*get_key(char *data);
+int			check_key(t_env_node *list, char *key);
+void		change_exp_node(t_env_node *exp, char *key, char *data);
 
 /*export_utils.c*/
+void		join_exp_data(t_env_node *exp, t_env_node *env, char *data);
 int			check_validation(char *data);
 int			cnt_equal(char *data);
 int			check_plus_operator(char *data);
-void		join_exp_data(t_env_node *exp, t_env_node *env, char *data);
+int			check_plus_operator_idx(char *data);
 
 /*export_utils2.c*/
-void		add_exp_data(t_env_node *exp_list, char *data);
-void		add_exp_env_data(t_env_node *exp, t_env_node *env, char *data);
-int			check_plus_operator_idx(char *data);
-char		*create_env_data(char *data);
-void		add_new_exp_node(t_env_node **exp_list, char *data);
+void		check_env_data(t_env_node *env_list, char *data, char *key);
+void		update_exp_node(t_env_node *node, char *key, char *value);
+void		add_export(t_env_node *exp_list, t_env_node *env_list, char *data);
+char		*split_key(char *data);
+char		*split_value(char *data);
+
+/*export_utils4.c*/
+void		change_env_node(t_env_node *env, char *key, char *data);
+void		split_key_val(t_env_node *node);
+void		set_split_exp_list(t_env_node *exp_list);
 
 /*export.c*/
 void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
+void		add_exp_data(t_env_node *exp_list, char *data);
 int			check_equal_idx(char *exp_data);
-void		split_key_val(t_env_node *node);
-void		set_split_exp_list(t_env_node *exp_list);
+char		*create_env_data(char *data);
 
 /*free.c*/
 void		free_env_val(t_env_node *list);
