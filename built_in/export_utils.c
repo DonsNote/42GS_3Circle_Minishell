@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 21:52:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 22:13:33 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	check_validation(char *data)
 	int	i;
 
 	i = 0;
-	if (data[i] == '=' || (data[i] >= '0' && data[i] <= '9'))
+	if (!((data[i] >= 'A' && data[i] <= 'Z') \
+	|| (data[i] >= 'a' && data[i] <= 'z')))
 		return (-1);
 	else
 	{
