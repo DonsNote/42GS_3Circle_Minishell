@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 22:17:58 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 20:02:36 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:36:11 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	cmp_len(char *s1, char *s2)
 		return (ft_strlen(s1));
 }
 
-int	exp_strncmp(char *s1, char *s2, size_t n)
+int	exp_strncmp(char *s1, char *s2, int n)
 {
-	size_t	i;
+	int		i;
 	int		val;
 
 	i = 0;

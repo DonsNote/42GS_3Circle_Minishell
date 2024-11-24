@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/23 17:19:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:46:25 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,70 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-t_env_node	*create_node(char *data);
-t_env_node	*last_node(t_env_node *list);
-
-char		*ft_strdup(const char *s);
-
-int			exception_msg(char *str);
-int			ft_strlen(const char *str);
-int			check_equal_idx(char *exp_data);
-int			cmp_len(char *s1, char *s2);
-int			exp_strncmp(char *s1, char *s2, size_t n);
-
+/*call_cmd.c*/
 int			call_cmd_pwd(void);
 int			call_cmd_cd(void);
 int			call_cmd_ls(void);
-int			check_token_size(t_token *node);
-int			ft_strncmp(const char *s1, const char *s2, int n);
 
-void		set_split_exp_list(t_env_node *exp_list);
-void		split_key_val(t_env_node *node);
-void		exp_bubble_sort(t_env_node *node);
-void		free_env_val(t_env_node *list);
-void		free_exp_key_value(t_env_node *node);
-void		add_node_back(t_env_node **list, t_env_node *new_node);
-void		create_list(t_env_node **list, char **envp);
+/*echo.c*/
+void		print_echo(t_token *node);
+void		cmd_echo(int fd, t_token *node);
 
+/*env.c*/
 void		print_list(t_env_node *list);
 void		print_exp_list(t_env_node *list);
 
+/*error.c */
+int			exception_msg(char *str);
+int			print_export_error(char *str);
+int			print_error(int i);
+
+/*export_sort.c*/
+int			cmp_len(char *s1, char *s2);
+int			exp_strncmp(char *s1, char *s2, int n);
+void		exp_bubble_sort(t_env_node *node);
+
+/*export_utils3.c*/
+char		*split_key(char *data);
+char		*split_value(char *data);
+void		add_export(t_env_node *exp_list, t_env_node *env_list, char *data);
+void		check_env_data(t_env_node *env_list, char *data);
+void		update_exp_node(t_env_node *node, char *key, char *value);
+
+/*export_utils.c*/
+void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
+int			check_validation(char *data);
+int			cnt_equal(char *data);
+int			check_plus_operator(char *data);
+void		join_exp_data(t_env_node *exp, t_env_node *env, char *data);
+
+/*export_utils2.c*/
+void		add_exp_data(t_env_node *exp_list, char *data);
+void		add_exp_env_data(t_env_node *exp, t_env_node *env, char *data);
+int			check_plus_operator_idx(char *data);
+char		*create_env_data(char *data);
+void		add_new_exp_node(t_env_node **exp_list, char *data);
+
+/*export.c*/
+int			check_equal_idx(char *exp_data);
+void		split_key_val(t_env_node *node);
+void		set_split_exp_list(t_env_node *exp_list);
+
+/*free.c*/
+void		free_env_val(t_env_node *list);
+void		free_exp_key_value(t_env_node *node);
+
+/*list.c*/
+t_env_node	*create_node(char *data);
+t_env_node	*last_node(t_env_node *list);
+void		add_node_back(t_env_node **list, t_env_node *new_node);
+void		create_list(t_env_node **list, char **envp);
+int			check_token_size(t_token *node);
+
+/*utils.c*/
+int			ft_strlen(const char *str);
+char		*ft_strdup(const char *s);
+int			ft_strncmp(const char *s1, const char *s2, int n);
 char		*ft_strjoin(char *s1, char *s2);
 
 #endif

@@ -6,25 +6,39 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:10:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:43:17 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	cnt_equal(char *data)
+void	cmd_export(t_token *node, t_env_node *exp, t_env_node *env)
 {
-	int	i;
-	int	cnt;
+	t_token		*temp;
 
-	i = 0;
-	cnt = 0;
-	while (data[i])
+	temp = node;
+	if (check_token_size(node) == 1 && temp->type == E_TYPE_CMD)
+		print_exp_list(exp);
+	else
 	{
-		if (data[i] == '=')
-			cnt++;
+		while (temp != NULL)
+		{
+			if (temp->type == E_TYPE_CMD)
+				temp = temp -> next;
+			else if (temp->type == E_TYPE_PARAM)
+			{
+				if (check_validation(temp->data) == -1)
+					print_error(1);
+				else if (cnt_equal(temp->data) == 0)
+					add_exp_data(exp, temp->data);
+				else if (check_plus_operator(temp->data))
+					join_exp_data(exp, env, temp->data);
+				else if (check_validation(temp->data) == 1)
+					add_exp_env_data(exp, env, temp->data);
+				temp = temp -> next;
+			}
+		}
 	}
-	return (cnt);
 }
 
 int	check_validation(char *data)
@@ -46,6 +60,21 @@ int	check_validation(char *data)
 	return (0);
 }
 
+int	cnt_equal(char *data)
+{
+	int	i;
+	int	cnt;
+
+	i = 0;
+	cnt = 0;
+	while (data[i])
+	{
+		if (data[i] == '=')
+			cnt++;
+	}
+	return (cnt);
+}
+
 int	check_plus_operator(char *data)
 {
 	int	i;
@@ -60,7 +89,7 @@ int	check_plus_operator(char *data)
 	return (0);
 }
 
-void	join_exp_data(t_env_node *exp_list, t_env_node *env_list, char *data)
+void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
 {
 	int			idx;
 	int			flag;
@@ -68,7 +97,7 @@ void	join_exp_data(t_env_node *exp_list, t_env_node *env_list, char *data)
 	char		*value;
 	t_env_node	*node;
 
-	node = exp_list;
+	node = exp;
 	flag = 0;
 	idx = check_plus_operator_idx(data);
 	key = split_key(data);
@@ -77,7 +106,7 @@ void	join_exp_data(t_env_node *exp_list, t_env_node *env_list, char *data)
 	{
 		if (ft_strncmp(key, node->key, idx + 1) == 0)
 		{
-			check_env_data(env_list, data);
+			check_env_data(env, data);
 			update_exp_node(node, key, value);
 			flag = 1;
 			break ;
@@ -85,34 +114,5 @@ void	join_exp_data(t_env_node *exp_list, t_env_node *env_list, char *data)
 		node = node -> next;
 	}
 	if (flag == 0)
-		add_export(exp_list, env_list, data);
-}
-
-void	cmd_export(t_token *node, t_env_node *exp_list, t_env_node *env_list)
-{
-	t_token		*temp;
-
-	temp = node;
-	if (check_token_size(node) == 1 && temp->type == E_TYPE_CMD)
-		print_exp_list(exp_list);
-	else
-	{
-		while (temp != NULL)
-		{
-			if (temp->type == E_TYPE_CMD)
-				temp = temp -> next;
-			else if (temp->type == E_TYPE_PARAM)
-			{
-				if (check_validation(temp->data) == -1)
-					print_error(1);
-				else if (cnt_equal(temp->data) == 0)
-					add_exp_data(exp_list, temp->data);
-				else if (check_plus_operator(temp->data))
-					join_exp_data(exp_list, env_list, temp->data);
-				else if (check_validation(temp->data) == 1)
-					add_exp_env_data(exp_list, env_list, temp->data);
-				temp = temp -> next;
-			}
-		}
-	}
+		add_export(exp, env, data);
 }

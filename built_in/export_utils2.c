@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:10:28 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:44:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ void	add_exp_data(t_env_node *exp_list, char *data)
 	split_key_val(exp_list);
 }
 
-void	add_exp_env_data(t_env_node *exp_list, t_env_node *env_list, char *data)
+void	add_exp_env_data(t_env_node *exp, t_env_node *env, char *data)
 {
 	t_env_node	*new_node;
 
 	new_node = create_node(data);
 	if (new_node != NULL)
 	{
-		add_node_back(&exp_list, new_node);
-		add_node_back(&env_list, new_node);
+		add_node_back(&exp, new_node);
+		add_node_back(&env, new_node);
 	}
 	new_node = 0;
-	split_key_val(exp_list);
+	split_key_val(exp);
 }
 
 int	check_plus_operator_idx(char *data)
