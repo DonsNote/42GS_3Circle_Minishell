@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/23 18:24:30 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/24 13:53:01 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*check_param(char *param)
 	size = check_quote(param);
 	if (size == -1)
 		return (NULL);
+	printf("Test\n");
 	if (size > 0)
 	{
 		data = delete_quote(param, size);
@@ -54,13 +55,15 @@ int	check_quote(char *param)
 	size = 0;
 	while (param[i] != '\0')
 	{
+		if (param[i] == '\\' && (param[i + 1] == 39 || param[i + 1] == 34))
+			i = i + 2;
 		if (param[i] == 39)
 		{
 			if (check_curquote(param, 39, &i))
 				return (-1);
 			size = size + 2;
 		}
-		if (param[i] == 34)
+		else if (param[i] == 34)
 		{
 			if (check_curquote(param, 34, &i))
 				return (-1);
@@ -74,10 +77,9 @@ int	check_quote(char *param)
 int	check_curquote(char *param, char c, int *i)
 {
 	*i = *i + 1;
-
 	while (param[*i] != c)
 	{
-		if (param[*i] == '\\' && param[*i + 1] == c)
+		if (param[*i] == '\\' && param[*i + 1] == 34)
 			*i = *i + 2;
 		if (param[*i] == '\0')
 			return (1);
@@ -94,18 +96,34 @@ char	*delete_quote(char *param, int size)
 	char	*sol;
 
 	i = ft_strlen(param);
-	j = 0;
 	sol = (char *)malloc(sizeof(char) * (i - size + 1));
 	if (sol == NULL)
 		return (NULL);
 	sol[i - size] = '\0';
 	i = 0;
+	j = 0;
 	while (param[i] != '\0')
 	{
-		if (param[i - 1] != '\\' && param[i] == 39)
+		if (param[i] != '\\' && param[i + 1] == 39)
+		{
+			i = i + 2;
+			while (param[i] != 39)
+			{
+				sol[j] = param[i];
+				++i;
+				++j;
+			}
+		}
+		if (param[i] != '\\' && param[i + 1] == 34)
+		{
 			++i;
-		if (param[i - 1] != '\\' && param[i] == 34)
-			++i;
+			while (param[i] != 34)
+			{
+				sol[j] = param[i];
+				++i;
+				++j;
+			}
+		}
 		sol[j] = param[i];
 		++i;
 		++j;
