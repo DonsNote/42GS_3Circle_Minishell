@@ -6,13 +6,13 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/20 20:47:53 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:29:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	print_list(t_env_node *list)
+void	cmd_env(t_env_node *list)
 {
 	t_env_node	*node;
 
@@ -36,6 +36,7 @@ void	print_exp_list(t_env_node *list)
 	}
 }
 
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	//t_env_node	*env_list;
@@ -55,4 +56,4 @@ int	main(int argc, char **argv, char **envp)
 	free_env_val(exp_list);
 	//free_env_val(env_list);
 	return (0);
-}
+}*/

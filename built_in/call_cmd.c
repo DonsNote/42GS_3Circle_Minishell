@@ -6,13 +6,13 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 19:58:29 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:48:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	call_cmd_pwd(void) // pwd 명령어
+int	call_cmd_pwd(void) // pwd 명령어 => 수정
 {
 	char	pwd[PATH_MAX];
 
@@ -26,7 +26,7 @@ int	call_cmd_pwd(void) // pwd 명령어
 	return (0);
 }
 
-int	call_cmd_cd(void) // cd 명령어 함수
+int	call_cmd_cd(void) // cd 명령어 함수 => 수정
 {
 	char	*new_dir;
 
@@ -39,7 +39,7 @@ int	call_cmd_cd(void) // cd 명령어 함수
 	return (0);
 }
 
-int	call_cmd_ls(void) // ls 명령어 함수
+int	call_cmd_ls(void) // ls 명령어 함수 => 수정
 {
 	DIR				*cur_dir;
 	struct dirent	*entry;

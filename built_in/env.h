@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:46:25 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:47:11 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+/*built_in.c*/
+int			check_operator(t_token *token);
+int			check_pipe(t_token *token);
+void		execute_cmd(t_token *token, t_env_node *env, t_env_node *exp);
+void		built_in(t_token *token, t_env_node *env, t_env_node *exp);
+
 /*call_cmd.c*/
 int			call_cmd_pwd(void);
 int			call_cmd_cd(void);
@@ -66,7 +72,7 @@ void		print_echo(t_token *node);
 void		cmd_echo(int fd, t_token *node);
 
 /*env.c*/
-void		print_list(t_env_node *list);
+void		cmd_env(t_env_node *list);
 void		print_exp_list(t_env_node *list);
 
 /*error.c */
@@ -87,7 +93,6 @@ void		check_env_data(t_env_node *env_list, char *data);
 void		update_exp_node(t_env_node *node, char *key, char *value);
 
 /*export_utils.c*/
-void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
 int			check_validation(char *data);
 int			cnt_equal(char *data);
 int			check_plus_operator(char *data);
@@ -101,6 +106,7 @@ char		*create_env_data(char *data);
 void		add_new_exp_node(t_env_node **exp_list, char *data);
 
 /*export.c*/
+void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
 int			check_equal_idx(char *exp_data);
 void		split_key_val(t_env_node *node);
 void		set_split_exp_list(t_env_node *exp_list);
