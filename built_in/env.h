@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 21:54:59 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:58:58 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		execute_cmd(t_token *token, t_env_node *env, t_env_node *exp);
 void		built_in(t_token *token, t_env_node *env, t_env_node *exp);
 
 /*call_cmd.c*/
-int			call_cmd_pwd(void);
+int			cmd_pwd(void);
 int			call_cmd_cd(void);
 int			call_cmd_ls(void);
 
@@ -78,6 +78,7 @@ void		print_exp_list(t_env_node *list);
 /*error.c */
 int			exception_msg(char *str);
 int			print_export_error(char *str);
+int			print_cd_error(char *str);
 int			print_error(int i);
 
 /*export_sort.c*/
@@ -131,6 +132,7 @@ int			check_token_size(t_token *node);
 /*utils.c*/
 int			ft_strlen(const char *str);
 char		*ft_strdup(const char *s);
+int			ft_strcmp(char *s1, char *s2);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 char		*ft_strjoin(char *s1, char *s2);
 

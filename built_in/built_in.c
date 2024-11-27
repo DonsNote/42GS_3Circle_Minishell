@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:45:52 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/25 22:41:42 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ void	execute_cmd(t_token *token, t_env_node *env, t_env_node *exp)
 	else if (ft_strncmp(temp->data, "env", 3) == 0)
 		cmd_env(env);
 	else if (ft_strncmp(temp->data, "pwd", 3) == 0)
-	{
-		//pwd 함수 구현
-	}
+		cmd_pwd();
 	else if (ft_strncmp(temp->data, "cd", 2) == 0)
 	{
 		//cd 함수 구현

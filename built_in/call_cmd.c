@@ -6,13 +6,13 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:48:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:47:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-int	call_cmd_pwd(void) // pwd 명령어 => 수정
+int	cmd_pwd(void) // pwd 명령어 => 수정
 {
 	char	pwd[PATH_MAX];
 
@@ -26,43 +26,39 @@ int	call_cmd_pwd(void) // pwd 명령어 => 수정
 	return (0);
 }
 
-int	call_cmd_cd(void) // cd 명령어 함수 => 수정
+int	find_key(t_env_node *exp, char *find)
 {
-	char	*new_dir;
+	t_env_node	*temp;
+	int			flag;
 
-	new_dir = "/home/junseok";
-	if (chdir(new_dir) != 0)
+	temp = exp;
+	flag = 0;
+	while (temp != NULL)
 	{
-		perror("cd error");
-		return (1);
+		if (ft_strcmp(temp->key, find) == 0)
+		{
+			if (chdir(temp->value) != 0)
+				return (0);
+		}
+		temp = temp -> next;
 	}
-	return (0);
+	return (1);
 }
 
-int	call_cmd_ls(void) // ls 명령어 함수 => 수정
+int	cmd_cd(t_token *token, t_env_node *exp) // cd 명령어 함수 => 수정
 {
-	DIR				*cur_dir;
-	struct dirent	*entry;
-	struct stat		buf;
-	char			pwd[PATH_MAX];
+	t_token	*temp;
 
-	getcwd(pwd, sizeof(pwd));
-	cur_dir = opendir(pwd);
-	if (cur_dir == NULL)
+	temp = token;
+	if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD \
+	|| check_token_size(temp) == 2 && chekc_cd_valid(temp->next->data) == 1)
 	{
-		perror("opendir fail");
-		return (1);
+		if (find_key(exp, "HOME") == 0)
+			print_cd_error("HOME");
 	}
-	entry = readdir(cur_dir);
-	while (entry != NULL)
+	else
 	{
-		lstat(entry->d_name, &buf);
-		if (S_ISREG(buf.st_mode))
-			printf("%s  ", entry->d_name);
-		else if (S_ISDIR(buf.st_mode))
-			printf("%s  ", entry->d_name);
+
 	}
-	printf("\n");
-	closedir(cur_dir);
-	return (0);
 }
+

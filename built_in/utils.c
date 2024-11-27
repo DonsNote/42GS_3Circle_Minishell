@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:12:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 17:47:25 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 16:33:37 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,15 @@ char	*ft_strdup(const char *s)
 	}
 	str[i] = 0;
 	return (str);
+}
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != 0 && s2[i] != 0)
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, int n)
