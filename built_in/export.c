@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 21:55:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 22:22:01 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,23 @@ char	*create_env_data(char *data)
 	}
 	new_str[j] = 0;
 	return (new_str);
+}
+
+int	check_key_validation(char *key)
+{
+	int	i;
+
+	i = 0;
+	while (key[i])
+	{
+		if (key[i] == '+' && (key[i + 1] != NULL))
+			return (-1);
+		if ((key[i] >= 'A' && key[i] <= 'Z') \
+		|| (key[i] >= 'a' && key[i] <= 'z') || key[i] == '_' \
+		|| (key[i] >= '0' && key[i] <= '9'))
+			i++;
+		else
+			return (-1);
+	}
+	return (0);
 }

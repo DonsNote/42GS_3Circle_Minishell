@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 22:13:33 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 22:21:14 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,19 @@ void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
 
 int	check_validation(char *data)
 {
-	int	i;
+	int		i;
+	char	*key;
 
 	i = 0;
+	key = get_key(data);
 	if (!((data[i] >= 'A' && data[i] <= 'Z') \
-	|| (data[i] >= 'a' && data[i] <= 'z')))
+	|| (data[i] >= 'a' && data[i] <= 'z') || data[i] == '_'))
 		return (-1);
+	else if (check_key_validation(key) == -1)
+	{
+		free(key);
+		return (-1);
+	}
 	else
 	{
 		while (data[i])
@@ -57,6 +64,7 @@ int	check_validation(char *data)
 			i++;
 		}
 	}
+	free(key);
 	return (0);
 }
 

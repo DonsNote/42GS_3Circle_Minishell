@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 17:47:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/27 22:21:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	find_key(t_env_node *exp, char *find)
 		{
 			if (chdir(temp->value) != 0)
 				return (0);
+			return (1);
 		}
 		temp = temp -> next;
 	}
@@ -61,4 +62,3 @@ int	cmd_cd(t_token *token, t_env_node *exp) // cd 명령어 함수 => 수정
 
 	}
 }
-

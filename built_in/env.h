@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 16:58:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:45:43 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <limits.h>
 # define PATH_MAX 4096
 
 typedef struct s_env_node
@@ -64,8 +65,8 @@ void		built_in(t_token *token, t_env_node *env, t_env_node *exp);
 
 /*call_cmd.c*/
 int			cmd_pwd(void);
+int			find_key(t_env_node *exp, char *find);
 int			call_cmd_cd(void);
-int			call_cmd_ls(void);
 
 /*echo.c*/
 void		print_echo(t_token *node);
@@ -77,21 +78,14 @@ void		print_exp_list(t_env_node *list);
 
 /*error.c */
 int			exception_msg(char *str);
+int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str);
-int			print_error(int i);
 
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
 int			exp_strncmp(char *s1, char *s2, int n);
 void		exp_bubble_sort(t_env_node *node);
-
-/*export_utils3.c*/
-void		add_new_exp_node(t_env_node **exp_list, char *data);
-void		add_exp_env_data(t_env_node *exp, t_env_node *env, char *data);
-char		*get_key(char *data);
-int			check_key(t_env_node *list, char *key);
-void		change_exp_node(t_env_node *exp, char *key, char *data);
 
 /*export_utils.c*/
 void		join_exp_data(t_env_node *exp, t_env_node *env, char *data);
@@ -107,6 +101,13 @@ void		add_export(t_env_node *exp_list, t_env_node *env_list, char *data);
 char		*split_key(char *data);
 char		*split_value(char *data);
 
+/*export_utils3.c*/
+void		add_new_exp_node(t_env_node **exp_list, char *data);
+void		add_exp_env_data(t_env_node *exp, t_env_node *env, char *data);
+char		*get_key(char *data);
+int			check_key(t_env_node *list, char *key);
+void		change_exp_node(t_env_node *exp, char *key, char *data);
+
 /*export_utils4.c*/
 void		change_env_node(t_env_node *env, char *key, char *data);
 void		split_key_val(t_env_node *node);
@@ -117,6 +118,7 @@ void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
 void		add_exp_data(t_env_node *exp_list, char *data);
 int			check_equal_idx(char *exp_data);
 char		*create_env_data(char *data);
+int			check_key_validation(char *key);
 
 /*free.c*/
 void		free_env_val(t_env_node *list);
