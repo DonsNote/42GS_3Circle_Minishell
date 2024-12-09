@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/24 13:53:01 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:45:41 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*check_param(char *param)
 	size = check_quote(param);
 	if (size == -1)
 		return (NULL);
-	printf("Test\n");
 	if (size > 0)
 	{
 		data = delete_quote(param, size);
