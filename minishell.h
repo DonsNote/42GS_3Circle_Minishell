@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/23 13:23:52 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:00:35 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*data;
+	int				fd;
 	t_type			type;
 	struct s_token	*next;
 }	t_token;
