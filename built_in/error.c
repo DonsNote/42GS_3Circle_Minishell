@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 16:55:21 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:39:18 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	print_export_error(char *str)
 
 int	print_cd_error(char *str)
 {
-	printf("mini: cd : %s not set\n", str);
+	printf("mini: cd: %s: No such file or directory\n", str);
 	return (1);
 }

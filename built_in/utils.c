@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:12:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 16:33:37 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/06 19:21:59 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_strdup(const char *s)
 	str[i] = 0;
 	return (str);
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;

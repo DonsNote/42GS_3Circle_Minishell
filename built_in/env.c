@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 18:29:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:02:27 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,18 @@ void	print_exp_list(t_env_node *list)
 /*
 int	main(int argc, char **argv, char **envp)
 {
-	//t_env_node	*env_list;
+	t_env_node	*env_list;
 	t_env_node	*exp_list;
 
 	(void)argc;
 	(void)argv;
-	//env_list = NULL;
+	env_list = NULL;
 	exp_list = NULL;
-	//create_list(&env_list, envp);
-	//print_list(env_list);
+	create_list(&env_list, envp);
 	create_list(&exp_list, envp);
 	set_split_exp_list(exp_list);
-	//print_exp_list(exp_list);
 	exp_bubble_sort(exp_list);
-	print_exp_list(exp_list);
-	free_env_val(exp_list);
-	//free_env_val(env_list);
+	info->exp = exp_list;
+	info->env = env_list;
 	return (0);
 }*/

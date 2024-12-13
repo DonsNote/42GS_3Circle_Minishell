@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 16:31:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/28 20:45:43 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:36:36 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ typedef struct s_env_node
 	struct s_env_node	*next;
 }	t_env_node;
 
+typedef struct s_info
+{
+	t_env_node	*env;
+	t_env_node	*exp;
+	char		*home;
+	char		*pwd;
+	char		*oldpwd;
+}	t_info;
+
 typedef enum e_type
 {
 	E_TYPE_CMD,
@@ -60,13 +69,27 @@ typedef struct s_token
 /*built_in.c*/
 int			check_operator(t_token *token);
 int			check_pipe(t_token *token);
-void		execute_cmd(t_token *token, t_env_node *env, t_env_node *exp);
-void		built_in(t_token *token, t_env_node *env, t_env_node *exp);
+void		init_info(t_info *info);
+void		execute_cmd(t_token *token, t_info *info);
+void		built_in(t_token *token, t_info *info);
 
-/*call_cmd.c*/
+/*pwd.c*/
 int			cmd_pwd(void);
-int			find_key(t_env_node *exp, char *find);
-int			call_cmd_cd(void);
+int			cmd_cd(t_token *token, t_info *info);
+int			find_key(t_info *info, char *find);
+char		*find_value(t_info *info, char *find);
+
+/*pwd_utils.c*/
+char		*return_data(char *key, char *value);
+void		update_env_data(t_info *info, char *key, char *value);
+void		update_exp_data(t_info *info, char *key, char *value);
+void		update_pwd(t_info *info);
+
+/*pwd_utils2.c*/
+int			check_cd_validation(t_token *token);
+void		execute_tilde(t_info *info);
+void		execute_single_hypen(t_info *info);
+void		execute_double_hypen(t_token *token);
 
 /*echo.c*/
 void		print_echo(t_token *node);
@@ -114,7 +137,7 @@ void		split_key_val(t_env_node *node);
 void		set_split_exp_list(t_env_node *exp_list);
 
 /*export.c*/
-void		cmd_export(t_token *node, t_env_node *exp, t_env_node *env);
+void		cmd_export(t_token *node, t_info *info);
 void		add_exp_data(t_env_node *exp_list, char *data);
 int			check_equal_idx(char *exp_data);
 char		*create_env_data(char *data);

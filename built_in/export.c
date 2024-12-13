@@ -6,19 +6,19 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 22:22:01 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:39:42 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 
-void	cmd_export(t_token *node, t_env_node *env, t_env_node *exp)
+void	cmd_export(t_token *node, t_info *info)
 {
 	t_token		*temp;
 
 	temp = node;
 	if (check_token_size(node) == 1 && temp->type == E_TYPE_CMD)
-		print_exp_list(exp);
+		print_exp_list(info->exp);
 	else
 	{
 		while (temp != NULL)
@@ -27,18 +27,27 @@ void	cmd_export(t_token *node, t_env_node *env, t_env_node *exp)
 				temp = temp -> next;
 			else if (temp->type == E_TYPE_PARAM)
 			{
-				if (check_validation(temp->data) == -1)
-					print_export_error(temp->data);
-				else if (cnt_equal(temp->data) == 0)
-					add_exp_data(exp, temp->data);
-				else if (check_plus_operator(temp->data))
-					join_exp_data(exp, env, temp->data);
-				else if (check_validation(temp->data) == 1)
-					add_exp_env_data(exp, env, temp->data);
+				execute_export_cmd(info, temp->data);
 				temp = temp -> next;
 			}
 		}
 	}
+	if (ft_strcmp(find_value(info, "PWD"), info->pwd) != 0)
+		info->pwd = find_value(info, "PWD");
+	if (ft_strcmp(find_value(info, "OLDPWD"), info->pwd) != 0)
+		info->pwd = find_value(info, "OLDPWD");
+}
+
+void	execute_export_cmd(t_info *info, char *data)
+{
+	if (check_validation(data) == -1)
+		print_export_error(data);
+	else if (cnt_equal(data) == 0)
+		add_exp_data(info->exp, data);
+	else if (check_plus_operator(data))
+		join_exp_data(info->exp, info->env, data);
+	else if (check_validation(data) == 1)
+		add_exp_env_data(info->exp, info->env, data);
 }
 
 void	add_exp_data(t_env_node *exp_list, char *data)
@@ -81,23 +90,4 @@ char	*create_env_data(char *data)
 	}
 	new_str[j] = 0;
 	return (new_str);
-}
-
-int	check_key_validation(char *key)
-{
-	int	i;
-
-	i = 0;
-	while (key[i])
-	{
-		if (key[i] == '+' && (key[i + 1] != NULL))
-			return (-1);
-		if ((key[i] >= 'A' && key[i] <= 'Z') \
-		|| (key[i] >= 'a' && key[i] <= 'z') || key[i] == '_' \
-		|| (key[i] >= '0' && key[i] <= '9'))
-			i++;
-		else
-			return (-1);
-	}
-	return (0);
 }

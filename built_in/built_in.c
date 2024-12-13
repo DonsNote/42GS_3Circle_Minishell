@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/25 22:41:42 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:09:09 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,35 @@ int	check_pipe(t_token *token)
 	return (cnt);
 }
 
-void	execute_cmd(t_token *token, t_env_node *env, t_env_node *exp)
+void	init_info(t_info *info)
+{
+	info->home = find_value(info, "HOME");
+	info->oldpwd = find_value(info, "OLDPWD");
+	info->pwd = find_value(info, "PWD");
+}
+
+void	execute_cmd(t_token *token, t_info *info)
 {
 	t_token	*temp;
 
 	temp = token;
-	if (ft_strncmp(temp->data, "echo", 4) == 0)
+	if (ft_strcmp(temp->data, "echo") == 0)
 		cmd_echo(0, temp);
-	else if (ft_strncmp(temp->data, "export", 6) == 0)
-		cmd_export(temp, env, exp);
-	else if (ft_strncmp(temp->data, "env", 3) == 0)
-		cmd_env(env);
-	else if (ft_strncmp(temp->data, "pwd", 3) == 0)
+	else if (ft_strcmp(temp->data, "export") == 0)
+		cmd_export(temp, info);
+	else if (ft_strcmp(temp->data, "env") == 0)
+		cmd_env(info);
+	else if (ft_strcmp(temp->data, "pwd") == 0)
 		cmd_pwd();
-	else if (ft_strncmp(temp->data, "cd", 2) == 0)
+	else if (ft_strcmp(temp->data, "cd") == 0)
 	{
 		//cd 함수 구현
 	}
-	else if (ft_strncmp(temp->data, "unset", 5) == 0)
+	else if (ft_strcmp(temp->data, "unset") == 0)
 	{
 		// unset 함수 구현
 	}
-	else if (ft_strncmp(temp->data, "exit", 4) == 0)
+	else if (ft_strcmp(temp->data, "exit") == 0)
 	{
 		// exit 함수 구현
 	}
@@ -81,13 +88,13 @@ void	execute_cmd(t_token *token, t_env_node *env, t_env_node *exp)
 	}
 }
 
-void	built_in(t_token *token, t_env_node *env, t_env_node *exp)
+void	built_in(t_token *token, t_info *info)
 {
 	t_token	*temp;
 
 	temp = token;
 	if (check_operator(token))
-		execute_cmd(token, env, exp);
+		execute_cmd(token, info);
 	else
 	{
 	}
