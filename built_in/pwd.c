@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/13 20:41:02 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:33:55 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,7 @@ int	cmd_cd(t_token *token, t_info *info)
 			print_cd_error("too many arguments");
 	}
 	else if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
-	{
-		if (find_key(info->exp, "HOME") == 0)
-			print_cd_error("HOME not set");
-		else if (find_key(info->exp, "HOME") == 1)
-		{
-			if (chdir(find_value(info, "HOME")) != 0)
-				print_cd_error(find_value(info, "HOME"));
-			else
-				update_pwd(info);
-		}
-	}
+		execute_cd_cmd(info);
 	else if (check_token_size(temp) == 2 \
 	&& ((temp->next->data == '-' || temp->next->data == '~') \
 	|| check_cd_validation(temp) == 0))
@@ -62,6 +52,19 @@ int	cmd_cd(t_token *token, t_info *info)
 			execute_single_hypen(info);
 	}
 	return (0);
+}
+
+void	execute_cd_cmd(t_info *info)
+{
+	if (find_key(info->exp, "HOME") == 0)
+		print_cd_error("HOME not set");
+	else if (find_key(info->exp, "HOME") == 1)
+	{
+		if (chdir(find_value(info, "HOME")) != 0)
+			print_cd_error(find_value(info, "HOME"));
+		else
+			update_pwd(info);
+	}
 }
 
 int	find_key(t_env_node *list, char *find)
