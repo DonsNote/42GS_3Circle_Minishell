@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/17 17:39:31 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:08:21 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ t_token	*tokenize(char *param, char **envp)
 {
 	t_token		*token;
 	t_env_token	*env;
-	char		*data;
 
 	env = env_tokenize(envp);
-	data = check_param(param);
-	if (data == NULL)
+	if (check_param(param))
+	{
+		free(param);
 		return (NULL);
-	token = NULL;
+	}
 	token = (t_token *)malloc(sizeof(t_token) * 1);
 	if (token == NULL)
 		return (NULL);
