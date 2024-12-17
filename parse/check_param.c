@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/26 13:45:41 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:57:51 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,12 @@ int	check_curquote(char *param, char c, int *i)
 	*i = *i + 1;
 	while (param[*i] != c)
 	{
-		if (param[*i] == '\\' && param[*i + 1] == 34)
+		if (param[*i] == '\\' && param[*i + 1] == c)
+		{
 			*i = *i + 2;
+			if (param[*i] == '\0')
+				return (0);
+		}
 		if (param[*i] == '\0')
 			return (1);
 		++*i;

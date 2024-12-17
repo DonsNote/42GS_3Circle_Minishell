@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/17 12:35:49 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:39:31 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,10 @@ t_token	*tokenize(char *param, char **envp)
 // {
 // 	return (0);
 // }
+
+int	check_type(char *data)
+{
+	const char	*oper[] = {"<<", ">>", "<", ">"};
+	
+	return (0);
+}
