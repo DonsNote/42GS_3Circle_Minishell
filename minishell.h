@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/09 16:00:35 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:05:19 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@
 # include <sys/types.h>
 # define PATH_MAX 4096
 
-typedef struct s_env_node
+typedef struct s_env_token
 {
-	char				*env_data;
-	struct s_env_node	*next;
-}	t_env_node;
+	char				*env_key;
+	char				*env_value;
+	struct s_env_token	*next;
+}	t_env_token;
 
 typedef enum e_type
 {
@@ -57,16 +58,17 @@ typedef struct s_token
 }	t_token;
 
 //parse
-t_token	*tokenize(char *param);
-char	*check_param(char *param);
-int		check_grammer(char *param);
+t_token		*tokenize(char *param, char **envp);
+t_env_token	*env_tokenize(char **envp);
+char		*check_param(char *param);
+int			check_grammer(char *param);
 
 //built_in
-int		exception_msg(char *str);
-char	*ft_strdup(const char *s);
+int			exception_msg(char *str);
+char		*ft_strdup(const char *s);
 
 //Utilities
-int		print_error(int i);
-int		ft_strlen(const char *str);
+int			print_error(int i);
+int			ft_strlen(const char *str);
 
 #endif

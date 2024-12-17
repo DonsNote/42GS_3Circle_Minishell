@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/23 17:23:52 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:35:49 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 void	make_token(t_token *token, char *param);
 
-t_token	*tokenize(char *param)
+t_token	*tokenize(char *param, char **envp)
 {
-	t_token	*token;
-	char	*data;
+	t_token		*token;
+	t_env_token	*env;
+	char		*data;
 
+	env = env_tokenize(envp);
 	data = check_param(param);
 	if (data == NULL)
 		return (NULL);
-	printf("%s\n", data);
 	token = NULL;
-	// token = (t_token *)malloc(sizeof(t_token) * 1);
-	// if (token == NULL)
-	// 	return (NULL);
+	token = (t_token *)malloc(sizeof(t_token) * 1);
+	if (token == NULL)
+		return (NULL);
 	// make_token(token, data);
 	return (token);
 }
