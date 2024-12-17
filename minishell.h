@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/17 17:36:24 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:24:48 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ char		*ft_strdup(const char *s);
 //Utilities
 int			print_error(int i);
 int			ft_strlen(const char *str);
+int			ft_isalpha_mini(char c);
 
 #endif
