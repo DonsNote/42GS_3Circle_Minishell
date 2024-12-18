@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/18 02:24:48 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 12:45:11 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 typedef struct s_env_token
 {
+	char				*env_data;
 	char				*env_key;
 	char				*env_value;
 	struct s_env_token	*next;
