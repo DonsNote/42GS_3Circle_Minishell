@@ -6,58 +6,70 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/18 02:08:21 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:12:04 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	make_token(t_token *token, char *param);
+int		make_token(t_token *token, t_env_token *env, char *param);
+int		check_type(t_token *token);
+void	delete_quote(char *param);
 
 t_token	*tokenize(char *param, char **envp)
 {
 	t_token		*token;
 	t_env_token	*env;
 
+	token = NULL;
 	env = env_tokenize(envp);
 	if (check_param(param))
-	{
-		free(param);
 		return (NULL);
-	}
-	token = (t_token *)malloc(sizeof(t_token) * 1);
-	if (token == NULL)
+	if (make_token(token, env, param))
 		return (NULL);
-	// make_token(token, data);
 	return (token);
 }
 
-// void	make_token(t_token *token, char *data)
-// {
-// 	int	i;
-// 	int	start;
-// 	int	size;
+int	make_token(t_token *token, t_env_token *env, char *param)
+{
+	int		i;
+	char	**s_tmp;
+	t_token	*new;
 
-// 	i = 0;
-// 	start = 0;
-// 	size = 0;
-// 	while (data[i] != '\0')
-// 	{
-// 		if (data[i] == 32)
+	i = 0;
+	s_tmp = ft_split(param, ' ');
+	while (s_tmp[i] != '\0')
+	{
+		new = (t_token *)malloc(sizeof(t_token) * 1);
+		if (new == NULL)
+		{
+			free(s_tmp);
+			return (1);
+		}
+		new->data = delet_quote(s_tmp[i]);
+		check_type(new);
+		if (token == NULL)
+			token = new;
+		else
 			
-// 		++i;
-// 	}
-// 	return ;
-// }
+	}
+	return (0);
+}
 
-// int	is_oper(char c)
-// {
-// 	return (0);
-// }
+void	delete_quote(char *param)
+{
 
-int	check_type(char *data)
+}
+
+int	check_type(t_token *token)
+{
+
+	return (0);
+}
+
+int	is_oper(t_token *token)
 {
 	const char	*oper[] = {"<<", ">>", "<", ">"};
-	
+
 	return (0);
 }

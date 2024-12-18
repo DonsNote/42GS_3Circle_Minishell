@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/18 02:36:10 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 14:06:29 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	*check_param(char *param)
 	char	*data;
 
 	if (check_quote(param))
+	{
+		free(param);
 		return (1);
+	}
 	if (check_grammer(param))
 		return (1);
 	return (0);
@@ -36,7 +39,7 @@ int	check_quote(char *param)
 		{
 			while (param[i] != 39)
 			{
-				if (ft_isalpha_mini(param[i]))
+				if (param[i] == '\0')
 					return (1);
 				++i;
 			}
