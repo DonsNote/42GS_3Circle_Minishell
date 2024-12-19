@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:35:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/16 16:21:09 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:20:30 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../minishell.h"
 
 void	cmd_unset(t_token *token, t_info *info)
 {
@@ -31,10 +31,10 @@ void	cmd_unset(t_token *token, t_info *info)
 	}
 }
 
-void	delete_node(t_env_node **list, char *find)
+void	delete_node(t_env_token **list, char *find)
 {
-	t_env_node	*temp;
-	t_env_node	*cur;
+	t_env_token	*temp;
+	t_env_token	*cur;
 
 	if (!list || !*list || !find)
 		return ;
@@ -43,7 +43,7 @@ void	delete_node(t_env_node **list, char *find)
 	cur = (*list);
 	while (cur->next != NULL)
 	{
-		if (ft_strcmp(cur->next->key, find) == 0)
+		if (ft_strcmp(cur->next->env_key, find) == 0)
 		{
 			temp = cur->next;
 			cur->next = temp->next;
@@ -55,12 +55,12 @@ void	delete_node(t_env_node **list, char *find)
 	}
 }
 
-int	delete_first_node(t_env_node **list, char *find)
+int	delete_first_node(t_env_token **list, char *find)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 
 	temp = (*list);
-	if (ft_strcmp(temp->key, find) == 0)
+	if (ft_strcmp(temp->env_key, find) == 0)
 	{
 		(*list) = (*list)->next;
 		free_node_data(temp);

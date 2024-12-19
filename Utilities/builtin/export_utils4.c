@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 21:46:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/13 20:39:49 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:02:18 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
-void	change_env_node(t_env_node *env, char *key, char *data)
+void	change_env_node(t_env_token *env, char *key, char *data)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 	int			len;
 
 	temp = env;
@@ -31,7 +31,7 @@ void	change_env_node(t_env_node *env, char *key, char *data)
 	}
 }
 
-void	split_key_val(t_env_node *node)
+void	split_key_val(t_env_token *node)
 {
 	int		i;
 	int		j;
@@ -52,13 +52,13 @@ void	split_key_val(t_env_node *node)
 	while (i < ft_strlen(node->env_data))
 		val_str[j++] = node->env_data[i++];
 	val_str[j] = 0;
-	node->key = key_str;
-	node->value = val_str;
+	node->env_key = key_str;
+	node->env_value = val_str;
 }
 
-void	set_split_exp_list(t_env_node *exp_list)
+void	set_split_exp_list(t_env_token *exp_list)
 {
-	t_env_node	*node;
+	t_env_token	*node;
 
 	node = exp_list;
 	while (node != NULL)
@@ -75,7 +75,7 @@ int	check_key_validation(char *key)
 	i = 0;
 	while (key[i])
 	{
-		if (key[i] == '+' && (key[i + 1] != NULL))
+		if (key[i] == '+' && (key[i + 1] != 0))
 			return (-1);
 		if ((key[i] >= 'A' && key[i] <= 'Z') \
 		|| (key[i] >= 'a' && key[i] <= 'z') || key[i] == '_' \

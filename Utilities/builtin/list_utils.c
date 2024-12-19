@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:52:47 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/20 20:46:49 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:03:29 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
-t_env_node	*create_node(char *data)
+t_env_token	*create_node(char *data)
 {
-	t_env_node	*new_node;
+	t_env_token	*new_node;
 
-	new_node = (t_env_node *)malloc(sizeof(t_env_node));
+	new_node = (t_env_token *)malloc(sizeof(t_env_token));
 	if (!new_node)
 		return (NULL);
 	new_node->env_data = data;
 	new_node->next = NULL;
-	new_node->key = NULL;
-	new_node->value = NULL;
+	new_node->env_key = NULL;
+	new_node->env_value = NULL;
 	return (new_node);
 }
 
-t_env_node	*last_node(t_env_node *list)
+t_env_token	*last_node(t_env_token *list)
 {
 	if (!list)
 		return (0);
@@ -39,9 +39,9 @@ t_env_node	*last_node(t_env_node *list)
 	return (list);
 }
 
-void	add_node_back(t_env_node **list, t_env_node *new_node)
+void	add_node_back(t_env_token **list, t_env_token *new_node)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 
 	temp = last_node(*list);
 	if (!temp)
@@ -50,11 +50,11 @@ void	add_node_back(t_env_node **list, t_env_node *new_node)
 		temp->next = new_node;
 }
 
-void	create_list(t_env_node **list, char **envp)
+void	create_list(t_env_token **list, char **envp)
 {
 	int			i;
 	char		*data;
-	t_env_node	*new_node;
+	t_env_token	*new_node;
 
 	i = 0;
 	while (envp[i])

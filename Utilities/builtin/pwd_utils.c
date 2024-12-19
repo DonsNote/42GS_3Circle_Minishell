@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:31:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/13 20:32:09 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:04:27 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
 char	*return_data(char *key, char *value)
 {
@@ -25,8 +25,8 @@ char	*return_data(char *key, char *value)
 
 void	update_env_data(t_info *info, char *key, char *value)
 {
-	t_env_node	*temp;
-	t_env_node	*new_node;
+	t_env_token	*temp;
+	t_env_token	*new_node;
 	char		*data;
 
 	data = return_data(key, value);
@@ -49,22 +49,22 @@ void	update_env_data(t_info *info, char *key, char *value)
 
 void	update_exp_data(t_info *info, char *key, char *value)
 {
-	t_env_node	*temp;
-	t_env_node	*new_node;
+	t_env_token	*temp;
+	t_env_token	*new_node;
 	char		*data;
 
 	data = return_data(key, value);
 	temp = info->exp;
 	while (temp)
 	{
-		if (ft_strcmp(temp->key, key) == 0)
+		if (ft_strcmp(temp->env_key, key) == 0)
 		{
 			if (temp->env_data != NULL)
 				free(temp->env_data);
 			temp->env_data = data;
-			if (temp->value != NULL)
-				free(temp->value);
-			temp->value = value;
+			if (temp->env_value != NULL)
+				free(temp->env_value);
+			temp->env_value = value;
 			return ;
 		}
 		temp = temp -> next;

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/13 20:33:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:05:31 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
 int	check_cd_validation(t_token *token)
 {
@@ -20,13 +20,13 @@ int	check_cd_validation(t_token *token)
 	{
 		if (temp->type == E_TYPE_CMD)
 			temp = temp -> next;
-		else if (temp->type == E_TYPE_OP) // 옵션으로 던질지 물어보기
+		else if (temp->type == E_TYPE_OPTION)
 		{
 			if (temp->data[0] == '-' && temp->data[1] == '-' \
-			&& temp->data[2] == NULL)
+			&& temp->data[2] == 0)
 				return (0);
 			else if (temp->data[0] == '-' && temp->data[1] == '-' \
-			&& temp->data[2] != NULL)
+			&& temp->data[2] != 0)
 				return (-1);
 			temp = temp -> next;
 		}
@@ -81,7 +81,7 @@ void	execute_double_hypen(t_token *token)
 	{
 		if (temp->type == E_TYPE_CMD)
 			temp = temp -> next;
-		else if (temp->type == E_TYPE_OP \
+		else if (temp->type == E_TYPE_OPTION \
 		&& (ft_strcmp(temp->data, "--") == 0))
 			temp = temp -> next;
 		else if (temp->type == E_TYPE_PARAM)

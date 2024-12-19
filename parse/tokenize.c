@@ -6,33 +6,31 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 07:43:08 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:26:52 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		make_token(t_token *token, t_env_token *env, char **s_tmp);
+int		make_token(t_token *token, t_info *info, char **s_tmp);
 int		check_type(t_token *token);
 void	delete_quote(char *param);
 
-t_token	*tokenize(char *param, char **envp)
+t_token	*tokenize(char *param, t_info *info)
 {
 	char		**s_tmp;
 	t_token		*token;
-	t_env_token	*env;
 
 	token = NULL;
 	if (check_param(param))
 		return (NULL);
-	env = env_tokenize(envp);
 	s_tmp = ft_split(param, 32);
-	if (make_token(token, env, param))
+	if (make_token(token, info, param))
 		return (NULL);
 	return (token);
 }
 
-int	make_token(t_token *token, t_env_token *env, char **s_tmp)
+int	make_token(t_token *token, t_info *env, char **s_tmp)
 {
 	int		i;
 	t_token	*new;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   minishell_built.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/18 22:51:02 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:55:13 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,19 @@ int	main(int ac, char **av, char **envp)
 
 int	input(char **envp)
 {
-	t_token	*token;
-	char	*param;
+	t_info	*info;
+	t_token	*dummy;
 
-	while (1)
-	{
-		param = readline("DJ_Shell>");
-		if (param)
-		{
-			token = tokenize(param, envp);
-			if (token == NULL)
-				return (1);
-			// if (builtin(token))
-			// 	return (1);
-		}
-		else
-			break ;
-		add_history(param);
-		free(param);
-	}
-	// free_all(token);
+	info = make_info(envp);
+
+	printf("%s\n", info->home);
+	// dummy = make_dummy();
+	// built_in(dummy, info);
 	return (0);
 }
+
+// int	make_dummy(void)
+// {
+	
+// 	export PWD+=123
+// }

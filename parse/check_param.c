@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/18 14:06:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:28:06 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_quote(char *param);
 
-int	*check_param(char *param)
+int	check_param(char *param)
 {
 	char	*data;
 

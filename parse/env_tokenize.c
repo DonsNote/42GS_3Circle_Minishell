@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:02:43 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/17 12:32:47 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:29:05 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,32 @@ int		keylen(char *data);
 int		valuelen(char *data);
 void	input_data(t_env_token *new, char *data);
 
-t_env_token	*env_tokenize(char **envp)
+t_env_token	*exp_tokenize(char **envp)
 {
 	t_env_token	*head;
 	int			i;
 
 	head = (t_env_token *)malloc(sizeof(t_env_token) * 1);
+	head->env_data = (char *)malloc(sizeof(char) * (ft_strlen(envp[0]) + 1));
 	head->env_key = (char *)malloc(sizeof(char) * keylen(envp[0]));
 	head->env_value = (char *)malloc(sizeof(char) * valuelen(envp[0]));
-	if (head == NULL || head->env_key == NULL || head->env_value == NULL)
+	if (head == NULL || head->env_key == NULL || head->env_value == NULL
+		|| head->env_data == NULL)
 		return (NULL);
 	head->next = NULL;
 	input_data(head, envp[0]);
+	input_env_data(head, envp[0]);
 	i = 1;
 	while (envp[i] != NULL)
 	{
-		if (make_env_token(head, envp[i]))
+		if (make_exp_token(head, envp[i]))
 			return (NULL);
 		++i;
 	}
 	return (head);
 }
 
-int	make_env_token(t_env_token *head, char *data)
+int	make_exp_token(t_env_token *head, char *data)
 {
 	t_env_token	*tmp;
 	t_env_token	*new;
@@ -53,8 +56,10 @@ int	make_env_token(t_env_token *head, char *data)
 		tmp = tmp->next;
 	new->env_key = (char *)malloc(sizeof(char) * keylen(data));
 	new->env_value = (char *)malloc(sizeof(char) * valuelen(data));
+	new->env_data = (char *)malloc(sizeof(char) * (ft_strlen(data) + 1));
 	if (new->env_key == NULL || new->env_value == NULL)
 		return (1);
+	input_env_data(new, data);
 	input_data(new, data);
 	tmp->next = new;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/18 22:22:46 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:56:55 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_strarray(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i] != NULL)
 	{
 		free(str[i]);
 		++i;

@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:21 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/16 15:42:45 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:05:41 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../minishell.h"
 
-void	free_env_val(t_env_node *list)
+void	free_exp_key_value(t_env_token *env_token)
 {
-	t_env_node	*temp;
+	if (env_token->env_key != NULL)
+		free(env_token->env_key);
+	if (env_token->env_value != NULL)
+		free(env_token->env_value);
+}
+
+void	free_node_data(t_env_token *env_token)
+{
+	if (env_token->env_data != NULL)
+		free(env_token->env_data);
+	free_exp_key_value(env_token);
+}
+
+void	free_env_val(t_env_token *list)
+{
+	t_env_token	*temp;
 
 	while (list != NULL)
 	{
@@ -22,25 +37,10 @@ void	free_env_val(t_env_node *list)
 		list = list -> next;
 		if (temp->env_data != NULL)
 			free(temp->env_data);
-		if (temp->key != NULL)
-			free(temp->key);
-		if (temp->value != NULL)
-			free(temp->value);
+		if (temp->env_key != NULL)
+			free(temp->env_key);
+		if (temp->env_value != NULL)
+			free(temp->env_value);
 		free(temp);
 	}
-}
-
-void	free_exp_key_value(t_env_node *node)
-{
-	if (node->key != NULL)
-		free(node->key);
-	if (node->value != NULL)
-		free(node->value);
-}
-
-void	free_node_data(t_env_node *node)
-{
-	if (node->env_data != NULL)
-		free(node->env_data);
-	free_exp_key_value(node);
 }

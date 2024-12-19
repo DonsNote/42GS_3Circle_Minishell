@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_util3.c                                     :+:      :+:    :+:   */
+/*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/24 21:46:28 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:20:39 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
-void	add_new_exp_node(t_env_node **list, char *data)
+void	add_new_exp_node(t_env_token **list, char *data)
 {
 	char		*env_data;
-	t_env_node	*new_node;
+	t_env_token	*new_node;
 
 	env_data = create_env_data(data);
 	new_node = create_node(env_data);
@@ -23,9 +23,9 @@ void	add_new_exp_node(t_env_node **list, char *data)
 		add_node_back(list, new_node);
 }
 
-void	add_exp_env_data(t_env_node *exp, t_env_node *env, char *data)
+void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 {
-	t_env_node	*new_node;
+	t_env_token	*new_node;
 	char		*key;
 	int			check;
 
@@ -66,9 +66,9 @@ char	*get_key(char *data)
 	return (key);
 }
 
-int	check_key(t_env_node *list, char *key)
+int	check_key(t_env_token *list, char *key)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 	int			len;
 
 	temp = list;
@@ -82,9 +82,9 @@ int	check_key(t_env_node *list, char *key)
 	return (0);
 }
 
-void	change_exp_node(t_env_node *exp, char *key, char *data)
+void	change_exp_node(t_env_token *exp, char *key, char *data)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 	int			len;
 
 	temp = exp;

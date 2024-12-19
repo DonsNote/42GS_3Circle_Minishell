@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/15 16:33:55 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:19:39 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../minishell.h"
 
 int	cmd_pwd(void)
 {
@@ -43,12 +43,14 @@ int	cmd_cd(t_token *token, t_info *info)
 	else if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
 		execute_cd_cmd(info);
 	else if (check_token_size(temp) == 2 \
-	&& ((temp->next->data == '-' || temp->next->data == '~') \
+	&& ((!(ft_strcmp(temp->next->data, "-")) \
+	|| !(ft_strcmp(temp->next->data, "~"))) \
 	|| check_cd_validation(temp) == 0))
 	{
-		if (temp->next->data == '~' || check_cd_validation(temp) == 0)
-			execute_tilde(temp);
-		else if (temp->next->data == '-')
+		if (!(ft_strcmp(temp->next->data, "~")) \
+		|| check_cd_validation(temp) == 0)
+			execute_tilde(info);
+		else if (!(ft_strcmp(temp->next->data, "-")))
 			execute_single_hypen(info);
 	}
 	return (0);
@@ -67,16 +69,16 @@ void	execute_cd_cmd(t_info *info)
 	}
 }
 
-int	find_key(t_env_node *list, char *find)
+int	find_key(t_env_token *list, char *find)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 	int			flag;
 
 	temp = list;
 	flag = 0;
 	while (temp != NULL)
 	{
-		if (ft_strcmp(temp->key, find) == 0)
+		if (ft_strcmp(temp->env_key, find) == 0)
 			return (1);
 		temp = temp -> next;
 	}
@@ -85,16 +87,16 @@ int	find_key(t_env_node *list, char *find)
 
 char	*find_value(t_info *info, char *find)
 {
-	t_env_node	*temp;
+	t_env_token	*temp;
 	char		*value;
 
 	temp = info->exp;
 	value = NULL;
 	while (temp)
 	{
-		if (ft_strcmp(temp->key, find) == 0)
+		if (ft_strcmp(temp->env_key, find) == 0)
 		{
-			value = ft_strdup(temp->value);
+			value = ft_strdup(temp->env_value);
 			return (value);
 		}
 		temp = temp -> next;

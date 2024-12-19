@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/11 15:02:27 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 18:20:39 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../minishell.h"
 
-void	cmd_env(t_env_node *list)
+void	cmd_env(t_env_token *list)
 {
-	t_env_node	*node;
+	t_env_token	*node;
 
 	node = list;
 	while (node != NULL)
@@ -24,9 +24,9 @@ void	cmd_env(t_env_node *list)
 	}
 }
 
-void	print_exp_list(t_env_node *list)
+void	print_exp_list(t_env_token *list)
 {
-	t_env_node	*node;
+	t_env_token	*node;
 
 	node = list;
 	while (node != NULL)
@@ -39,8 +39,8 @@ void	print_exp_list(t_env_node *list)
 /*
 int	main(int argc, char **argv, char **envp)
 {
-	t_env_node	*env_list;
-	t_env_node	*exp_list;
+	t_env_token	*env_list;
+	t_env_token	*exp_list;
 
 	(void)argc;
 	(void)argv;

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/27 22:21:14 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/19 21:58:08 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "../../minishell.h"
 
-void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
+void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 {
 	int			idx;
 	int			flag;
 	char		*key;
 	char		*value;
-	t_env_node	*node;
+	t_env_token	*node;
 
 	node = exp;
 	flag = 0;
@@ -27,7 +27,7 @@ void	join_exp_data(t_env_node *exp, t_env_node *env, char *data)
 	value = split_value(data);
 	while (node != NULL)
 	{
-		if (ft_strncmp(key, node->key, idx + 1) == 0)
+		if (ft_strncmp(key, node->env_key, idx + 1) == 0)
 		{
 			check_env_data(env, data, key);
 			update_exp_node(node, key, value);
