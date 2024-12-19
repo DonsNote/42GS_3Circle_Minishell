@@ -46,8 +46,8 @@ int	make_token(t_token *token, t_env_token *env, char *param)
 			free(s_tmp);
 			return (1);
 		}
-		new->data = delet_quote(s_tmp[i]);
 		check_type(new);
+		new->data = delet_quote(s_tmp[i]);
 		if (token == NULL)
 			token = new;
 		else
