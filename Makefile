@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/19 21:55:34 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/20 00:14:50 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAG = -Wall -Wextra -Werror -g
 
 INC = minishell.h
 
-SRCS = minishell_built.c \
+SRCS = minishell_.c \
 		Utilities/utilities.c \
 		Utilities/free.c \
 		Utilities/free2.c \
@@ -41,7 +41,11 @@ SRCS = minishell_built.c \
 		parse/check_param.c \
 		parse/check_grammer.c \
 		parse/tokenize.c \
-		parse/env_tokenize.c 
+		parse/substitution.c \
+		parse/env_tokenize.c \
+		parse/env_tokenize2.c \
+		parse/make_info.c \
+		parse/here_doc.c
 
 OBJS = $(SRCS:.c=.o)
 

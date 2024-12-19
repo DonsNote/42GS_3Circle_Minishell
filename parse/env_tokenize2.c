@@ -6,11 +6,14 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 21:23:08 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:48:01 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int		make_env_token(t_env_token *head, char *data);
+void	input_env_data(t_env_token *new, char *data);
 
 t_env_token	*env_tokenize(char **envp)
 {
@@ -28,11 +31,33 @@ t_env_token	*env_tokenize(char **envp)
 	i = 1;
 	while (envp[i] != NULL)
 	{
-		if (init_env_data(head, envp[i]))
+		if (make_env_token(head, envp[i]))
 			return (NULL);
 		++i;
 	}
 	return (head);
+}
+
+int	make_env_token(t_env_token *head, char *data)
+{
+	t_env_token	*tmp;
+	t_env_token	*new;
+
+	new = (t_env_token *)malloc(sizeof(t_env_token) * 1);
+	if (new == NULL)
+		return (1);
+	new->next = NULL;
+	tmp = head;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	new->env_key = NULL;
+	new->env_value = NULL;
+	new->env_data = (char *)malloc(sizeof(char) * (ft_strlen(data) + 1));
+	if (new->env_data == NULL)
+		return (1);
+	input_env_data(new, data);
+	tmp->next = new;
+	return (0);
 }
 
 void	input_env_data(t_env_token *new, char *data)

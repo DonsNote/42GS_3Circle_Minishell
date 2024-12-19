@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:28:14 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:53:53 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,16 @@ typedef struct s_token
 
 /*parse*/
 t_token		*tokenize(char *param, t_info *info);
+t_env_token	*exp_tokenize(char **envp);
 t_env_token	*env_tokenize(char **envp);
 int			check_param(char *param);
 int			check_grammer(char *param);
 t_info		*make_info(char **envp);
+void		input_env_data(t_env_token *new, char *data);
 
 /*built_in*/
 int			check_operator(t_token *token);
 int			check_pipe(t_token *token);
-void		init_info(t_info *info);
 void		execute_cmd(t_token *token, t_info *info);
 void		built_in(t_token *token, t_info *info);
 
@@ -128,7 +129,7 @@ void		add_exp_data(t_env_token *exp_list, char *data);
 int			check_equal_idx(char *exp_data);
 char		*create_env_data(char *data);
 
-/*free.c*/
+/*free2.c*/
 void		free_env_val(t_env_token *list);
 void		free_exp_key_value(t_env_token *node);
 void		free_node_data(t_env_token *node);
@@ -183,7 +184,7 @@ char		**ft_split(char const *s, char c);
 int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str);
-void		free_all(t_token *token, t_env_token *env_token);
+void		free_all(t_token *token, t_info *info);
 void		free_str(char *str);
 void		free_strarray(char **str);
 

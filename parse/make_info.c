@@ -6,11 +6,13 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:04:27 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 21:53:20 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:52:35 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*init_info(t_env_token *exp, char *type);
 
 t_info	*make_info(char **envp)
 {

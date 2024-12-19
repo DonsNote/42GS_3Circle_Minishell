@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:09:21 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:56:33 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ int	check_pipe(t_token *token)
 		temp = temp -> next;
 	}
 	return (cnt);
-}
-
-void	init_info(t_info *info)
-{
-	info->home = find_value(info, "HOME");
-	info->oldpwd = find_value(info, "OLDPWD");
-	info->pwd = find_value(info, "PWD");
 }
 
 void	execute_cmd(t_token *token, t_info *info)

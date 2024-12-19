@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:29:17 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 00:06:04 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	input(char **envp)
 		add_history(param);
 		free(param);
 	}
-	free_all(token);
+	// free_all(token, info);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:02:43 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 21:29:05 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/19 23:36:50 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		make_env_token(t_env_token *head, char *data);
+int		make_exp_token(t_env_token *head, char *data);
 int		keylen(char *data);
 int		valuelen(char *data);
 void	input_data(t_env_token *new, char *data);
