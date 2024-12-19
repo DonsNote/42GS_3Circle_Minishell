@@ -1,34 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/11/12 16:44:45 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:51:02 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	input(char **envp);
+
 int	main(int ac, char **av, char **envp)
 {
-	(void)ac;
-	(void)av;
-	(void)envp;
+	if (ac != 1 || av[1] != NULL)
+		return (print_error(1));
+	if (input(envp))
+		return (print_error(1));
+	return (0);
+}
 
-	char *str;
+int	input(char **envp)
+{
+	t_token	*token;
+	char	*param;
+
 	while (1)
 	{
-		str = readline("Mini : ");
-		if (str)
-			if (check_param(str))
-				return (print_error(1));
+		param = readline("DJ_Shell>");
+		if (param)
+		{
+			token = tokenize(param, envp);
+			if (token == NULL)
+				return (1);
+			// if (builtin(token))
+			// 	return (1);
+		}
 		else
 			break ;
-		add_history(str);
-		free(str);
+		add_history(param);
+		free(param);
 	}
+	// free_all(token);
 	return (0);
 }

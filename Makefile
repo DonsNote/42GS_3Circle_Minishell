@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/11/12 16:57:10 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/18 22:30:04 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,25 @@ NAME = minishell
 
 CC = cc
 
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -g
 
 INC = minishell.h
 
 SRCS = minishell.c \
-		Utilities/check_param.c \
-		parse/check_param.c
+		Utilities/utilities.c \
+		Utilities/split.c \
+		Utilities/free.c \
+		parse/check_param.c \
+		parse/check_grammer.c \
+		parse/tokenize.c \
+		parse/env_tokenize.c 
 
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAG) -g -o $(NAME) $^ -lreadline
+	$(CC) $(CFLAG) -o $(NAME) $^ -lreadline
 
 clean :
 	rm -rf $(OBJS)

@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_print.c                                      :+:      :+:    :+:   */
+/*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/12 17:25:48 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/11/26 11:54:44 by dohyuki2          #+#    #+#             */
+/*   Updated: 2024/11/26 13:45:27 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	print_error(int i)
+int	substitution(char *param, char *envp)
 {
-	if (i == 1)
-		printf("Error!\n");
-	else
-		printf("nono");
-	return (2);
+
 }

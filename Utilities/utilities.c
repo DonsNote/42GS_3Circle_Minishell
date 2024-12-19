@@ -1,50 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_param.c                                      :+:      :+:    :+:   */
+/*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/18 14:06:29 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
+<<<<<<< HEAD:Utilities/error_print.c
+/*   Updated: 2024/11/12 17:25:48 by dohyuki2         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/18 15:08:09 by dohyuki2         ###   ########.fr       */
+>>>>>>> 9221ced2d00c511a1ee24db8705c0178bfd30cbf:Utilities/utilities.c
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		check_quote(char *param);
-
-int	*check_param(char *param)
+int	print_error(int i)
 {
-	char	*data;
-
-	if (check_quote(param))
-	{
-		free(param);
-		return (1);
-	}
-	if (check_grammer(param))
-		return (1);
-	return (0);
+	if (i == 1)
+		printf("Error!\n");
+	else
+		printf("nono");
+	return (2);
 }
 
-int	check_quote(char *param)
+int	ft_strlen(const char *str)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (param[i] != '\0')
-	{
-		if (param[i] == 39)
-		{
-			while (param[i] != 39)
-			{
-				if (param[i] == '\0')
-					return (1);
-				++i;
-			}
-		}
-		++i;
-	}
-	return (0);
+	if (str == NULL)
+		return (0);
+	len = 0;
+	while (str[len] != '\0')
+		len++;
+	return (len);
 }
+
+
