@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/18 15:52:54 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/18 22:30:04 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INC = minishell.h
 SRCS = minishell.c \
 		Utilities/utilities.c \
 		Utilities/split.c \
+		Utilities/free.c \
 		parse/check_param.c \
 		parse/check_grammer.c \
 		parse/tokenize.c \
