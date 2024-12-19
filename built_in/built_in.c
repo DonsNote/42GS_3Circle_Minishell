@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/12 12:09:09 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:54:29 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,11 @@ void	execute_cmd(t_token *token, t_info *info)
 	else if (ft_strcmp(temp->data, "pwd") == 0)
 		cmd_pwd();
 	else if (ft_strcmp(temp->data, "cd") == 0)
-	{
-		//cd 함수 구현
-	}
+		cmd_cd(token, info);
 	else if (ft_strcmp(temp->data, "unset") == 0)
-	{
-		// unset 함수 구현
-	}
-	else if (ft_strcmp(temp->data, "exit") == 0)
-	{
-		// exit 함수 구현
-	}
+		cmd_unset(token, info);
 	else
 	{
-		// built_in 명령어를 제외한 나머지 명령어 실행 함수 구현
 	}
 }
 
