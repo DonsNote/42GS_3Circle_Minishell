@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 21:58:08 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:31:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 {
 	int			idx;
-	int			flag;
 	char		*key;
 	char		*value;
 	t_env_token	*node;
 
 	node = exp;
-	flag = 0;
 	idx = check_plus_operator_idx(data);
 	key = split_key(data);
 	value = split_value(data);
@@ -29,15 +27,14 @@ void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 	{
 		if (ft_strncmp(key, node->env_key, idx + 1) == 0)
 		{
-			check_env_data(env, data, key);
+			check_env_data(env, data, value, key);
+			printf("check_join_exp_data\n");
 			update_exp_node(node, key, value);
-			flag = 1;
-			break ;
+			return ;
 		}
 		node = node -> next;
 	}
-	if (flag == 0)
-		add_export(exp, env, data);
+	add_export(exp, env, data);
 }
 
 int	check_validation(char *data)
@@ -46,11 +43,11 @@ int	check_validation(char *data)
 	char	*key;
 
 	i = 0;
-	key = get_key(data);
-	if (!((data[i] >= 'A' && data[i] <= 'Z') \
+	if ((!(data[i] >= 'A' && data[i] <= 'Z') \
 	|| (data[i] >= 'a' && data[i] <= 'z') || data[i] == '_'))
 		return (-1);
-	else if (check_key_validation(key) == -1)
+	key = get_key(data);
+	if (check_key_validation(key) == -1)
 	{
 		free(key);
 		return (-1);
@@ -60,7 +57,7 @@ int	check_validation(char *data)
 		while (data[i])
 		{
 			if (data[i] == '=')
-				return (1);
+				break ;
 			i++;
 		}
 	}
@@ -79,6 +76,7 @@ int	cnt_equal(char *data)
 	{
 		if (data[i] == '=')
 			cnt++;
+		i++;
 	}
 	return (cnt);
 }
