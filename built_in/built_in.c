@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 23:56:33 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:49:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	execute_cmd(t_token *token, t_info *info)
 		cmd_cd(token, info);
 	else if (ft_strcmp(temp->data, "unset") == 0)
 		cmd_unset(token, info);
-	else
-	{
-	}
+	// else
+	// {
+	// }
 }
 
 void	built_in(t_token *token, t_info *info)
@@ -79,7 +79,8 @@ void	built_in(t_token *token, t_info *info)
 	temp = token;
 	if (check_operator(token))
 		execute_cmd(token, info);
-	else
-	{
-	}
+	printf("check\n");
+	// else
+	// {
+	// }
 }

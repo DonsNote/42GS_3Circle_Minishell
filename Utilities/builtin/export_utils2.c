@@ -3,46 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:00:50 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 18:30:40 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_env_data(t_env_token *env_list, char *data, char *key)
+void	check_env_data(t_env_token *env_list, char *data, char *val, char *key)
 {
 	int			len;
-	int			flag;
+	char		*temp;
 	char		*add_data;
 	t_env_token	*node;
 
 	node = env_list;
-	flag = 0;
 	add_data = create_env_data(data);
 	len = ft_strlen(key);
 	while (node != NULL)
 	{
 		if (ft_strncmp(node->env_data, key, len) == 0)
 		{
-			free(node->env_data);
-			node->env_data = add_data;
-			flag = 1;
-			break ;
+			temp = ft_strdup(node->env_data);
+			if (node->env_data != NULL)
+				free(node->env_data);
+			node->env_data = ft_strjoin(temp, val);
+			free(temp);
+			return ;
 		}
 		node = node -> next;
 	}
-	if (flag == 0)
-		add_new_exp_node(&env_list, data);
+	add_new_exp_node(&env_list, add_data);
+	free(add_data);
 }
 
 void	update_exp_node(t_env_token *node, char *key, char *value)
 {
 	char	*new_value;
 	char	*new_env_data;
-
+	printf("check exp_node\n");
 	new_value = ft_strjoin(node->env_value, value);
 	free_exp_key_value(node);
 	node->env_key = key;
