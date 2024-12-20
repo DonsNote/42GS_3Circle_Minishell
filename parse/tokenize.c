@@ -6,15 +6,15 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/20 17:20:30 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 20:34:05 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		make_token(t_token *token, t_info *info, char *param);
-int		check_type(t_token *token);
-char	*delete_quote(char *param);
+int	make_token(t_token *token, t_info *info, char *param);
+int	check_type(t_token *token);
+int	delete_dquote(t_token *token, t_info *info);
 
 t_token	*tokenize(char *param, t_info *info)
 {
@@ -62,9 +62,20 @@ int	make_token(t_token *token, t_info *info, char *param)
 	return (0);
 }
 
-char	*delete_quote(char *param)
+int	delete_dquote(t_token *token, t_info *info)
 {
-	return (NULL);
+	int		i;
+	char	*tmp;
+
+	if (token->data[0] != 39)
+		return (0);
+	i = 0;
+	while (token->data[i] != '\0')
+	{
+		if (token->data[i] == '$')
+			tmp = substitution(token, info);
+	}
+	return (0);
 }
 
 int	check_type(t_token *token)

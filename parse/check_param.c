@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/20 17:28:09 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:20:37 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	check_quote(char *param)
 	{
 		if (param[i] == 39)
 		{
+			++i;
 			while (param[i] != 39)
 			{
 				if (param[i] == '\\' && param[i + 1] == 39)
