@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 21:46:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:02:18 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:27:49 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	check_key_validation(char *key)
 	{
 		if (key[i] == '+' && (key[i + 1] != 0))
 			return (-1);
+		else
+			return (0);
 		if ((key[i] >= 'A' && key[i] <= 'Z') \
 		|| (key[i] >= 'a' && key[i] <= 'z') || key[i] == '_' \
 		|| (key[i] >= '0' && key[i] <= '9'))

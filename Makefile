@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
+#    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/20 00:14:50 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/20 16:53:23 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAG = -Wall -Wextra -Werror -g
 
 INC = minishell.h
 
-SRCS = minishell_.c \
+SRCS = minishell_built.c \
 		Utilities/utilities.c \
 		Utilities/free.c \
 		Utilities/free2.c \
@@ -33,6 +33,7 @@ SRCS = minishell_.c \
 		Utilities/parsing/split.c \
 		built_in/built_in.c \
 		built_in/echo.c \
+		built_in/env.c \
 		built_in/exec.c \
 		built_in/export.c \
 		built_in/export_sort.c \

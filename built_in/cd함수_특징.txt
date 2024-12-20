@@ -27,3 +27,6 @@ ex)
 	6. cd로 이동할 때마다 oldpwd와 pwd를 갱신시켜야함!! oldpwd의 기존의 값을 free후 pwd값으로 변경, 그리고 바뀐 dir의 pwd를 현재 pwd로 변경해줌, 변경하기전에 pwd free
 	7. cd 포함 들어오는 input 갯수가 3개 이상이면 too many argument 오류 출력 => ex) cd 42_sub/ ft_printf 
 	8. export 로 pwd 또는 oldpwd값을 변경해주면 구조체 pwd도 변경!!
+
+
+	makefile에서 built_in/env.c 추가가 안되어 있다.
