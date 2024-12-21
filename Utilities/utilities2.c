@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_gramer.c                                     :+:      :+:    :+:   */
+/*   utilities2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 20:16:42 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/11/18 12:02:10 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/12/21 17:33:40 by dohyuki2          #+#    #+#             */
+/*   Updated: 2024/12/21 17:54:54 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_grammer(char *param)
+int	ft_isalpha(char c)
 {
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
+}
+
+int	ft_isdigit(char c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
 	return (0);
 }
