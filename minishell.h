@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 09:57:28 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:20:06 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			check_plus_operator_idx(char *data);
 /*export_utils2.c*/
 void		check_env_data(t_env_token *env_list, char *data, char *val, char *key);
 void		update_exp_node(t_env_token *node, char *key, char *value);
-void		add_export(t_env_token *exp_list, t_env_token *env_list, char *data);
+void		add_export(t_info *info, char *key, char *value);
 char		*split_key(char *data);
 char		*split_value(char *data);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 18:20:39 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:22:46 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

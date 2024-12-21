@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 20:02:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:22:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ void	update_exp_node(t_env_token *node, char *key, char *value)
 	}
 }
 
-void	add_export(t_env_token *exp_list, t_env_token *env_list, char *data)
+void	add_export(t_info *info, char *key, char *value)
 {
-	add_new_exp_node(&exp_list, data);
-	add_new_exp_node(&env_list, data);
-	set_split_exp_list(exp_list);
+	char	*data;
+
+	data = ft_strjoin(key, value);
+	add_new_exp_node(&info->exp, data);
+	add_new_exp_node(&info->env, data);
+	set_split_exp_list(info->exp);
 }
 
 char	*split_key(char *data)
