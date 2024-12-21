@@ -6,13 +6,13 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/20 20:34:05 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:13:06 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	make_token(t_token *token, t_info *info, char *param);
+int	make_token(t_token *token, t_info *info);
 int	check_type(t_token *token);
 int	delete_dquote(t_token *token, t_info *info);
 
@@ -28,65 +28,69 @@ t_token	*tokenize(char *param, t_info *info)
 	token = (t_token *)malloc(sizeof(t_token) * 1);
 	if (token == NULL)
 		return (NULL);
-	s_param = ft_split(param, '|');
-	while (s_param[i] != NULL)
-	{
-		if (make_token(token, info, s_param[i]))
-			return (NULL);
-		++i;
-	}
+	token->data = param;
+	token->fd = NULL;
+	token->next = NULL;
+	token->type = E_TYPE_CMD;
+	if (make_token(token, info))
+		return (NULL);
 	return (token);
 }
 
-int	make_token(t_token *token, t_info *info, char *param)
+int	make_token(t_token *token, t_info *info)
 {
-	int		i;
-	t_token	*new;
-
-	i = 0;
-	while (param[i] != NULL)
-	{
-		new = (t_token *)malloc(sizeof(t_token) * 1);
-		if (new == NULL)
-		{
-			free_strarray(param);
-			return (1);
-		}
-		check_type(new);
-		new->data = delete_quote(param[i]);
-		if (token == NULL)
-			token = new;
-		else
-			return (1);
-	}
 	return (0);
 }
 
 int	delete_dquote(t_token *token, t_info *info)
 {
 	int		i;
+	int		j;
+	int		size;
+	char	*tmp;
+
+	if (token->data[0] != 34)
+		return (0);
+	if (substitution(token, info))
+		return (1);
+	i = 0;
+	j = 1;
+	size = ft_strlen(token->data) - 1;
+	tmp = (char *)malloc(sizeof(char) * size);
+	if (tmp == NULL)
+		return (1);
+	while (token->data[j] != 34)
+	{
+		tmp[i] = token->data[j];
+		++i;
+		++j;
+	}
+	free(token->data);
+	token->data = tmp;
+	return (0);
+}
+
+int	delete_quote(t_token *token)
+{
+	int		i;
+	int		j;
 	char	*tmp;
 
 	if (token->data[0] != 39)
 		return (0);
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(token->data) - 1));
+	if (tmp == NULL)
+		return (1);
+	tmp[j] = '\0';
 	i = 0;
-	while (token->data[i] != '\0')
+	j = 1;
+	while (token->data[j] != 39)
 	{
-		if (token->data[i] == '$')
-			tmp = substitution(token, info);
+		tmp[i] = token->data[j];
+		++i;
+		++j;
 	}
-	return (0);
-}
-
-int	check_type(t_token *token)
-{
-
-	return (0);
-}
-
-int	is_oper(t_token *token)
-{
-	const char	*oper[] = {"<<", ">>", "<", ">"};
-
+	free(token->data);
+	token->data = tmp;
 	return (0);
 }

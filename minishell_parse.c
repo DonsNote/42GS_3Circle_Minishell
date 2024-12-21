@@ -6,30 +6,33 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/20 19:42:56 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:22:42 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	input(char **envp);
+int	input(t_info *info);
 
 int	main(int ac, char **av, char **envp)
 {
+	t_info	*info;
+
 	if (ac != 1 || av[1] != NULL)
 		return (print_error(1));
-	if (input(envp))
+	info = make_info(envp);
+	if (info == NULL)
+		return (print_error(1));
+	if (input(info))
 		return (print_error(1));
 	return (0);
 }
 
-int	input(char **envp)
+int	input(t_info *info)
 {
 	t_token	*token;
-	t_info	*info;
 	char	*param;
 
-	info = make_info(envp);
 	while (1)
 	{
 		param = readline("DJ_Shell>");
@@ -37,9 +40,12 @@ int	input(char **envp)
 		{
 			token = tokenize(param, info);
 			if (token == NULL)
+			{
+				free_info(info);
 				return (1);
-			// if (builtin(token, info))
-			// 	return (1);
+			}
+			// if (built_in(token, info))
+			// 	break ;
 		}
 		else
 			break ;
