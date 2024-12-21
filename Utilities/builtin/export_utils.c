@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/20 18:31:02 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:12:51 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,19 @@ void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 	value = split_value(data);
 	while (node != NULL)
 	{
-		if (ft_strncmp(key, node->env_key, idx + 1) == 0)
+		if (ft_strncmp(node->env_key, key, idx + 1) == 0)
 		{
 			check_env_data(env, data, value, key);
-			printf("check_join_exp_data\n");
-			update_exp_node(node, key, value);
+			update_exp_node(exp, key, value);
+			free(key);
+			free(value);
 			return ;
 		}
 		node = node -> next;
 	}
 	add_export(exp, env, data);
+	free(key);
+	free(value);
 }
 
 int	check_validation(char *data)

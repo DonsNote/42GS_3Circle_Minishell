@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:21 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 18:05:41 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 19:59:23 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	free_env_val(t_env_token *list)
 	while (list != NULL)
 	{
 		temp = list;
-		list = list -> next;
 		if (temp->env_data != NULL)
 			free(temp->env_data);
 		if (temp->env_key != NULL)
@@ -42,5 +41,6 @@ void	free_env_val(t_env_token *list)
 		if (temp->env_value != NULL)
 			free(temp->env_value);
 		free(temp);
+		list = list -> next;
 	}
 }
