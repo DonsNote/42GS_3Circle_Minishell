@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/21 20:13:07 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:57:20 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ int	delete_dquote(t_token *token, t_info *info);
 
 t_token	*tokenize(char *param, t_info *info)
 {
-	int		i;
-	char	**s_param;
 	t_token	*token;
 
 	if (check_param(param))
 		return (NULL);
-	i = 0;
 	token = (t_token *)malloc(sizeof(t_token) * 1);
 	if (token == NULL)
 		return (NULL);
@@ -39,6 +36,29 @@ t_token	*tokenize(char *param, t_info *info)
 
 int	make_token(t_token *token, t_info *info)
 {
+	int		check;
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp->data[0] != '\0')
+	{
+		if (check_first(tmp->data[0]) == E_Q)
+			check = is_quote(tmp, info);
+		else if (check_first(tmp->data[0]) == E_DQ)
+			check = is_dquote(tmp, info);
+		else if (check_first(tmp->data[0]) == E_SP)
+			check = is_space(tmp, info);
+		else if (check_first(tmp->data[0]) == E_STR)
+			check = is_str(tmp, info);
+		else if (check_first(tmp->data[0]) == E_PIPE)
+			check = if_pipe(tmp, info);
+		else if (check_first(tmp->data[0]) == E_OPER)
+			check = is_oper(tmp, info);
+		if (check == -1)
+			return (1);
+		while (tmp != NULL)
+			tmp = tmp->next;
+	}
 	return (0);
 }
 

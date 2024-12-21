@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 19:22:42 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:19:27 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	input(t_info *info)
 		{
 			token = tokenize(param, info);
 			if (token == NULL)
-			{
-				free_info(info);
-				return (1);
-			}
+				break ;
 			// if (built_in(token, info))
 			// 	break ;
 		}

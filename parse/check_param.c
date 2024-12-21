@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/21 17:54:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:35:53 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_param(char *param)
 {
 	char	*data;
 
-	if (check_quote(param, '\"') || check_quote(param, '\''))
+	if (check_quote(param, 34) || check_quote(param, 39))
 	{
 		free(param);
 		return (1);
@@ -41,8 +41,6 @@ int	check_quote(char *param, char c)
 			++i;
 			while (param[i] != c)
 			{
-				if (param[i] == '\\' && param[i + 1] == c)
-					i = i + 2;
 				if (param[i] == '\0')
 					return (1);
 				++i;
@@ -57,6 +55,8 @@ int	check_grammer(char *param)
 {
 	int	i;
 
+	if (param[0] == '|')
+		return (1);
 	i = 0;
 	while (param[i] != '\0')
 	{
@@ -66,6 +66,11 @@ int	check_grammer(char *param)
 			if (ft_isdigit(param[i]))
 				return (1);
 		}
+		if (param[i] == '|' && (param[i + 1] == '|' || param[i + 1] == '\0'))
+			return (1);
+		if (param[i] == '&')
+			return (1);
+		++i;
 	}
 	return (0);
 }
