@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 21:33:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:06:04 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	return_if(t_token *temp)
 		return (-1);
 	else if (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") == 0)
 		return (0);
+	return (0);
 }
 
 int	cd_validation(t_token *token)
@@ -42,6 +43,7 @@ int	cd_validation(t_token *token)
 		}
 		return (-1);
 	}
+	return (0);
 }
 
 void	execute_tilde(t_info *info)
