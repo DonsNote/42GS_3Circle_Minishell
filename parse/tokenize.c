@@ -73,7 +73,8 @@ int	make_token(t_token *token, t_info *info)
 
 void	organize_token(t_token *token)
 {
-	t_token	*tmp;
+	(void)token;
+	// t_token	*tmp;
 
 	tmp = token;
 	while (tmp != NULL)

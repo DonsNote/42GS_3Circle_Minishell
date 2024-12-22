@@ -14,6 +14,7 @@
 
 int	is_space(t_token *token, t_info *info)
 {
+	(void)info;
 	int		i;
 	char	*tmp;
 	t_token	*next;

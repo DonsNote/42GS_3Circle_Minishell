@@ -30,7 +30,7 @@ int	cmd_cd(t_token *token, t_info *info)
 	if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
 		execute_cd_cmd(info);
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == 0)
-		execute_double_hypen(temp);
+		execute_double_hypen(temp, info);
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == -1)
 		print_cd_error(temp->next->next->data, 2);
 	else if (check_token_size(temp) >= 3)

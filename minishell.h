@@ -70,6 +70,7 @@ typedef struct s_token
 
 typedef enum e_check
 {
+	E_NONE,
 	E_Q,
 	E_DQ,
 	E_SP,
@@ -200,7 +201,7 @@ void		execute_normal_cd(char *data, t_info *info);
 int			cd_validation(t_token *token);
 void		execute_tilde(t_info *info);
 void		execute_single_hypen(t_info *info);
-void		execute_double_hypen(t_token *token);
+void		execute_double_hypen(t_token *token, t_info *info);
 void		execute_size_two(t_token *token, t_info *info);
 
 /*Utilities*/

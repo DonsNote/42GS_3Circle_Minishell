@@ -56,7 +56,6 @@ void	exp_bubble_sort(t_env_token *node)
 {
 	t_env_token	*cmp_node_1;
 	t_env_token	*cmp_node_2;
-	char		*temp;
 	int			len;
 
 	cmp_node_1 = node;

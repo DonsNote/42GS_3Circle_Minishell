@@ -66,6 +66,8 @@ t_type	check_type(t_token *token, t_check check, int i)
 
 t_check	check_first(char c)
 {
+	if (c == '\0')
+		return (E_NONE);
 	if (c == 39)
 		return (E_Q);
 	if (c == 34)
