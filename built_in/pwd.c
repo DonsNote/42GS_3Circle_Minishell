@@ -3,19 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:19:39 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:45:33 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	cmd_pwd(void)
+int	cmd_pwd(t_token *token)
 {
 	char	pwd[PATH_MAX];
 
+	if (check_token_size(token) > 1)
+	{
+		printf("pwd: too many arguments\n");
+		return (1);
+	}
 	if (getcwd(pwd, sizeof(pwd)) != NULL)
 		printf("%s\n", pwd);
 	else
@@ -31,39 +36,37 @@ int	cmd_cd(t_token *token, t_info *info)
 	t_token	*temp;
 
 	temp = token;
-	if (check_token_size(temp) > 2)
-	{
-		if (check_cd_validation(temp) == 0)
-			execute_double_hypen(temp);
-		else if (check_cd_validation(temp) == -1)
-			print_cd_error("--: invalid option");
-		else
-			print_cd_error("too many arguments");
-	}
-	else if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
+	if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
 		execute_cd_cmd(info);
+	else if (check_token_size(temp) == 3 \
+	&& cd_validation(temp->next->data, temp->next->type) == 0)
+		execute_double_hypen(temp);
+	else if (check_token_size(temp) == 3 \
+	&& cd_validation(temp->next->data, temp->next->type) == -1)
+		print_cd_error(temp->next->data, 2);
+	else if (check_token_size(temp) >= 3)
+		print_cd_error("too many arguments", 4);
 	else if (check_token_size(temp) == 2 \
 	&& ((!(ft_strcmp(temp->next->data, "-")) \
 	|| !(ft_strcmp(temp->next->data, "~"))) \
-	|| check_cd_validation(temp) == 0))
-	{
-		if (!(ft_strcmp(temp->next->data, "~")) \
-		|| check_cd_validation(temp) == 0)
-			execute_tilde(info);
-		else if (!(ft_strcmp(temp->next->data, "-")))
-			execute_single_hypen(info);
-	}
+	|| cd_validation(temp->next->data, temp->next->type) == 0))
+		execute_size_two(temp->next->data, info, temp->next->type);
+	else if (check_token_size(temp) >= 2 && temp->next->type == E_TYPE_OPTION \
+	&& cd_validation(temp->next->data, temp->next->type) == -1)
+		print_cd_error(temp->next->data, 2);
+	else if (check_token_size(temp) == 2)
+		execute_normal_cd(temp->next->data, info);
 	return (0);
 }
 
 void	execute_cd_cmd(t_info *info)
 {
 	if (find_key(info->exp, "HOME") == 0)
-		print_cd_error("HOME not set");
+		print_cd_error("HOME", 3);
 	else if (find_key(info->exp, "HOME") == 1)
 	{
 		if (chdir(find_value(info, "HOME")) != 0)
-			print_cd_error(find_value(info, "HOME"));
+			print_cd_error(find_value(info, "HOME"), 1);
 		else
 			update_pwd(info);
 	}

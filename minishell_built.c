@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 19:39:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:54:38 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,41 @@ t_token	*make_dummy(void)
 {
 	t_token	*tmp;
 	t_token	*tmp1;
+	t_token	*tmp2;
+	t_token	*tmp3;
 
 	tmp = (t_token *)malloc(sizeof(t_token) * 1);
 	if (tmp == NULL)
 		return (NULL);
-	tmp->data = "export";
+	tmp->data = "echo";
 	tmp->fd = 0;
 	tmp->type = E_TYPE_CMD;
 
 	tmp1 = (t_token *)malloc(sizeof(t_token) * 1);
 	if (tmp1 == NULL)
 		return (NULL);
-	tmp1->data = "PWD+=123";
+	tmp1->data = "-nn";
 	tmp1->fd = 0;
-	tmp1->type = E_TYPE_PARAM;
+	tmp1->type = E_TYPE_OPTION;
 	tmp1->next = NULL;
 	tmp->next = tmp1;
+
+	tmp2 = (t_token *)malloc(sizeof(t_token) * 1);
+	if (tmp2 == NULL)
+		return (NULL);
+	tmp2->data = "-n-n";
+	tmp2->fd = 0;
+	tmp2->type = E_TYPE_OPTION;
+	tmp2->next = NULL;
+	tmp1->next = tmp2;
+
+	tmp3 = (t_token *)malloc(sizeof(t_token) * 1);
+	if (tmp3 == NULL)
+		return (NULL);
+	tmp3->data = "A123";
+	tmp3->fd = 0;
+	tmp3->type = E_TYPE_PARAM;
+	tmp3->next = NULL;
+	tmp2->next = tmp3;
 	return (tmp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 16:56:59 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:29:22 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	while (j < (int)ft_strlen(s2))
 		new_str[i++] = s2[j++];
-	free (s1);
 	new_str[i] = 0;
 	s1 = 0;
 	return (new_str);

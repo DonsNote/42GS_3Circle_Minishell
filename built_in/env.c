@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/20 16:51:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:31:25 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	print_exp_list(t_env_token *list)
 	node = list;
 	while (node != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n", node->env_key, node->env_value);
+		if (node->env_value != NULL)
+			printf("declare -x %s=\"%s\"\n", node->env_key, node->env_value);
+		else
+			printf("declare -x %s\n", node->env_key);
 		node = node->next;
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 20:22:46 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:50:10 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	add_new_exp_node(t_env_token **list, char *data)
+void	add_new_exp_node(t_env_token *list, char *data)
 {
 	char		*env_data;
 	t_env_token	*new_node;
@@ -37,7 +37,7 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 	{
 		new_node = create_node(data);
 		if (new_node != NULL)
-			add_node_back(&exp, new_node);
+			add_node_back(exp, new_node);
 		set_split_exp_list(exp);
 	}
 	check = check_key(env, key);
@@ -47,8 +47,9 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 	{
 		new_node = create_node(data);
 		if (new_node != NULL)
-			add_node_back(&env, new_node);
+			add_node_back(env, new_node);
 	}
+	exp_bubble_sort(exp);
 }
 
 char	*get_key(char *data)

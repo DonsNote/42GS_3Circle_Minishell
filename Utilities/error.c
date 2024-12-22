@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 17:16:17 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 14:47:46 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,15 @@ int	print_export_error(char *str)
 	return (1);
 }
 
-int	print_cd_error(char *str)
+int	print_cd_error(char *str, int flag)
 {
-	printf("mini: cd: %s: No such file or directory\n", str);
+	if (flag == 1)
+		printf("mini: cd: %s: No such file or directory\n", str);
+	else if (flag == 2)
+		printf("mini: cd: %s: invalid option\n", str);
+	else if (flag == 3)
+		printf("mini: cd: %s not set\n", str);
+	else if (flag == 4)
+		printf("mini: cd: %s\n", str);
 	return (1);
 }

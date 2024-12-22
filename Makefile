@@ -6,7 +6,7 @@
 #    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/20 16:53:23 by junseyun         ###   ########.fr        #
+#    Updated: 2024/12/21 20:47:10 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,9 @@ SRCS = minishell_built.c \
 		built_in/export_sort.c \
 		built_in/pwd.c \
 		built_in/unset.c \
-		parse/check_param.c \
-		parse/check_grammer.c \
-		parse/tokenize.c \
-		parse/substitution.c \
 		parse/env_tokenize.c \
 		parse/env_tokenize2.c \
 		parse/make_info.c \
-		parse/here_doc.c
 
 OBJS = $(SRCS:.c=.o)
 
