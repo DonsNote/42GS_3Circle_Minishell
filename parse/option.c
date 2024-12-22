@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:54:54 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 01:28:27 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:52:57 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_option(t_token *token, t_info *info)
 		tmp[i] = token->data[i];
 		++i;
 	}
-	tmp[i] = '\0';
+	tmp[i - 1] = '\0';
 	next = make_new_token(token, i);
 	token->data = tmp;
 	token->next = next;
