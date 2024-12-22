@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 23:34:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:55:25 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,19 @@ int	make_token(t_token *token, t_info *info)
 	while (tmp != NULL)
 	{
 		if (check_first(tmp->data[0]) == E_Q)
-			check = is_quote(tmp, info);
+			check = is_quote(tmp);
 		else if (check_first(tmp->data[0]) == E_DQ)
 			check = is_dquote(tmp, info);
 		else if (check_first(tmp->data[0]) == E_SP)
-			check = is_space(tmp, info);
+			check = is_space(tmp);
 		else if (check_first(tmp->data[0]) == E_STR)
 			check = is_str(tmp, info);
 		else if (check_first(tmp->data[0]) == E_PIPE)
-			check = is_pipe(tmp, info);
+			check = is_pipe(tmp);
 		else if (check_first(tmp->data[0]) == E_OPTION)
 			check = is_option(tmp, info);
 		else if (check_first(tmp->data[0]) == E_OPER)
-			check = is_oper(tmp, info);
+			check = is_oper(tmp);
 		if (check == -1)
 			return (1);
 		tmp = tmp->next;
@@ -76,10 +76,10 @@ void	organize_token(t_token *token)
 	(void)token;
 	// t_token	*tmp;
 
-	tmp = token;
-	while (tmp != NULL)
-	{
+	// tmp = token;
+	// while (tmp != NULL)
+	// {
 		
-	}
+	// }
 	return ;
 }
