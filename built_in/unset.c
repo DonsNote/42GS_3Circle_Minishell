@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:35:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:20:30 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:56:01 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	cmd_unset(t_token *token, t_info *info)
 			{
 				delete_node(&(info->exp), temp->data);
 				delete_node(&(info->env), temp->data);
+				return ;
 			}
 		}
 		temp = temp -> next;
@@ -35,6 +36,7 @@ void	delete_node(t_env_token **list, char *find)
 {
 	t_env_token	*temp;
 	t_env_token	*cur;
+	int			len;
 
 	if (!list || !*list || !find)
 		return ;
@@ -43,7 +45,8 @@ void	delete_node(t_env_token **list, char *find)
 	cur = (*list);
 	while (cur->next != NULL)
 	{
-		if (ft_strcmp(cur->next->env_key, find) == 0)
+		len = ft_strlen(cur->next->env_key);
+		if (ft_strncmp(cur->next->env_key, find, len) == 0)
 		{
 			temp = cur->next;
 			cur->next = temp->next;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
 /*   Updated: 2024/12/22 22:59:36 by dohyuki2         ###   ########.fr       */
@@ -183,7 +183,7 @@ void		delete_node(t_env_token **list, char *find);
 int			delete_first_node(t_env_token **list, char *find);
 
 /*pwd.c*/
-int			cmd_pwd(t_token *token);
+int			cmd_pwd(void);
 int			cmd_cd(t_token *token, t_info *info);
 void		execute_cd_cmd(t_info *info);
 int			find_key(t_env_token *list, char *find);
@@ -197,11 +197,11 @@ void		update_pwd(t_info *info);
 void		execute_normal_cd(char *data, t_info *info);
 
 /*pwd_utils2.c*/
-int			cd_validation(char *data, t_type type);
+int			cd_validation(t_token *token);
 void		execute_tilde(t_info *info);
 void		execute_single_hypen(t_info *info);
 void		execute_double_hypen(t_token *token);
-void		execute_size_two(char *data, t_info *info, t_type type);
+void		execute_size_two(t_token *token, t_info *info);
 
 /*Utilities*/
 int			print_error(int i);
