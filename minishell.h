@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 18:52:33 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:01:43 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ typedef enum e_type
 	E_TYPE_PARAM,
 	E_TYPE_IN,
 	E_TYPE_OUT,
-	E_TYPE_LESS,
+	E_TYPE_HERE_DOC,
 	E_TYPE_SP,
 	E_TYPE_GREAT,
+	E_TYPE_SP,
 	E_TYPE_FILE
 }	t_type;
 
@@ -68,6 +69,17 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef enum e_check
+{
+	E_Q,
+	E_DQ,
+	E_SP,
+	E_OPTION,
+	E_STR,
+	E_PIPE,
+	E_OPER
+}	t_check;
+
 /*parse*/
 t_token		*tokenize(char *param, t_info *info);
 t_env_token	*exp_tokenize(char **envp);
@@ -75,6 +87,17 @@ t_env_token	*env_tokenize(char **envp);
 int			check_param(char *param);
 t_info		*make_info(char **envp);
 void		input_env_data(t_env_token *new, char *data);
+t_check		check_first(char c);
+t_type		check_type(t_token *token, t_check check, int i);
+t_type		check_oper(t_token *token, int i);
+t_token		*make_new_token(t_token *token, int i);
+int			is_quote(t_token *token, t_info *info);
+int			is_dquote(t_token *token, t_info *info);
+int			is_space(t_token *token, t_info *info);
+int			is_str(t_token *token, t_info *info);
+int			is_pipe(t_token *token, t_info *info);
+int			is_oper(t_token *token, t_info *info);
+void		substitution(t_token *token, t_info *info);
 
 /*built_in*/
 int			check_operator(t_token *token);
@@ -190,7 +213,10 @@ int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str, int flag);
 void		free_all(t_token *token, t_info *info);
-void		free_str(char *str);
-void		free_strarray(char **str);
+void		free_token(t_token *token);
+void		free_info(t_info *info);
+void		free_env_token(t_env_token *token);
+int			ft_isalpha(char c);
+int			ft_isdigit(char c);
 
 #endif

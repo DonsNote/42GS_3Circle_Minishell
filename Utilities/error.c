@@ -16,7 +16,7 @@ int	print_error(int i)
 {
 	if (i == 1)
 		printf("Error!\n");
-	return (2);
+	return (1);
 }
 
 int	print_export_error(char *str)
