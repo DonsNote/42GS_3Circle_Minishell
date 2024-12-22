@@ -6,28 +6,19 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 17:45:33 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:55:58 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	cmd_pwd(t_token *token)
+int	cmd_pwd(void)
 {
-	char	pwd[PATH_MAX];
+	char	*pwd;
 
-	if (check_token_size(token) > 1)
-	{
-		printf("pwd: too many arguments\n");
-		return (1);
-	}
-	if (getcwd(pwd, sizeof(pwd)) != NULL)
-		printf("%s\n", pwd);
-	else
-	{
-		perror("pwd error");
-		return (1);
-	}
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 	return (0);
 }
 
@@ -38,24 +29,22 @@ int	cmd_cd(t_token *token, t_info *info)
 	temp = token;
 	if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
 		execute_cd_cmd(info);
-	else if (check_token_size(temp) == 3 \
-	&& cd_validation(temp->next->data, temp->next->type) == 0)
+	else if (check_token_size(temp) == 3 && cd_validation(temp) == 0)
 		execute_double_hypen(temp);
-	else if (check_token_size(temp) == 3 \
-	&& cd_validation(temp->next->data, temp->next->type) == -1)
-		print_cd_error(temp->next->data, 2);
+	else if (check_token_size(temp) == 3 && cd_validation(temp) == -1)
+		print_cd_error(temp->next->next->data, 2);
 	else if (check_token_size(temp) >= 3)
 		print_cd_error("too many arguments", 4);
 	else if (check_token_size(temp) == 2 \
-	&& ((!(ft_strcmp(temp->next->data, "-")) \
-	|| !(ft_strcmp(temp->next->data, "~"))) \
-	|| cd_validation(temp->next->data, temp->next->type) == 0))
-		execute_size_two(temp->next->data, info, temp->next->type);
-	else if (check_token_size(temp) >= 2 && temp->next->type == E_TYPE_OPTION \
-	&& cd_validation(temp->next->data, temp->next->type) == -1)
-		print_cd_error(temp->next->data, 2);
+	&& ((!(ft_strcmp(temp->next->next->data, "-")) \
+	|| !(ft_strcmp(temp->next->next->data, "~"))) || cd_validation(temp) == 0))
+		execute_size_two(temp, info);
+	else if (check_token_size(temp) >= 2 \
+	&& temp->next->next->type == E_TYPE_OPTION \
+	&& cd_validation(temp) == -1)
+		print_cd_error(temp->next->next->data, 2);
 	else if (check_token_size(temp) == 2)
-		execute_normal_cd(temp->next->data, info);
+		execute_normal_cd(temp->next->next->data, info);
 	return (0);
 }
 
@@ -75,13 +64,13 @@ void	execute_cd_cmd(t_info *info)
 int	find_key(t_env_token *list, char *find)
 {
 	t_env_token	*temp;
-	int			flag;
+	int			len;
 
 	temp = list;
-	flag = 0;
 	while (temp != NULL)
 	{
-		if (ft_strcmp(temp->env_key, find) == 0)
+		len = ft_strlen(temp->env_key);
+		if (ft_strncmp(temp->env_key, find, len) == 0)
 			return (1);
 		temp = temp -> next;
 	}

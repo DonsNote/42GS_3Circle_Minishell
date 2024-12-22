@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 20:10:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:30:17 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	cmd_export(t_token *node, t_info *info)
 	t_token		*temp;
 
 	temp = node;
-	if (check_token_size(node) == 1 && temp->type == E_TYPE_CMD)
+	if (check_token_size(temp) == 1 && temp->type == E_TYPE_CMD)
+	{
+		exp_bubble_sort(info->exp);
 		print_exp_list(info->exp);
-	else
+	}
+	else if (check_token_size(temp) != 1)
 	{
 		while (temp != NULL)
 		{
@@ -49,25 +52,51 @@ void	execute_export_cmd(t_info *info, char *data)
 		add_exp_env_data(info->exp, info->env, data);
 }
 
+int	find_exp_list(t_env_token *exp, char *data)
+{
+	t_env_token	*temp;
+
+	temp = exp;
+	while (temp)
+	{
+		if (ft_strncmp(temp->env_data, data, ft_strlen(data)) == 0)
+		{
+			if (ft_strncmp(temp->env_key, data, ft_strlen(data)) == 0)
+				return (1);
+			else
+			{
+				if (temp->env_key != NULL)
+					free(temp->env_key);
+				temp->env_key = ft_strdup(data);
+				return (1);
+			}
+		}
+		temp = temp -> next;
+	}
+	return (0);
+}
+
+
 void	add_exp_data(t_env_token *exp_list, char *data)
 {
 	t_env_token	*new_node;
 	t_env_token	*temp;
 
+	temp = exp_list;
+	if (find_exp_list(temp, data))
+		return ;
 	new_node = create_node(data);
 	if (new_node != NULL)
 		add_node_back(exp_list, new_node);
-	temp = exp_list;
 	while (temp)
 	{
 		if (ft_strcmp(temp->env_data, data) == 0)
 		{
-			temp->env_key = data;
+			temp->env_key = ft_strdup(data);
 			break ;
 		}
 		temp = temp -> next;
 	}
-	exp_bubble_sort(exp_list);
 }
 
 int	check_equal_idx(char *exp_data)
