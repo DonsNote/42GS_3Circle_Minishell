@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_parse.c                                  :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 17:13:07 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:06:06 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,8 @@ int	input(t_info *info)
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
-			while (token != NULL)
-			{
-				printf("Data : %s\n", token->data);
-				token = token->next;
-			}
-			// if (built_in(token, info))
-			// 	break ;
+			if (built_in(token, info))
+				continue ;
 		}
 		else
 			break ;

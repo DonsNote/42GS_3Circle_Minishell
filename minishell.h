@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 16:01:43 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:54:35 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef enum e_type
 	E_TYPE_IN,
 	E_TYPE_OUT,
 	E_TYPE_HERE_DOC,
-	E_TYPE_SP,
 	E_TYPE_GREAT,
 	E_TYPE_SP,
 	E_TYPE_FILE
@@ -98,12 +97,13 @@ int			is_str(t_token *token, t_info *info);
 int			is_pipe(t_token *token, t_info *info);
 int			is_oper(t_token *token, t_info *info);
 void		substitution(t_token *token, t_info *info);
+int			open_fd(t_token *token, t_info *info);
 
 /*built_in*/
 int			check_operator(t_token *token);
 int			check_pipe(t_token *token);
 void		execute_cmd(t_token *token, t_info *info);
-void		built_in(t_token *token, t_info *info);
+int			built_in(t_token *token, t_info *info);
 
 /*echo.c*/
 int			check_option(t_token *token);

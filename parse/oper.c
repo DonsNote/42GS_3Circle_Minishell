@@ -6,11 +6,13 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:49:26 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 18:42:37 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:51:14 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	make_oper_token(t_token *token, char type);
 
 int	is_oper(t_token *token, t_info *info)
 {

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 18:49:58 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:54:44 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ t_token	*tokenize(char *param, t_info *info)
 	token->fd = 0;
 	token->next = NULL;
 	if (make_token(token, info))
-  {
-    print_error(1);
+	{
+		print_error(1);
 		return (NULL);
-  }
+	}
 	if (open_fd(token, info))
 	{
 		print_error(1);

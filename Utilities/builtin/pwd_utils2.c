@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 17:50:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:00:45 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	cd_validation(char *data, t_type type)
 				return (-1);
 		}
 	}
-	else
-		return (-1);
+	return (-1);
 }
 
 void	execute_tilde(t_info *info)

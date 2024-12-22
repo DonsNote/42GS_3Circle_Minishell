@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:38:38 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 18:49:06 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:10:11 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	check_echo_option(t_token *node)
 		return (-1);
 	else if (temp->next->type == E_TYPE_OPTION)
 		return (0);
+	return (0);
 }
 
 void	cmd_echo(t_token *node)

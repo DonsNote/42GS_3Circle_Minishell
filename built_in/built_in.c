@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 18:53:07 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 20:10:22 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	execute_cmd(t_token *token, t_info *info)
 	// }
 }
 
-void	built_in(t_token *token, t_info *info)
+int	built_in(t_token *token, t_info *info)
 {
 	t_token	*temp;
 
@@ -82,4 +82,5 @@ void	built_in(t_token *token, t_info *info)
 	// else
 	// {
 	// }
+	return (1);
 }
