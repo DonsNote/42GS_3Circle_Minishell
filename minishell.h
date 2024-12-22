@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 22:32:23 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:59:36 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ int			is_space(t_token *token, t_info *info);
 int			is_str(t_token *token, t_info *info);
 int			is_pipe(t_token *token, t_info *info);
 int			is_oper(t_token *token, t_info *info);
+int			is_option(t_token *token, t_info *info);
 void		substitution(t_token *token, t_info *info);
 int			open_fd(t_token *token, t_info *info);
+void		here_doc(t_token *token, t_info *info);
 
 /*built_in*/
 int			check_operator(t_token *token);
