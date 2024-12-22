@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 18:11:05 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:50:50 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_token	*make_new_token(t_token *token, int i)
 	int		j;
 	t_token	*new;
 
+	if (token->data[i] == '\0')
+		return (NULL);
 	new = (t_token *)malloc(sizeof(t_token) * 1);
 	if (new == NULL)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:54:44 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 17:13:56 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:44:50 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*find_value_parse(char *key, t_info *info, int *size)
 	t_env_token	*tmp;
 
 	tmp = info->exp;
+	value = NULL;
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(tmp->env_key, key) == 0)

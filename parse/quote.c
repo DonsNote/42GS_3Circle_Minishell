@@ -6,29 +6,28 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 00:05:16 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 23:11:40 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:38:52 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_quote(t_token *token, t_info *info)
+int	is_quote(t_token *token)
 {
-	(void)info;
 	int		i;
 	int		j;
 	char	*tmp;
 	t_token	*next;
 
 	i = 1;
-	while (token->data[i] != 39)
+	while (token->data[i] != 39 || token->data[i] != '\0')
 		++i;
 	tmp = (char *)malloc(sizeof(char) * (i - 1));
 	if (tmp == NULL)
 		return (-1);
 	i = 1;
 	j = 0;
-	while (token->data[i] != 39)
+	while (token->data[i] != 39 || token->data[i] != '\0')
 	{
 		tmp[j] = token->data[i];
 		++i;

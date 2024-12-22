@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 23:05:06 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:40:26 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ t_check		check_first(char c);
 t_type		check_type(t_token *token, t_check check, int i);
 t_type		check_oper(t_token *token, int i);
 t_token		*make_new_token(t_token *token, int i);
-int			is_quote(t_token *token, t_info *info);
+int			is_quote(t_token *token);
 int			is_dquote(t_token *token, t_info *info);
-int			is_space(t_token *token, t_info *info);
+int			is_space(t_token *token);
 int			is_str(t_token *token, t_info *info);
-int			is_pipe(t_token *token, t_info *info);
-int			is_oper(t_token *token, t_info *info);
+int			is_pipe(t_token *token);
+int			is_oper(t_token *token);
 int			is_option(t_token *token, t_info *info);
 void		substitution(t_token *token, t_info *info);
 int			open_fd(t_token *token, t_info *info);
