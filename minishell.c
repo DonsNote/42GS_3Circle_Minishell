@@ -31,6 +31,7 @@ int	main(int ac, char **av, char **envp)
 int	input(t_info *info)
 {
 	t_token	*token;
+	t_token	*temp;
 	char	*param;
 
 	while (1)
@@ -41,6 +42,20 @@ int	input(t_info *info)
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
+			temp = token;
+			while (temp)
+			{
+				if (temp->type == E_TYPE_CMD)
+					printf("CMD\n");
+				else if (temp->type == E_TYPE_OPTION)
+					printf("OPTION\n");
+				else if (temp->type == E_TYPE_SP)
+					printf("SPACE\n");
+				else if (temp->type == E_TYPE_PARAM)
+					printf("PARAM\n");
+				temp = temp -> next;
+			}
+			printf("token size = %d\n", check_token_size(token));
 			if (built_in(token, info))
 				continue ;
 		}
