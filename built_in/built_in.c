@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/20 16:49:57 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:53:07 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	execute_cmd(t_token *token, t_info *info)
 
 	temp = token;
 	if (ft_strcmp(temp->data, "echo") == 0)
-		cmd_echo(0, temp);
+		cmd_echo(temp);
 	else if (ft_strcmp(temp->data, "export") == 0)
 		cmd_export(temp, info);
 	else if (ft_strcmp(temp->data, "env") == 0)
 		cmd_env(info->env);
 	else if (ft_strcmp(temp->data, "pwd") == 0)
-		cmd_pwd();
+		cmd_pwd(token);
 	else if (ft_strcmp(temp->data, "cd") == 0)
 		cmd_cd(token, info);
 	else if (ft_strcmp(temp->data, "unset") == 0)
@@ -79,7 +79,6 @@ void	built_in(t_token *token, t_info *info)
 	temp = token;
 	if (check_operator(token))
 		execute_cmd(token, info);
-	printf("check\n");
 	// else
 	// {
 	// }

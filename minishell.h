@@ -55,6 +55,7 @@ typedef enum e_type
 	E_TYPE_IN,
 	E_TYPE_OUT,
 	E_TYPE_HERE_DOC,
+	E_TYPE_SP,
 	E_TYPE_GREAT,
 	E_TYPE_SP,
 	E_TYPE_FILE
@@ -105,8 +106,11 @@ void		execute_cmd(t_token *token, t_info *info);
 void		built_in(t_token *token, t_info *info);
 
 /*echo.c*/
-void		print_echo(t_token *node);
-void		cmd_echo(int fd, t_token *node);
+int			check_option(t_token *token);
+void		print_param(t_token *node);
+void		print_echo(t_token *node, int flag);
+int			check_echo_option(t_token *node);
+void		cmd_echo(t_token *node);
 
 /*env.c*/
 void		cmd_env(t_env_token *list);
@@ -115,6 +119,7 @@ void		print_exp_list(t_env_token *list);
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
 int			exp_strncmp(char *s1, char *s2, int n);
+void		swap_node(t_env_token *cmp1, t_env_token *cmp2);
 void		exp_bubble_sort(t_env_token *node);
 
 /*export_utils.c*/
@@ -127,12 +132,12 @@ int			check_plus_operator_idx(char *data);
 /*export_utils2.c*/
 void		check_env_data(t_env_token *env_list, char *data, char *val, char *key);
 void		update_exp_node(t_env_token *node, char *key, char *value);
-void		add_export(t_info *info, char *key, char *value);
+void		add_export(t_env_token *env, t_env_token *exp, char *data);
 char		*split_key(char *data);
 char		*split_value(char *data);
 
 /*export_utils3.c*/
-void		add_new_exp_node(t_env_token **exp_list, char *data);
+void		add_new_exp_node(t_env_token *list, char *data);
 void		add_exp_env_data(t_env_token *exp, t_env_token *env, char *data);
 char		*get_key(char *data);
 int			check_key(t_env_token *list, char *key);
@@ -159,8 +164,8 @@ void		free_node_data(t_env_token *node);
 /*list_utils.c*/
 t_env_token	*create_node(char *data);
 t_env_token	*last_node(t_env_token *list);
-void		add_node_back(t_env_token **list, t_env_token *new_node);
-void		create_list(t_env_token **list, char **envp);
+void		add_node_back(t_env_token *list, t_env_token *new_node);
+void		create_list(t_env_token *list, char **envp);
 int			check_token_size(t_token *node);
 
 /*utils.c*/
@@ -176,7 +181,7 @@ void		delete_node(t_env_token **list, char *find);
 int			delete_first_node(t_env_token **list, char *find);
 
 /*pwd.c*/
-int			cmd_pwd(void);
+int			cmd_pwd(t_token *token);
 int			cmd_cd(t_token *token, t_info *info);
 void		execute_cd_cmd(t_info *info);
 int			find_key(t_env_token *list, char *find);
@@ -187,13 +192,14 @@ char		*return_data(char *key, char *value);
 void		update_env_data(t_info *info, char *key, char *value);
 void		update_exp_data(t_info *info, char *key, char *value);
 void		update_pwd(t_info *info);
+void		execute_normal_cd(char *data, t_info *info);
 
 /*pwd_utils2.c*/
-int			check_cd_validation(t_token *token);
+int			cd_validation(char *data, t_type type);
 void		execute_tilde(t_info *info);
 void		execute_single_hypen(t_info *info);
 void		execute_double_hypen(t_token *token);
-
+void		execute_size_two(char *data, t_info *info, t_type type);
 
 /*Utilities*/
 int			print_error(int i);
@@ -205,7 +211,7 @@ char		*ft_strjoin(char *s1, char *s2);
 char		**ft_split(char const *s, char c);
 int			print_error(int i);
 int			print_export_error(char *str);
-int			print_cd_error(char *str);
+int			print_cd_error(char *str, int flag);
 void		free_all(t_token *token, t_info *info);
 void		free_token(t_token *token);
 void		free_info(t_info *info);

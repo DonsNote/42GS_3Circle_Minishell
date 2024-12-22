@@ -28,7 +28,10 @@ t_token	*tokenize(char *param, t_info *info)
 	token->fd = 0;
 	token->next = NULL;
 	if (make_token(token, info))
+  {
+    print_error(1);
 		return (NULL);
+  }
 	if (open_fd(token, info))
 	{
 		print_error(1);

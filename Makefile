@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/22 17:20:47 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/21 20:47:10 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,9 @@ SRCS = minishell_parse.c \
 		parse/pipe.c \
 		parse/space.c \
 		parse/str.c 
+		parse/env_tokenize.c \
+		parse/env_tokenize2.c \
+		parse/make_info.c \
 
 OBJS = $(SRCS:.c=.o)
 

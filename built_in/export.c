@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 19:40:57 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:50:59 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ void	cmd_export(t_token *node, t_info *info)
 	{
 		while (temp != NULL)
 		{
-			if (temp->type == E_TYPE_CMD)
-				temp = temp -> next;
-			else if (temp->type == E_TYPE_PARAM)
-			{
+			if (temp->type == E_TYPE_PARAM)
 				execute_export_cmd(info, temp->data);
-				temp = temp -> next;
-			}
+			temp = temp -> next;
 		}
 	}
 	if (ft_strcmp(find_value(info, "PWD"), info->pwd) != 0)
@@ -41,23 +37,37 @@ void	cmd_export(t_token *node, t_info *info)
 void	execute_export_cmd(t_info *info, char *data)
 {
 	if (check_validation(data) == -1)
+	{
 		print_export_error(data);
-	else if (cnt_equal(data) == 0)
+		return ;
+	}
+	if (cnt_equal(data) == 0)
 		add_exp_data(info->exp, data);
 	else if (check_plus_operator(data))
 		join_exp_data(info->exp, info->env, data);
-	else if (check_validation(data) == 1)
+	else if (cnt_equal(data) == 1)
 		add_exp_env_data(info->exp, info->env, data);
 }
 
 void	add_exp_data(t_env_token *exp_list, char *data)
 {
 	t_env_token	*new_node;
+	t_env_token	*temp;
 
 	new_node = create_node(data);
 	if (new_node != NULL)
-		add_node_back(&exp_list, new_node);
-	set_split_exp_list(exp_list);
+		add_node_back(exp_list, new_node);
+	temp = exp_list;
+	while (temp)
+	{
+		if (ft_strcmp(temp->env_data, data) == 0)
+		{
+			temp->env_key = data;
+			break ;
+		}
+		temp = temp -> next;
+	}
+	exp_bubble_sort(exp_list);
 }
 
 int	check_equal_idx(char *exp_data)
@@ -78,7 +88,7 @@ char	*create_env_data(char *data)
 	char	*new_str;
 
 	len = ft_strlen(data);
-	new_str = (char *)malloc(sizeof(char) * len);
+	new_str = (char *)malloc(sizeof(char) * len + 1);
 	i = 0;
 	j = 0;
 	while (data[i])

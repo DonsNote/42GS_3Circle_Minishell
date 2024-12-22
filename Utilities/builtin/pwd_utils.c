@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:31:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:04:27 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:50:56 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	update_env_data(t_info *info, char *key, char *value)
 	}
 	new_node = create_node(data);
 	if (new_node != NULL)
-		add_node_back(&temp, new_node);
+		add_node_back(temp, new_node);
 }
 
 void	update_exp_data(t_info *info, char *key, char *value)
@@ -71,7 +71,7 @@ void	update_exp_data(t_info *info, char *key, char *value)
 	}
 	new_node = create_node(data);
 	if (new_node != NULL)
-		add_node_back(&temp, new_node);
+		add_node_back(temp, new_node);
 	set_split_exp_list(temp);
 	exp_bubble_sort(temp);
 }
@@ -94,4 +94,12 @@ void	update_pwd(t_info *info)
 	update_env_data(info, "OLDPWD", info->oldpwd);
 	update_exp_data(info, "PWD", info->pwd);
 	update_exp_data(info, "OLDPWD", info->oldpwd);
+}
+
+void	execute_normal_cd(char *data, t_info *info)
+{
+	if (chdir(data) != 0)
+		print_cd_error(data, 1);
+	else
+		update_pwd(info);
 }
