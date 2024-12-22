@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   oper.c                                             :+:      :+:    :+:   */
+/*   option.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 04:49:26 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 22:52:41 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/12/22 21:54:54 by dohyuki2          #+#    #+#             */
+/*   Updated: 2024/12/22 22:52:51 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	make_oper_token(t_token *token, char type);
-
-int	is_oper(t_token *token, t_info *info)
-{
-	if (token->type == E_TYPE_HERE_DOC)
-		make_oper_token(token, '<');
-	if (token->type == E_TYPE_IN)
-		make_oper_token(token, '<');
-	if (token->type == E_TYPE_GREAT)
-		make_oper_token(token, '>');
-	if (token->type == E_TYPE_OUT)
-		make_oper_token(token, '>');
-	return (0);
-}
-
-void	make_oper_token(t_token *token, char type)
+int	is_option(t_token *token, t_info *info)
 {
 	int		i;
+	int		j;
 	char	*tmp;
 	t_token	*next;
 
 	i = 0;
-	while (token->data[i] != type && token->data[i] != '\0')
+	while (check_first(token->data[i]) == E_STR && token->data[i] != '\0')
 		++i;
 	tmp = (char *)malloc(sizeof(char) * (i + 1));
+	if (tmp == NULL)
+		return (-1);
 	i = 0;
-	while (token->data[i] != type && token->data[i] != '\0')
+	while (check_first(token->data[i]) == E_STR && token->data[i] != '\0')
 	{
 		tmp[i] = token->data[i];
 		++i;
@@ -47,5 +35,6 @@ void	make_oper_token(t_token *token, char type)
 	next = make_new_token(token, i);
 	token->data = tmp;
 	token->next = next;
-	return ;
+	substitution(token, info);
+	return (0);
 }

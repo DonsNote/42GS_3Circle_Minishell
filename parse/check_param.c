@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 11:41:56 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:55:45 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_quote(char *param, char c);
-int	check_grammer(char *param);
+int		check_quote(char *param, char c);
+int		check_grammer(char *param);
+void	jump(char *param, int *i);
 
 int	check_param(char *param)
 {
@@ -57,6 +58,8 @@ int	check_grammer(char *param)
 	i = 0;
 	while (param[i] != '\0')
 	{
+		if (param[i] == 34 || param[i] == 39)
+			jump(param, &i);
 		if (param[i] == '$')
 		{
 			++i;
@@ -70,4 +73,25 @@ int	check_grammer(char *param)
 		++i;
 	}
 	return (0);
+}
+
+void	jump(char *param, int *i)
+{
+	if (param[*i] == 34)
+	{
+		*i = *i + 1;
+		while (param[*i] != 34)
+			++*i;
+		++*i;
+		return ;
+	}
+	if (param[*i] == 39)
+	{
+		*i = *i + 1;
+		while (param[*i] != 39)
+			++*i;
+		++*i;
+		return ;
+	}
+	return ;
 }

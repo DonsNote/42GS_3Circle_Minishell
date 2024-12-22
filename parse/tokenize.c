@@ -6,13 +6,14 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 19:54:44 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:57:18 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	make_token(t_token *token, t_info *info);
+int		make_token(t_token *token, t_info *info);
+void	organize_token(t_token *token);
 
 t_token	*tokenize(char *param, t_info *info)
 {
@@ -37,6 +38,7 @@ t_token	*tokenize(char *param, t_info *info)
 		print_error(1);
 		return (NULL);
 	}
+	// organize_token(token);
 	return (token);
 }
 
@@ -58,6 +60,8 @@ int	make_token(t_token *token, t_info *info)
 			check = is_str(tmp, info);
 		else if (check_first(tmp->data[0]) == E_PIPE)
 			check = is_pipe(tmp, info);
+		else if (check_first(tmp->data[0]) == E_OPTION)
+			check = is_option(tmp, info);
 		else if (check_first(tmp->data[0]) == E_OPER)
 			check = is_oper(tmp, info);
 		if (check == -1)
@@ -65,4 +69,16 @@ int	make_token(t_token *token, t_info *info)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	organize_token(t_token *token)
+{
+	// t_token	*tmp;
+
+	// tmp = token;
+	// while (tmp != NULL)
+	// {
+		
+	// }
+	return ;
 }
