@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 22:30:17 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:13:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,29 @@ void	cmd_export(t_token *node, t_info *info)
 			temp = temp -> next;
 		}
 	}
-	if (ft_strcmp(find_value(info, "PWD"), info->pwd) != 0)
-		info->pwd = find_value(info, "PWD");
-	if (ft_strcmp(find_value(info, "OLDPWD"), info->pwd) != 0)
-		info->pwd = find_value(info, "OLDPWD");
+	change_pwd_oldpwd(info);
+}
+
+void	change_pwd_oldpwd(t_info *info)
+{
+	if (find_key(info->exp, "PWD") == 1)
+	{
+		if (ft_strcmp(find_value(info, "PWD"), info->pwd) != 0)
+		{
+			if (info->pwd != NULL)
+				free(info->pwd);
+			info->pwd = ft_strdup(find_value(info, "PWD"));
+		}
+	}
+	if (find_key(info->exp, "OLDPWD") == 1)
+	{
+		if (ft_strcmp(find_value(info, "OLDPWD"), info->oldpwd) != 0)
+		{
+			if (info->oldpwd != NULL)
+				free(info->oldpwd);
+			info->oldpwd = ft_strdup(find_value(info, "OLDPWD"));
+		}
+	}
 }
 
 void	execute_export_cmd(t_info *info, char *data)

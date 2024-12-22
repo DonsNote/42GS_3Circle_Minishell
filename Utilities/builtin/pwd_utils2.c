@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 23:06:04 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:23:49 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ void	execute_single_hypen(t_info *info)
 	char	*temp;
 
 	temp = info->oldpwd;
+	if (temp == NULL)
+	{
+		print_cd_error("OLDPWD", 3);
+		return ;
+	}
 	if (chdir(temp) != 0)
 	{
 		print_cd_error(temp, 1);
