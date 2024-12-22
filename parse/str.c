@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote.c                                            :+:      :+:    :+:   */
+/*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 00:05:16 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 11:05:43 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/12/22 04:47:42 by dohyuki2          #+#    #+#             */
+/*   Updated: 2024/12/22 15:53:25 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_quote(t_token *token, t_info *info)
+int	is_str(t_token *token, t_info *info)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 	t_token	*next;
 
-	i = 1;
-	while (token->data[i] != 39)
+	i = 0;
+	while (check_first(token->data[i]) == E_STR)
 		++i;
-	tmp = (char *)malloc(sizeof(char) * (i - 1));
+	tmp = (char *)malloc(sizeof(char) * (i + 1));
 	if (tmp == NULL)
 		return (-1);
-	i = 1;
-	j = 0;
-	while (token->data[i] != 39)
+	i = 0;
+	while (check_first(token->data[i]) == E_STR)
 	{
-		tmp[j] = token->data[i];
+		tmp[i] = token->data[i];
 		++i;
-		++j;
 	}
-	tmp[j] = '\0';
-	next = make_new_token(token, i + 1);
+	tmp[i] = '\0';
+	next = make_new_token(token, i);
 	token->data = tmp;
 	token->next = next;
+	substitution(token, info);
 	return (0);
 }
