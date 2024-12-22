@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:35:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:39:05 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 02:58:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cmd_unset(t_token *token, t_info *info)
 	temp = token;
 	while (temp)
 	{
-		if (temp->type == E_TYPE_PARAM)
+		if (temp->type == E_TYPE_PARAM && temp->data)
 		{
 			if (find_key(info->exp, temp->data))
 			{
@@ -41,9 +41,10 @@ void	delete_node(t_env_token **list, char *find)
 	if (delete_first_node(list, find))
 		return ;
 	cur = (*list);
-	while (cur->next != NULL)
+	while (cur && cur->next != NULL)
 	{
-		if (ft_strcmp(cur->next->env_key, find) == 0)
+		if (cur->next->env_key && find && \
+		ft_strcmp(cur->next->env_key, find) == 0)
 		{
 			temp = cur->next;
 			cur->next = temp->next;
@@ -59,7 +60,7 @@ int	delete_first_node(t_env_token **list, char *find)
 {
 	t_env_token	*temp;
 
-	if (!list || !*list || !find)
+	if (!list || !*list || !find || !(*list)->env_key)
 		return (0);
 	temp = (*list);
 	if (ft_strcmp(temp->env_key, find) == 0)
