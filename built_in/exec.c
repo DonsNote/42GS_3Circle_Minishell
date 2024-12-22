@@ -16,4 +16,5 @@ void	exec_cmd(t_token *token, t_info *info)
 {
 // 	if (find_key(info->exp, "PATH") == 0)
 // 		print_cd_error(token->data);
+    return ;
 }

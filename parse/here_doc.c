@@ -14,5 +14,7 @@
 
 void	here_doc(t_token *token, t_info *info)
 {
+	(void)token;
+	(void)info;
 	return ;
 }

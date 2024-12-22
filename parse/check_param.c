@@ -18,8 +18,6 @@ void	jump(char *param, int *i);
 
 int	check_param(char *param)
 {
-	char	*data;
-
 	if (param == NULL)
 		return (1);
 	if (check_quote(param, 34) || check_quote(param, 39))

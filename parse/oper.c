@@ -16,6 +16,7 @@ void	make_oper_token(t_token *token, char type);
 
 int	is_oper(t_token *token, t_info *info)
 {
+	(void)info;
 	if (token->type == E_TYPE_HERE_DOC)
 		make_oper_token(token, '<');
 	if (token->type == E_TYPE_IN)
