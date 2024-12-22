@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 00:55:25 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:35:04 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	make_token(t_token *token, t_info *info)
 	tmp = token;
 	while (tmp != NULL)
 	{
+		printf("DATA : %s\n", tmp->data);
 		if (check_first(tmp->data[0]) == E_Q)
 			check = is_quote(tmp);
 		else if (check_first(tmp->data[0]) == E_DQ)

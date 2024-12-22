@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 00:50:50 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:30:31 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_check	check_first(char c)
 		return (E_DQ);
 	if (c == 32)
 		return (E_SP);
-	if (c == '-')
+	if (c == 45)
 		return (E_OPTION);
 	if (c == '|')
 		return (E_PIPE);
