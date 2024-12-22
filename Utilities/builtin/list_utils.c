@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:52:47 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/19 22:03:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:42:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ t_env_token	*last_node(t_env_token *list)
 	return (list);
 }
 
-void	add_node_back(t_env_token **list, t_env_token *new_node)
+void	add_node_back(t_env_token *list, t_env_token *new_node)
 {
 	t_env_token	*temp;
 
-	temp = last_node(*list);
+	temp = last_node(list);
 	if (!temp)
-		*list = new_node;
+		list = new_node;
 	else
 		temp->next = new_node;
 }
 
-void	create_list(t_env_token **list, char **envp)
+void	create_list(t_env_token *list, char **envp)
 {
 	int			i;
 	char		*data;
@@ -70,13 +70,17 @@ void	create_list(t_env_token **list, char **envp)
 
 int	check_token_size(t_token *node)
 {
-	int	size;
+	t_token	*temp;
+	int		size;
 
 	size = 0;
-	while (node)
+	temp = node;
+	while (temp)
 	{
-		node = node -> next;
-		size++;
+		if (temp->type == E_TYPE_CMD || temp->type == E_TYPE_PARAM \
+		|| temp->type == E_TYPE_OPTION)
+			size++;
+		temp = temp -> next;
 	}
 	return (size);
 }

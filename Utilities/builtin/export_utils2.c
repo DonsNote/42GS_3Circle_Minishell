@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 20:22:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:23:48 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ void	check_env_data(t_env_token *env_list, char *data, char *val, char *key)
 			if (node->env_data != NULL)
 				free(node->env_data);
 			node->env_data = ft_strjoin(temp, val);
+			free(temp);
 			return ;
 		}
 		node = node -> next;
 	}
-	add_new_exp_node(&env_list, add_data);
+	add_new_exp_node(env_list, add_data);
 }
 
 void	update_exp_node(t_env_token *node, char *key, char *value)
@@ -49,24 +50,25 @@ void	update_exp_node(t_env_token *node, char *key, char *value)
 		if (ft_strcmp(temp->env_key, key) == 0)
 		{
 			new_value = ft_strjoin(temp->env_value, value);
+			free_exp_key_value(temp);
+			temp->env_key = key;
 			temp->env_value = new_value;
 			free(temp->env_data);
 			new_env_data = ft_strjoin(temp->env_key, "=");
 			new_env_data = ft_strjoin(new_env_data, temp->env_value);
 			temp->env_data = new_env_data;
+			return ;
 		}
 		temp = temp -> next;
 	}
 }
 
-void	add_export(t_info *info, char *key, char *value)
+void	add_export(t_env_token *env, t_env_token *exp, char *data)
 {
-	char	*data;
-
-	data = ft_strjoin(key, value);
-	add_new_exp_node(&info->exp, data);
-	add_new_exp_node(&info->env, data);
-	set_split_exp_list(info->exp);
+	add_new_exp_node(exp, data);
+	add_new_exp_node(env, data);
+	set_split_exp_list(exp);
+	exp_bubble_sort(exp);
 }
 
 char	*split_key(char *data)

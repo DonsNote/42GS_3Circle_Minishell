@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/21 20:13:07 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:52:23 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_token	*tokenize(char *param, t_info *info)
 	if (make_token(token, info))
 		return (NULL);
 	return (token);
+	return (0);
 }
 
 int	make_token(t_token *token, t_info *info)

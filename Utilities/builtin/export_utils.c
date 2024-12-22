@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 20:19:04 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/22 00:48:45 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 {
-	int			idx;
 	char		*key;
 	char		*value;
 	t_env_token	*node;
-	t_info		*info;
 
 	node = exp;
-	idx = check_plus_operator_idx(data);
 	key = split_key(data);
 	value = split_value(data);
 	while (node != NULL)
 	{
-		if (ft_strncmp(node->env_key, key, idx + 1) == 0)
+		if (ft_strcmp(node->env_key, key) == 0)
 		{
 			check_env_data(env, data, value, key);
 			update_exp_node(exp, key, value);
@@ -36,7 +33,7 @@ void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 		}
 		node = node -> next;
 	}
-	add_export(info, key, value);
+	add_export(env, exp, data);
 	free(key);
 	free(value);
 }
@@ -47,7 +44,7 @@ int	check_validation(char *data)
 	char	*key;
 
 	i = 0;
-	if ((!(data[i] >= 'A' && data[i] <= 'Z') \
+	if (!((data[i] >= 'A' && data[i] <= 'Z') \
 	|| (data[i] >= 'a' && data[i] <= 'z') || data[i] == '_'))
 		return (-1);
 	key = get_key(data);
