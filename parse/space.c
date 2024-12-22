@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:44:45 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 01:43:10 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:07:30 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_space(t_token *token)
 	t_token	*next;
 
 	tmp = (char *)malloc(sizeof(char) * 2);
-	if (token->data == NULL)
+	if (tmp == NULL)
 		return (1);
 	tmp[0] = 32;
 	tmp[1] = '\0';
