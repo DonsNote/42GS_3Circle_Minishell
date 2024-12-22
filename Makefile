@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/22 22:30:58 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/22 23:36:36 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-CFLAG = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 INC = minishell.h
 
@@ -36,7 +36,6 @@ SRCS = minishell.c \
 		built_in/built_in.c \
 		built_in/echo.c \
 		built_in/env.c \
-		built_in/exec.c \
 		built_in/export.c \
 		built_in/export_sort.c \
 		built_in/pwd.c \
@@ -65,7 +64,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAG) -o $(NAME) $^ -lreadline
+	$(CC) $(CFLAGS) -o $(NAME) $^ -lreadline
 
 clean :
 	rm -rf $(OBJS)

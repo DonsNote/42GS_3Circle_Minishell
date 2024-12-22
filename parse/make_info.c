@@ -17,7 +17,6 @@ char	*init_info(t_env_token *exp, char *type);
 t_info	*make_info(char **envp)
 {
 	t_info		*info;
-	t_env_token	*env;
 
 	info = (t_info *)malloc(sizeof(t_info) * 1);
 	if (info == NULL)
@@ -38,14 +37,14 @@ char	*init_info(t_env_token *exp, char *type)
 	char		*sol;
 
 	tmp = exp;
-	while (exp != NULL)
+	while (tmp != NULL)
 	{
-		if (ft_strcmp(type, exp->env_key) == 0)
+		if (ft_strcmp(type, tmp->env_key) == 0)
 		{
-			sol = ft_strdup(exp->env_value);
+			sol = ft_strdup(tmp->env_value);
 			return (sol);
 		}
-		exp = exp->next;
+		tmp = tmp->next;
 	}
 	return (0);
 }

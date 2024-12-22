@@ -15,7 +15,6 @@
 int	is_option(t_token *token, t_info *info)
 {
 	int		i;
-	int		j;
 	char	*tmp;
 	t_token	*next;
 

@@ -14,6 +14,7 @@
 
 int	is_pipe(t_token *token, t_info *info)
 {
+	(void)info;
 	char	*tmp;
 	t_token	*next;
 

@@ -34,7 +34,7 @@ int	cd_validation(t_token *token)
 	temp = token;
 	while (temp)
 	{
-		if (temp->type == E_OPTION)
+		if (temp->type == E_TYPE_OPTION)
 		{
 			if (ft_strlen(temp->data) > 2)
 				return (-1);
@@ -79,10 +79,9 @@ void	execute_single_hypen(t_info *info)
 	update_pwd(info);
 }
 
-void	execute_double_hypen(t_token *token)
+void	execute_double_hypen(t_token *token, t_info *info)
 {
 	t_token	*temp;
-	t_info	*info;
 
 	temp = token;
 	while (temp)

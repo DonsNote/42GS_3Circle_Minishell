@@ -14,6 +14,7 @@
 
 int	is_quote(t_token *token, t_info *info)
 {
+	(void)info;
 	int		i;
 	int		j;
 	char	*tmp;

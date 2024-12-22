@@ -38,7 +38,7 @@ t_token	*tokenize(char *param, t_info *info)
 		print_error(1);
 		return (NULL);
 	}
-	// organize_token(token);
+	organize_token(token);
 	return (token);
 }
 
@@ -73,6 +73,7 @@ int	make_token(t_token *token, t_info *info)
 
 void	organize_token(t_token *token)
 {
+	(void)token;
 	// t_token	*tmp;
 
 	// tmp = token;
