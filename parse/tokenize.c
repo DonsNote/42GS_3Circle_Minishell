@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 22:57:18 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:34:26 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	organize_token(t_token *token)
 	(void)token;
 	// t_token	*tmp;
 
-	// tmp = token;
-	// while (tmp != NULL)
-	// {
+	tmp = token;
+	while (tmp != NULL)
+	{
 		
-	// }
+	}
 	return ;
 }
