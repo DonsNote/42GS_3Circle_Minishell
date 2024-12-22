@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:40:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:25:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int			check_key_validation(char *key);
 
 /*export.c*/
 void		cmd_export(t_token *node, t_info *info);
+void		change_pwd_oldpwd(t_info *info);
 void		execute_export_cmd(t_info *info, char *data);
 void		add_exp_data(t_env_token *exp_list, char *data);
 int			check_equal_idx(char *exp_data);
@@ -180,6 +181,7 @@ char		*ft_strjoin(char *s1, char *s2);
 
 /*unset.c*/
 void		cmd_unset(t_token *token, t_info *info);
+void		unset_pwd_oldpwd(t_info *info);
 void		delete_node(t_env_token **list, char *find);
 int			delete_first_node(t_env_token **list, char *find);
 

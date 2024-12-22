@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:35:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 02:58:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:17:55 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ void	cmd_unset(t_token *token, t_info *info)
 			}
 		}
 		temp = temp -> next;
+	}
+	unset_pwd_oldpwd(info);
+}
+
+void	unset_pwd_oldpwd(t_info *info)
+{
+	if (find_key(info->exp, "PWD") == 0)
+	{
+		if (info->pwd != NULL)
+			free(info->pwd);
+		info->pwd = NULL;
+	}
+	if (find_key(info->exp, "OLDPWD") == 0)
+	{
+		if (info->oldpwd != NULL)
+			free(info->oldpwd);
+		info->oldpwd = NULL;
 	}
 }
 
