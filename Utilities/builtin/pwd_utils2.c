@@ -3,38 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 20:00:45 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:33:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	cd_validation(char *data, t_type type)
+int	return_if(t_token *temp)
 {
-	if (type == E_TYPE_OPTION)
+	if ((ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, "-") == 0) \
+	|| (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "..") == 0))
+		return (1);
+	else if (ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, ".") == 0)
+		return (2);
+	else if ((ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, "-") != 0) \
+	|| (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") != 0))
+		return (-1);
+	else if (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") == 0)
+		return (0);
+}
+
+int	cd_validation(t_token *token)
+{
+	t_token	*temp;
+
+	temp = token;
+	while (temp)
 	{
-		if (ft_strlen(data) > 2)
-			return (-1);
-		else
+		if (temp->type == E_OPTION)
 		{
-			if (ft_strlen(data) == 1 && ft_strcmp(data, "-") == 0)
-				return (1);
-			else if (ft_strlen(data) == 1 && ft_strcmp(data, ".") == 0)
-				return (2);
-			else if (ft_strlen(data) == 2 && ft_strcmp(data, "..") == 0)
-				return (1);
-			else if (ft_strlen(data) == 1 && ft_strcmp(data, "-") != 0)
+			if (ft_strlen(temp->data) > 2)
 				return (-1);
-			else if (ft_strlen(data) == 2 && ft_strcmp(data, "--") == 0)
-				return (0);
-			else if (ft_strlen(data) == 2 && ft_strcmp(data, "--") != 0)
-				return (-1);
+			else
+				return (return_if(temp));
 		}
+		return (-1);
 	}
-	return (-1);
 }
 
 void	execute_tilde(t_info *info)
@@ -89,12 +96,27 @@ void	execute_double_hypen(t_token *token)
 	}
 }
 
-void	execute_size_two(char *data, t_info *info, t_type type)
+void	execute_size_two(t_token *token, t_info *info)
 {
-	if ((ft_strncmp(data, "-", ft_strlen(data))) == 0)
-		execute_single_hypen(info);
-	else if ((ft_strncmp(data, "-", ft_strlen(data))) != 0)
-		print_cd_error(data, 2);
-	else if (!(ft_strcmp(data, "~")) || cd_validation(data, type) == 0)
-		execute_tilde(info);
+	t_token	*temp;
+
+	temp = token;
+	while (temp)
+	{
+		if (temp->type == E_TYPE_OPTION)
+		{
+			if (ft_strncmp(temp->data, "-", ft_strlen(temp->data)) == 0)
+				execute_single_hypen(info);
+			else if (ft_strncmp(temp->data, "-", ft_strlen(temp->data)) != 0)
+				print_cd_error(temp->data, 2);
+			break ;
+		}
+		else if (temp->type == E_TYPE_PARAM \
+		&& ft_strncmp(temp->data, "~", ft_strlen(temp->data)) == 0)
+		{
+			execute_tilde(info);
+			break ;
+		}
+		temp = temp -> next;
+	}
 }
