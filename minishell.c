@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:59:36 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:31:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int ac, char **av, char **envp)
 int	input(t_info *info)
 {
 	t_token	*token;
-	t_token	*temp;
 	char	*param;
 
 	while (1)
@@ -42,20 +41,6 @@ int	input(t_info *info)
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
-			temp = token;
-			while (temp)
-			{
-				if (temp->type == E_TYPE_CMD)
-					printf("CMD\n");
-				else if (temp->type == E_TYPE_OPTION)
-					printf("OPTION\n");
-				else if (temp->type == E_TYPE_SP)
-					printf("SPACE\n");
-				else if (temp->type == E_TYPE_PARAM)
-					printf("PARAM\n");
-				temp = temp -> next;
-			}
-			printf("token size = %d\n", check_token_size(token));
 			if (built_in(token, info))
 				continue ;
 		}
