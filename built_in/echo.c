@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:38:38 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 20:10:11 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 00:42:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	check_echo_option(t_token *node)
 	t_token	*temp;
 
 	temp = node;
-	if (temp->next->type != E_TYPE_OPTION)
+	if (temp->next->next->type != E_TYPE_OPTION)
 		return (-1);
-	else if (temp->next->type == E_TYPE_OPTION)
+	else if (temp->next->next->type == E_TYPE_OPTION)
 		return (0);
 	return (0);
 }
@@ -81,5 +81,6 @@ void	cmd_echo(t_token *node)
 	int	flag;
 
 	flag = check_echo_option(node);
+	printf("flag = %d\n", flag);
 	print_echo(node, flag);
 }
