@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 22:57:18 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:34:26 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*tokenize(char *param, t_info *info)
 		print_error(1);
 		return (NULL);
 	}
-	// organize_token(token);
+	organize_token(token);
 	return (token);
 }
 
@@ -73,12 +73,12 @@ int	make_token(t_token *token, t_info *info)
 
 void	organize_token(t_token *token)
 {
-	// t_token	*tmp;
+	t_token	*tmp;
 
-	// tmp = token;
-	// while (tmp != NULL)
-	// {
+	tmp = token;
+	while (tmp != NULL)
+	{
 		
-	// }
+	}
 	return ;
 }
