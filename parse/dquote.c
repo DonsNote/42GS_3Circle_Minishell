@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:43:28 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 14:27:14 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:32:36 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_dquote(t_token *token, t_info *info)
 	i = 1;
 	while (token->data[i] != 34 && token->data[i] != '\0')
 		++i;
-	tmp = (char *)malloc(sizeof(char) * (i - 1));
+	tmp = (char *)malloc(sizeof(char) * i);
 	if (tmp == NULL)
 		return (-1);
 	i = 1;
