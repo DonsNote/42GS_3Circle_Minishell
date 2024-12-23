@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:31:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 18:50:56 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 04:32:16 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,10 @@ void	update_pwd(t_info *info)
 	if (info->pwd != NULL)
 		free(info->pwd);
 	info->pwd = getcwd(NULL, 0);
-	update_env_data(info, "PWD", info->pwd);
-	update_env_data(info, "OLDPWD", info->oldpwd);
-	update_exp_data(info, "PWD", info->pwd);
-	update_exp_data(info, "OLDPWD", info->oldpwd);
+	update_env_data(info, "PWD", ft_strdup(info->pwd));
+	update_env_data(info, "OLDPWD", ft_strdup(info->oldpwd));
+	update_exp_data(info, "PWD", ft_strdup(info->pwd));
+	update_exp_data(info, "OLDPWD", ft_strdup(info->oldpwd));
 }
 
 void	execute_normal_cd(char *data, t_info *info)

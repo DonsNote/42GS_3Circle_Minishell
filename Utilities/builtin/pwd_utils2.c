@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 03:23:49 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 04:24:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	execute_single_hypen(t_info *info)
 {
 	char	*temp;
 
-	temp = info->oldpwd;
+	temp = ft_strdup(info->oldpwd);
 	if (temp == NULL)
 	{
 		print_cd_error("OLDPWD", 3);
@@ -81,6 +81,7 @@ void	execute_single_hypen(t_info *info)
 	}
 	else
 		printf("%s\n", temp);
+	free(temp);
 	update_pwd(info);
 }
 

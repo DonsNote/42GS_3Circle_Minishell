@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:47:51 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 04:21:18 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	cmd_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
-	free(pwd);
 	return (0);
 }
 

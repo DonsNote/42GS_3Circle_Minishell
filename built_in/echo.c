@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 15:38:38 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 01:30:48 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 04:08:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_param(t_token *node)
 		printf("%s", node->data);
 }
 
-void	print_echo(t_token *node, int flag)
+void	print_echo(t_token *node, int flag, int check)
 {
 	t_token	*temp;
 
@@ -43,14 +43,14 @@ void	print_echo(t_token *node, int flag)
 	while (temp != NULL)
 	{
 		if (temp->type == E_TYPE_OPTION && flag == 0 && check_option(temp))
+		{
+			check = 1;
 			flag = 1;
-		else if (temp->type == E_TYPE_OPTION && flag == 0 \
-		&& !check_option(temp))
-			flag = 2;
+		}
 		else if (temp->type == E_TYPE_OPTION && flag == 1 && check_option(temp))
 			flag = 1;
-		else if (temp->type == E_TYPE_OPTION && flag == 1 \
-		&& !check_option(temp))
+		else if (((temp->type == E_TYPE_OPTION && flag == 1) \
+		|| (temp->type == E_TYPE_OPTION && flag == 0)) && !check_option(temp))
 		{
 			print_param(temp);
 			flag = 2;
@@ -60,7 +60,7 @@ void	print_echo(t_token *node, int flag)
 			print_param(temp);
 		temp = temp->next;
 	}
-	if (flag != 1)
+	if (check != 1)
 		printf("\n");
 }
 
@@ -78,9 +78,15 @@ int	check_echo_option(t_token *node)
 
 void	cmd_echo(t_token *node)
 {
-	int	flag;
+	t_token	*temp;
+	int		flag;
 
+	temp = node;
+	if (check_token_size(temp) == 1)
+	{
+		printf("\n");
+		return ;
+	}
 	flag = check_echo_option(node);
-	printf("flag = %d\n", flag);
-	print_echo(node, flag);
+	print_echo(node, flag, 0);
 }
