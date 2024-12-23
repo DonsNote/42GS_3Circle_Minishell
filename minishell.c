@@ -6,13 +6,14 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 14:54:12 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:04:33 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	input(t_info *info);
+void print_type(t_token *token);
 
 int	main(int ac, char **av, char **envp)
 {
@@ -31,7 +32,6 @@ int	main(int ac, char **av, char **envp)
 int	input(t_info *info)
 {
 	t_token	*token;
-	t_token *temp;
 	char	*param;
 	t_token	*tmp;
 
@@ -43,6 +43,13 @@ int	input(t_info *info)
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
+			tmp = token;
+			while (tmp != NULL)
+			{
+				print_type(tmp);
+				tmp = tmp->next;
+			}
+
 			if (built_in(token, info))
 				continue ;
 		}
@@ -54,4 +61,17 @@ int	input(t_info *info)
 	}
 	free_all(token, info);
 	return (0);
+}
+
+void print_type(t_token *token)
+{
+	if (token->type == E_TYPE_CMD)
+		printf("CMD : %s\n", token->data);
+	else if (token->type == E_TYPE_OPTION)
+		printf("OPTION : %s\n", token->data);
+	else if (token->type == E_TYPE_PARAM)
+		printf("PARAM : %s\n", token->data);
+	else
+		printf("Othe : %s\n", token->data);
+	return ;
 }
