@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 14:31:22 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:22:39 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	check_grammer(char *param)
 			jump(param, &i);
 		if (param[i] == '$')
 		{
-			++i;
-			if (ft_isdigit(param[i]))
+			if (ft_isdigit(param[i + 1]))
 				return (1);
+			++i;
 		}
 		if (((param[i] == '|' && param[i + 1] == '|')
 				|| (param[i] == '|' && param[i + 1] == '\0')))
@@ -83,8 +83,8 @@ void	jump(char *param, int *i)
 		*i = *i + 1;
 		while (param[*i] != 34 && param[*i] != '\0')
 			++*i;
-		if (param[*i] == 34)
-			++*i;
+		if (param[*i] == '\0')
+			--*i;
 		return ;
 	}
 	if (param[*i] == 39)
@@ -92,8 +92,8 @@ void	jump(char *param, int *i)
 		*i = *i + 1;
 		while (param[*i] != 39 && param[*i] != '\0')
 			++*i;
-		if (param[*i] == 39)
-			++*i;
+		if (param[*i] == '\0')
+			--*i;
 		return ;
 	}
 	return ;
