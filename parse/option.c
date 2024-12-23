@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 21:54:54 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 03:18:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:27:31 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_option(t_token *token, t_info *info)
 	i = 1;
 	while (check_first(token->data[i]) == E_STR)
 		++i;
-	tmp = (char *)malloc(sizeof(char) * i);
+	tmp = (char *)malloc(sizeof(char) * (i + 1));
 	if (tmp == NULL)
 		return (-1);
 	tmp[0] = '-';
@@ -35,6 +35,6 @@ int	is_option(t_token *token, t_info *info)
 	next = make_new_token(token, i);
 	token->data = tmp;
 	token->next = next;
-	substitution(token, info);
+	substitution(token, info, NULL);
 	return (0);
 }

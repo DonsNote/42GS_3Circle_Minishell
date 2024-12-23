@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:43:28 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 03:13:08 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:27:14 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	is_dquote(t_token *token, t_info *info)
 	next = make_new_token(token, i + 1);
 	token->data = tmp;
 	token->next = next;
-	substitution(token, info);
+	substitution(token, info, NULL);
 	return (0);
 }

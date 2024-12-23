@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 23:10:45 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:31:22 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	check_grammer(char *param)
 			if (ft_isdigit(param[i]))
 				return (1);
 		}
-		if (param[i] == '|' && (param[i + 1] == '|' || param[i + 1] == '\0'))
+		if (((param[i] == '|' && param[i + 1] == '|')
+				|| (param[i] == '|' && param[i + 1] == '\0')))
 			return (1);
 		if (param[i] == '&')
 			return (1);
@@ -80,17 +81,19 @@ void	jump(char *param, int *i)
 	if (param[*i] == 34)
 	{
 		*i = *i + 1;
-		while (param[*i] != 34)
+		while (param[*i] != 34 && param[*i] != '\0')
 			++*i;
-		++*i;
+		if (param[*i] == 34)
+			++*i;
 		return ;
 	}
 	if (param[*i] == 39)
 	{
 		*i = *i + 1;
-		while (param[*i] != 39)
+		while (param[*i] != 39 && param[*i] != '\0')
 			++*i;
-		++*i;
+		if (param[*i] == 39)
+			++*i;
 		return ;
 	}
 	return ;
