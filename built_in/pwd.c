@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:47:51 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:49:10 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	cmd_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
-	free(pwd);
 	return (0);
 }
 
@@ -32,7 +31,10 @@ int	cmd_cd(t_token *token, t_info *info)
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == 0)
 		execute_double_hypen(temp, info);
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == -1)
+	{
+		printf("check validation\n");
 		print_cd_error(temp->next->next->data, 2);
+	}
 	else if (check_token_size(temp) >= 3)
 		print_cd_error("too many arguments", 4);
 	else if (check_token_size(temp) == 2 \

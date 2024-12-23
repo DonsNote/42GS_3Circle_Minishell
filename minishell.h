@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 03:25:57 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 04:04:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			built_in(t_token *token, t_info *info);
 /*echo.c*/
 int			check_option(t_token *token);
 void		print_param(t_token *node);
-void		print_echo(t_token *node, int flag);
+void		print_echo(t_token *node, int flag, int check);
 int			check_echo_option(t_token *node);
 void		cmd_echo(t_token *node);
 
