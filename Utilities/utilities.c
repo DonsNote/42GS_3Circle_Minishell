@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/22 16:45:43 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:39:50 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*ft_strdup(const char *s)
 	int		len;
 	int		i;
 
+	if (s == NULL)
+		return (0);
 	i = 0;
 	len = (int)ft_strlen(s);
 	str = (char *)malloc(sizeof(char) * (len + 1));

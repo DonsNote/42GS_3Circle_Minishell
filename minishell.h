@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 15:26:06 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:42:47 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,8 @@ char		*ft_strjoin(char *s1, char *s2);
 
 /*unset.c*/
 void		cmd_unset(t_token *token, t_info *info);
-void		unset_pwd_oldpwd(t_info *info);
-void		delete_node(t_env_token **list, char *find);
+void		delete_node_exp(t_env_token **list, char *find);
+void		delete_node_env(t_env_token **list, char *find);
 int			delete_first_node(t_env_token **list, char *find);
 
 /*pwd.c*/

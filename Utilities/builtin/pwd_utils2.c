@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 14:47:51 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:06:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@ int	return_if(t_token *temp)
 	else if (ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, ".") == 0)
 		return (2);
 	else if (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") == 0)
-	{
-		printf("-- option check\n");
 		return (0);
-	}
 	else if ((ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, "-") != 0) \
 	|| (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") != 0))
-	{
-		printf("-- option check\n");
 		return (-1);
-	}
 	return (0);
 }
 
@@ -47,7 +41,7 @@ int	cd_validation(t_token *token)
 			else
 				return (return_if(temp));
 		}
-		return (-1);
+		temp = temp -> next;
 	}
 	return (0);
 }
@@ -74,12 +68,12 @@ void	execute_single_hypen(t_info *info)
 {
 	char	*temp;
 
-	temp = ft_strdup(info->oldpwd);
-	if (temp == NULL)
+	if (info->oldpwd == NULL)
 	{
 		print_cd_error("OLDPWD", 3);
 		return ;
 	}
+	temp = ft_strdup(info->oldpwd);
 	if (chdir(temp) != 0)
 	{
 		print_cd_error(temp, 1);
@@ -118,7 +112,9 @@ void	execute_size_two(t_token *token, t_info *info)
 	{
 		if (temp->type == E_TYPE_OPTION)
 		{
-			if (ft_strncmp(temp->data, "-", ft_strlen(temp->data)) == 0)
+			if (ft_strncmp(temp->data, "--", 2) == 0)
+				execute_tilde(info);
+			else if (ft_strncmp(temp->data, "-", ft_strlen(temp->data)) == 0)
 				execute_single_hypen(info);
 			else if (ft_strncmp(temp->data, "-", ft_strlen(temp->data)) != 0)
 				print_cd_error(temp->data, 2);
@@ -130,6 +126,8 @@ void	execute_size_two(t_token *token, t_info *info)
 			execute_tilde(info);
 			break ;
 		}
+		else
+			chdir(temp->data);
 		temp = temp -> next;
 	}
 }
