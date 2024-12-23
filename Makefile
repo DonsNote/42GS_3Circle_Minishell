@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/22 23:36:36 by junseyun         ###   ########.fr        #
+#    Updated: 2024/12/23 15:25:35 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS = minishell.c \
 		parse/check_param.c \
 		parse/tokenize.c \
 		parse/substitution.c \
+		parse/substitution2.c \
 		parse/env_tokenize.c \
 		parse/env_tokenize2.c \
 		parse/make_info.c \
