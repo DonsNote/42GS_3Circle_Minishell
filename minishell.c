@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 15:04:33 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:49:43 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int	input(t_info *info)
 	while (1)
 	{
 		param = readline("DJ_Shell>");
-		if (param)
+		if (param[0] == '\0')
+			continue ;
+		else if (param)
 		{
+			add_history(param);
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
@@ -53,10 +56,6 @@ int	input(t_info *info)
 			if (built_in(token, info))
 				continue ;
 		}
-		else
-			break ;
-		add_history(param);
-		free(param);
 		free_token(token);
 	}
 	free_all(token, info);
