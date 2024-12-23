@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 04:24:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:47:51 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,17 @@ int	return_if(t_token *temp)
 		return (1);
 	else if (ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, ".") == 0)
 		return (2);
+	else if (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") == 0)
+	{
+		printf("-- option check\n");
+		return (0);
+	}
 	else if ((ft_strlen(temp->data) == 1 && ft_strcmp(temp->data, "-") != 0) \
 	|| (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") != 0))
+	{
+		printf("-- option check\n");
 		return (-1);
-	else if (ft_strlen(temp->data) == 2 && ft_strcmp(temp->data, "--") == 0)
-		return (0);
+	}
 	return (0);
 }
 
