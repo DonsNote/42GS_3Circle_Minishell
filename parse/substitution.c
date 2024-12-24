@@ -6,18 +6,16 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:54:44 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 15:25:12 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:27:44 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		check_current_value(char c);
 char	*find_value_parse(char *key, t_info *info);
-char	*make_head(t_token *token);
-char	*make_key(t_token *token);
-char	*make_tail(t_token *token);
-int		check_env_var(char *token);
+char	*make_head(char *data);
+char	*make_key(char *data);
+char	*make_tail(char *data);
 
 void	substitution(t_token *token, t_info *info, char *tmp)
 {
@@ -29,9 +27,9 @@ void	substitution(t_token *token, t_info *info, char *tmp)
 	temp = ft_strdup(token->data);
 	while (check_env_var(temp))
 	{
-		head = make_head(token);
-		value = find_value_parse(make_key(token), info);
-		tail = make_tail(token);
+		head = make_head(temp);
+		value = find_value_parse(make_key(temp), info);
+		tail = make_tail(temp);
 		tmp = ft_strjoin(head, value);
 		free(head);
 		free(value);
@@ -44,23 +42,25 @@ void	substitution(t_token *token, t_info *info, char *tmp)
 	return ;
 }
 
-char	*make_head(t_token *token)
+char	*make_head(char *data)
 {
 	int		i;
 	char	*head;
 
 	i = 0;
-	while (token->data[i] != '$' && token->data[i] != '\0')
+	if (data[0] == '$')
+		return (NULL);
+	while (data[i] != '$' && data[i] != '\0')
 		++i;
-	if (token->data[i] == '$')
+	if (data[i] == '$')
 	{
 		head = (char *)malloc(sizeof(char) * (i + 1));
 		if (head == NULL)
 			return (NULL);
 		i = 0;
-		while (token->data[i] != '$')
+		while (data[i] != '$')
 		{
-			head[i] = token->data[i];
+			head[i] = data[i];
 			++i;
 		}
 		head[i] = '\0';
@@ -69,7 +69,7 @@ char	*make_head(t_token *token)
 	return (NULL);
 }
 
-char	*make_key(t_token *token)
+char	*make_key(char *data)
 {
 	int		i;
 	int		size;
@@ -77,10 +77,10 @@ char	*make_key(t_token *token)
 
 	i = 0;
 	size = 0;
-	while (token->data[i] != '$')
+	while (data[i] != '$')
 		++i;
 	++i;
-	while (check_current_value(token->data[i]))
+	while (check_current_value(data[i]))
 	{
 		++i;
 		++size;
@@ -90,9 +90,9 @@ char	*make_key(t_token *token)
 		return (NULL);
 	i = i - size;
 	size = 0;
-	while (check_current_value(token->data[i]))
+	while (check_current_value(data[i]))
 	{
-		key[size] = token->data[i];
+		key[size] = data[i];
 		++i;
 		++size;
 	}
@@ -100,7 +100,7 @@ char	*make_key(t_token *token)
 	return (key);
 }
 
-char	*make_tail(t_token *token)
+char	*make_tail(char *data)
 {
 	int		i;
 	int		size;
@@ -108,12 +108,12 @@ char	*make_tail(t_token *token)
 
 	i = 0;
 	size = 0;
-	while (token->data[i] != '$')
+	while (data[i] != '$')
 		++i;
 	++i;
-	while (check_current_value(token->data[i]))
+	while (check_current_value(data[i]))
 		++i;
-	while (token->data[i] != '\0')
+	while (data[i] != '\0')
 	{
 		++i;
 		++size;
@@ -125,9 +125,9 @@ char	*make_tail(t_token *token)
 		return (NULL);
 	i = i - size;
 	size = 0;
-	while (token->data[i] != '\0')
+	while (data[i] != '\0')
 	{
-		tail[size] = token->data[i];
+		tail[size] = data[i];
 		++i;
 		++size;
 	}
