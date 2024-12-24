@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 00:50:10 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:15:56 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 		if (new_node != NULL)
 			add_node_back(env, new_node);
 	}
-	exp_bubble_sort(exp);
 }
 
 char	*get_key(char *data)
