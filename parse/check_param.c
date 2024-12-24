@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/24 13:14:09 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:19:27 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,17 @@ int	check_grammer(char *param)
 				return (1);
 			++i;
 		}
-		if (((param[i] == '|' && param[i + 1] == '|')
-				|| (param[i] == '|' && param[i + 1] == '\0')))
-			return (1);
+		if (param[i] == '|')
+		{
+			if (param[i + 1] == '|')
+				return (1);
+			jump(param, &i);
+			if (param[i + 1] == '\0')
+				return (1);
+			++i;
+		}
 		if (param[i] == '&')
 			return (1);
-		++i;
 	}
 	return (0);
 }
