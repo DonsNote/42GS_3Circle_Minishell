@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:31:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 04:32:16 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:43:09 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	update_exp_data(t_info *info, char *key, char *value)
 	if (new_node != NULL)
 		add_node_back(temp, new_node);
 	set_split_exp_list(temp);
-	exp_bubble_sort(temp);
 }
 
 void	update_pwd(t_info *info)
@@ -85,15 +84,20 @@ void	update_pwd(t_info *info)
 		temp = ft_strdup(info->pwd);
 	if (info->oldpwd != NULL)
 		free(info->oldpwd);
-	info->oldpwd = ft_strdup(temp);
-	free(temp);
+	if (temp != NULL)
+		info->oldpwd = ft_strdup(temp);
+	if (temp != NULL)
+		free(temp);
 	if (info->pwd != NULL)
 		free(info->pwd);
 	info->pwd = getcwd(NULL, 0);
 	update_env_data(info, "PWD", ft_strdup(info->pwd));
-	update_env_data(info, "OLDPWD", ft_strdup(info->oldpwd));
 	update_exp_data(info, "PWD", ft_strdup(info->pwd));
-	update_exp_data(info, "OLDPWD", ft_strdup(info->oldpwd));
+	if (info->oldpwd != NULL)
+	{
+		update_env_data(info, "OLDPWD", ft_strdup(info->oldpwd));
+		update_exp_data(info, "OLDPWD", ft_strdup(info->oldpwd));
+	}
 }
 
 void	execute_normal_cd(char *data, t_info *info)

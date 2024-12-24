@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:35:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 14:43:26 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:42:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,15 @@ void	cmd_unset(t_token *token, t_info *info)
 		{
 			if (find_key(info->exp, temp->data))
 			{
-				delete_node(&(info->exp), temp->data);
-				delete_node(&(info->env), temp->data);
+				delete_node_exp(&(info->exp), temp->data);
+				delete_node_env(&(info->env), temp->data);
 			}
 		}
 		temp = temp -> next;
 	}
-	unset_pwd_oldpwd(info);
 }
 
-void	unset_pwd_oldpwd(t_info *info)
-{
-	if (find_key(info->exp, "PWD") == 0)
-	{
-		if (info->pwd != NULL)
-			free(info->pwd);
-		info->pwd = NULL;
-	}
-	if (find_key(info->exp, "OLDPWD") == 0)
-	{
-		if (info->oldpwd != NULL)
-			free(info->oldpwd);
-		info->oldpwd = NULL;
-	}
-}
-
-void	delete_node(t_env_token **list, char *find)
+void	delete_node_exp(t_env_token **list, char *find)
 {
 	t_env_token	*temp;
 	t_env_token	*cur;
@@ -62,6 +45,33 @@ void	delete_node(t_env_token **list, char *find)
 	{
 		if (cur->next->env_key && find && \
 		ft_strcmp(cur->next->env_key, find) == 0)
+		{
+			temp = cur->next;
+			cur->next = temp->next;
+			free_node_data(temp);
+			free(temp);
+			return ;
+		}
+		cur = cur -> next;
+	}
+}
+
+void	delete_node_env(t_env_token **list, char *find)
+{
+	t_env_token	*temp;
+	t_env_token	*cur;
+	int			len;
+
+	if (!list || !*list || !find)
+		return ;
+	if (delete_first_node(list, find))
+		return ;
+	cur = (*list);
+	len = ft_strlen(find);
+	while (cur && cur->next != NULL)
+	{
+		if (cur->next->env_data && find && \
+		ft_strncmp(cur->next->env_data, find, len) == 0)
 		{
 			temp = cur->next;
 			cur->next = temp->next;

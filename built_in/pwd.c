@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:15:37 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 14:49:10 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:59:13 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,12 @@ int	cmd_cd(t_token *token, t_info *info)
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == 0)
 		execute_double_hypen(temp, info);
 	else if (check_token_size(temp) == 3 && cd_validation(temp) == -1)
-	{
-		printf("check validation\n");
 		print_cd_error(temp->next->next->data, 2);
-	}
 	else if (check_token_size(temp) >= 3)
 		print_cd_error("too many arguments", 4);
 	else if (check_token_size(temp) == 2 \
-	&& ((!(ft_strcmp(temp->next->next->data, "-")) \
-	|| !(ft_strcmp(temp->next->next->data, "~"))) || cd_validation(temp) == 0))
+	&& (cd_validation(temp) == 0 || (!(ft_strcmp(temp->next->next->data, "-")) \
+	|| !(ft_strcmp(temp->next->next->data, "~")))))
 		execute_size_two(temp, info);
 	else if (check_token_size(temp) >= 2 \
 	&& temp->next->next->type == E_TYPE_OPTION \

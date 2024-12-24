@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 20:10:49 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:15:45 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	add_export(t_env_token *env, t_env_token *exp, char *data)
 	add_new_exp_node(exp, data);
 	add_new_exp_node(env, data);
 	set_split_exp_list(exp);
-	exp_bubble_sort(exp);
 }
 
 char	*split_key(char *data)
