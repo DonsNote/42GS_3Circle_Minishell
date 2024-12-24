@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 16:42:47 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/24 13:08:12 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ typedef struct s_info
 	char		*home;
 	char		*pwd;
 	char		*oldpwd;
+	char		*paths;
+	char		*cmd;
+	char		**cmd_paths;
+	char		**cmd_lines;
 }	t_info;
 
 typedef enum e_type
@@ -104,11 +108,19 @@ void		here_doc(t_token *token, t_info *info);
 int			check_current_value(char c);
 int			check_env_var(char *token);
 
+/*execve.c*/
+int			env_list_size(t_env_token *env_list);
+char		**create_envp(t_info *info);
+void		init_cmd_lines(t_token *token, t_info *info);
+
 /*built_in*/
 int			check_operator(t_token *token);
 int			check_pipe(t_token *token);
 void		execute_cmd(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
+
+/*ft_split.c*/
+char		**ft_split(char const *s, char c);
 
 /*echo.c*/
 int			check_option(t_token *token);
