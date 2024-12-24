@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 23:26:09 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:57:52 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			is_oper(t_token *token);
 int			is_option(t_token *token, t_info *info);
 void		substitution(t_token *token, t_info *info, char *tmp);
 int			open_fd(t_token *token, t_info *info);
-void		here_doc(t_token *token, t_info *info);
+int			here_doc(t_token *token, t_info *info);
 int			check_current_value(char c);
 int			check_env_var(char *data);
 

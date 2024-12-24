@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/23 03:13:15 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/24 20:56:33 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ t_type	check_type(t_token *token, t_check check, int i)
 	if (token->type == E_TYPE_PIPE && (check == E_Q || check == E_DQ
 			|| check == E_STR))
 		return (E_TYPE_CMD);
-	if (token->type == E_TYPE_GREAT || token->type == E_TYPE_HERE_DOC
-		|| token->type == E_TYPE_IN || token->type == E_TYPE_OUT)
-		return (E_TYPE_FILE);
 	if (check == E_PIPE)
 		return (E_TYPE_PIPE);
 	if (check == E_OPTION)
 		return (E_TYPE_OPTION);
 	if (check == E_SP)
 		return (E_TYPE_SP);
+	if (token->type == E_TYPE_GREAT || token->type == E_TYPE_HERE_DOC
+		|| token->type == E_TYPE_IN || token->type == E_TYPE_OUT)
+		return (E_TYPE_FILE);
 	if (check == E_OPER)
 		return (check_oper(token, i));
 	return (E_TYPE_PARAM);
