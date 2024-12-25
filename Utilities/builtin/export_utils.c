@@ -6,11 +6,48 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 00:48:45 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 01:40:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static void	free_data_val(char *new_key, char *new_val, char *key, char *val)
+{
+	if (new_key != NULL)
+		free(new_key);
+	if (new_val != NULL)
+		free(new_val);
+	if (key != NULL)
+		free(key);
+	if (val != NULL)
+		free(val);
+}
+
+static void	change_match_exp(t_env_token *exp, char *key, char *val)
+{
+	char	*new_key;
+	char	*new_value;
+
+	new_key = ft_strdup(key);
+	if (!new_key)
+	{
+		free_data_val(NULL, NULL, key, val);
+		return ;
+	}
+	if (val)
+	{
+		new_value = ft_strdup(val);
+		if (!new_value)
+		{
+			free_data_val(new_key, NULL, key, val);
+			return ;
+		}
+	}
+	update_exp_node(exp, new_key, new_value);
+	free(key);
+	free(val);
+}
 
 void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 {
@@ -20,23 +57,22 @@ void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 
 	node = exp;
 	key = split_key(data);
+	if (!key)
+		return ;
 	value = split_value(data);
-	while (node != NULL)
+	while (node)
 	{
 		if (ft_strcmp(node->env_key, key) == 0)
 		{
-			check_env_data(env, data, value, key);
-			update_exp_node(exp, key, value);
-			free(key);
-			free(value);
+			check_env_data(env, data, key, value);
+			change_match_exp(exp, key, value);
 			return ;
 		}
 		node = node -> next;
 	}
 	add_export(env, exp, data);
-	free(key);
-	free(value);
 }
+
 
 int	check_validation(char *data)
 {

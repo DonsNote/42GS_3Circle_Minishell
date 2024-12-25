@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 16:15:56 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 01:25:42 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 	int			check;
 
 	key = get_key(data);
+	check = check_key(env, key);
+	if (check == 1)
+		change_env_node(env, key, data);
+	else
+	{
+		new_node = create_node(data);
+		if (new_node != NULL)
+			add_node_back(env, new_node);
+	}
 	check = check_key(exp, key);
 	if (check == 1)
 		change_exp_node(exp, key, data);
@@ -40,15 +49,7 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 			add_node_back(exp, new_node);
 		set_split_exp_list(exp);
 	}
-	check = check_key(env, key);
-	if (check == 1)
-		change_env_node(env, key, data);
-	else
-	{
-		new_node = create_node(data);
-		if (new_node != NULL)
-			add_node_back(env, new_node);
-	}
+	free(key);
 }
 
 char	*get_key(char *data)
@@ -57,11 +58,14 @@ char	*get_key(char *data)
 	int		idx;
 	char	*key;
 
-	i = -1;
+	i = 0;
 	idx = check_equal_idx(data);
 	key = (char *)malloc(sizeof(char) * (idx + 1));
-	while (++i < idx)
+	while (i < idx)
+	{
 		key[i] = data[i];
+		i++;
+	}
 	key[i] = 0;
 	return (key);
 }
@@ -73,9 +77,10 @@ int	check_key(t_env_token *list, char *key)
 
 	temp = list;
 	len = ft_strlen(key);
-	while (temp != NULL)
+	while (temp && temp->env_data)
 	{
-		if (ft_strncmp(temp->env_data, key, len) == 0)
+		if (ft_strncmp(key, temp->env_data, len) == 0 \
+		&& (temp->env_data[len] == '=' || temp->env_data[len] == 0))
 			return (1);
 		temp = temp -> next;
 	}
@@ -85,6 +90,7 @@ int	check_key(t_env_token *list, char *key)
 void	change_exp_node(t_env_token *exp, char *key, char *data)
 {
 	t_env_token	*temp;
+	char		*new_data;
 	int			len;
 
 	temp = exp;
@@ -93,10 +99,14 @@ void	change_exp_node(t_env_token *exp, char *key, char *data)
 	{
 		if (ft_strncmp(temp->env_data, key, len) == 0)
 		{
+			new_data = ft_strdup(data);
+			if (!new_data)
+				return ;
 			free(temp->env_data);
-			temp->env_data = data;
+			temp->env_data = new_data;
 			split_key_val(temp);
 			return ;
 		}
+		temp = temp -> next;
 	}
 }
