@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:18:04 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:33:34 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # define PATH_MAX 4096
 
 typedef struct s_env_token

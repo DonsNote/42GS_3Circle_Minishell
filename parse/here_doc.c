@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 13:20:25 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:32:26 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ void	pipe_parse(t_token *token, t_info *info, char *file_name)
 	pid_t	pid;
 	char	*param;
 	char	*eof;
-	int		status;
 
 	eof = ft_strdup(token->data);
 	pid = fork();
 	if (pid == -1)
 		return ;
 	if (pid == 0)
-		if (wait(&status) == -1)
+		if (waitpid(pid, NULL, 0) == pid)
 			return ;
 	while (1)
 	{
