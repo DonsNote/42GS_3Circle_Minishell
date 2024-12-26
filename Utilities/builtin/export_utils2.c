@@ -6,13 +6,13 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 16:15:45 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 01:45:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_env_data(t_env_token *env_list, char *data, char *val, char *key)
+void	check_env_data(t_env_token *env_list, char *data, char *key, char *val)
 {
 	int			len;
 	char		*temp;
@@ -31,6 +31,7 @@ void	check_env_data(t_env_token *env_list, char *data, char *val, char *key)
 				free(node->env_data);
 			node->env_data = ft_strjoin(temp, val);
 			free(temp);
+			free(add_data);
 			return ;
 		}
 		node = node -> next;
@@ -41,7 +42,7 @@ void	check_env_data(t_env_token *env_list, char *data, char *val, char *key)
 void	update_exp_node(t_env_token *node, char *key, char *value)
 {
 	char		*new_value;
-	char		*new_env_data;
+	char		*temp_data;
 	t_env_token	*temp;
 
 	temp = node;
@@ -53,10 +54,11 @@ void	update_exp_node(t_env_token *node, char *key, char *value)
 			free_exp_key_value(temp);
 			temp->env_key = key;
 			temp->env_value = new_value;
-			free(temp->env_data);
-			new_env_data = ft_strjoin(temp->env_key, "=");
-			new_env_data = ft_strjoin(new_env_data, temp->env_value);
-			temp->env_data = new_env_data;
+			temp_data = ft_strjoin(temp->env_data, value);
+			if (temp->env_data != NULL)
+				free(temp->env_data);
+			temp->env_data = ft_strdup(temp_data);
+			free(temp_data);
 			return ;
 		}
 		temp = temp -> next;
