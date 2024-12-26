@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
+#    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/23 15:25:35 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/26 14:09:13 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = minishell.c \
 		Utilities/free.c \
 		Utilities/free2.c \
 		Utilities/error.c \
+		Utilities/builtin/execve.c\
 		Utilities/builtin/export_utils.c \
 		Utilities/builtin/export_utils2.c \
 		Utilities/builtin/export_utils3.c \

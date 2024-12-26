@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 21:46:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/22 00:48:13 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 00:26:28 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	change_env_node(t_env_token *env, char *key, char *data)
 {
 	t_env_token	*temp;
+	char		*new_data;
 	int			len;
 
 	temp = env;
@@ -23,8 +24,11 @@ void	change_env_node(t_env_token *env, char *key, char *data)
 	{
 		if (ft_strncmp(temp->env_data, key, len) == 0)
 		{
+			new_data = ft_strdup(data);
+			if (!new_data)
+				return ;
 			free(temp->env_data);
-			temp->env_data = data;
+			temp->env_data = new_data;
 			return ;
 		}
 		temp = temp -> next;

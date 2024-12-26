@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 16:16:01 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 01:38:09 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	find_exp_list(t_env_token *exp, char *data)
 	return (0);
 }
 
-
 void	add_exp_data(t_env_token *exp_list, char *data)
 {
 	t_env_token	*new_node;
@@ -123,7 +122,7 @@ int	check_equal_idx(char *exp_data)
 	int	i;
 
 	i = 0;
-	while (exp_data[i] != '=')
+	while (exp_data[i] != '=' && exp_data[i])
 		i++;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/24 01:30:59 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:13:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**create_envp(t_info *info)
 	temp = info->env;
 	envp = (char **)malloc(sizeof(char *) * (env_list_size(temp) + 1));
 	i = 0;
-	while (i < env_list_size(temp))
+	while (temp)
 	{
 		str = ft_strdup(temp->env_data);
 		envp[i] = ft_strdup(str);
@@ -59,7 +59,7 @@ void	init_cmd_lines(t_token *token, t_info *info)
 	temp = token;
 	size = check_token_size(temp);
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
-	info->paths = find_value(info->exp, "PATH");
+	info->paths = find_value(info, "PATH");
 	info->cmd_paths = ft_split(info->paths, ':');
 	if (!info->cmd_lines)
 		return ;
