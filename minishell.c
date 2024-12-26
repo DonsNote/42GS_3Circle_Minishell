@@ -6,14 +6,14 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:14:02 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:24:03 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	input(t_info *info);
-void print_type(t_token *token);
+int		input(t_info *info);
+void	print_type(t_token *token);
 
 int	main(int ac, char **av, char **envp)
 {
@@ -61,7 +61,7 @@ int	input(t_info *info)
 	return (0);
 }
 
-void print_type(t_token *token)
+void	print_type(t_token *token)
 {
 	if (token->type == E_TYPE_CMD)
 		printf("CMD : %s\n", token->data);
@@ -69,7 +69,19 @@ void print_type(t_token *token)
 		printf("OPTION : %s\n", token->data);
 	else if (token->type == E_TYPE_PARAM)
 		printf("PARAM : %s\n", token->data);
-	else
-		printf("Othe : %s\n", token->data);
+	else if (token->type == E_TYPE_PIPE)
+		printf("PIPE : %s\n", token->data);
+	else if (token->type == E_TYPE_FILE)
+		printf("FILE : %s\n", token->data);
+	else if (token->type == E_TYPE_SP)
+		printf("SP : %s\n", token->data);
+	else if (token->type == E_TYPE_IN)
+		printf("IN : %s\n", token->data);
+	else if (token->type == E_TYPE_OUT)
+		printf("OUT : %s\n", token->data);
+	else if (token->type == E_TYPE_HERE_DOC)
+		printf("HERE_DOC : %s\n", token->data);
+	else if (token->type == E_TYPE_GREAT)
+		printf("GREAT : %s\n", token->data);
 	return ;
 }

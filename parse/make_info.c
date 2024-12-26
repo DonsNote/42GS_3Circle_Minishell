@@ -6,13 +6,14 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:04:27 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/19 23:52:35 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/24 23:40:26 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 char	*init_info(t_env_token *exp, char *type);
+void	init_qustion_mark(t_info *info);
 
 t_info	*make_info(char **envp)
 {
@@ -28,6 +29,7 @@ t_info	*make_info(char **envp)
 	info->oldpwd = init_info(info->exp, "OLDPWD");
 	if (!info->env || !info->exp || !info->home || !info->pwd || !info->oldpwd)
 		return (NULL);
+	init_qustion_mark(info);
 	return (info);
 }
 
@@ -47,4 +49,25 @@ char	*init_info(t_env_token *exp, char *type)
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+void	init_qustion_mark(t_info *info)
+{
+	t_env_token	*temp;
+	t_env_token	*tmp;
+
+	temp = info->exp;
+	tmp = (t_env_token *)malloc(sizeof(t_env_token) * 1);
+	tmp->env_data = NULL;
+	tmp->env_key = (char *)malloc(sizeof(char) * 2);
+	tmp->env_key[0] = '?';
+	tmp->env_key[1] = '\0';
+	tmp->env_value = (char *)malloc(sizeof(char) * 2);
+	tmp->env_value[0] = 48;
+	tmp->env_value[1] = '\0';
+	tmp->next = NULL;
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = tmp;
+	return ;
 }
