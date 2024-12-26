@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:33:34 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 15:17:40 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int			check_param(char *param);
 t_info		*make_info(char **envp);
 void		input_env_data(t_env_token *new, char *data);
 t_check		check_first(char c);
-t_type		check_type(t_token *token, t_check check, int i);
+t_type		check_type(t_token *token, t_check check, int i, char *param);
 t_type		check_oper(t_token *token, int i);
 t_token		*make_new_token(t_token *token, int i);
 int			is_quote(t_token *token);

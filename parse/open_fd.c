@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:21:05 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/24 19:29:53 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:22:09 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	open_fd(t_token *token, t_info *info)
 				return (1);
 		}
 		else if (tmp->type == E_TYPE_HERE_DOC)
-			if (here_doc(token, info))
+			if (here_doc(token->next, info))
 				return (1);
 		tmp = tmp->next;
 	}

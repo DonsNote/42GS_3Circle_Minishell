@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 14:17:14 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:06:22 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_token	*tokenize(char *param, t_info *info)
 	if (token == NULL)
 		return (NULL);
 	token->data = ft_strdup(param);
-	token->type = check_type(NULL, check_first(param[0]), 0);
-	token->fd = 0;
+	token->type = check_type(NULL, check_first(param[0]), 0, param);
+	token->fd = -1;
 	token->next = NULL;
 	if (make_token(token, info))
 	{

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:33:40 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 00:41:31 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:16:45 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,18 @@ char	*ft_itoa(int num)
 
 	size = 0;
 	num_tmp = num;
-	while (num_tmp % 10 <= 0)
+	while (num_tmp / 10 > 0)
 	{
 		num_tmp = num_tmp / 10;
 		size = size + 1;
 	}
+	size = size + 1;
 	tmp = (char *)malloc(sizeof(char) * size + 1);
 	if (tmp == NULL)
 		return (NULL);
 	tmp[size] = '\0';
 	size = size - 1;
-	while (size < 0)
+	while (size >= 0)
 	{
 		tmp[size] = num % 10 + 48;
 		num = num / 10;
