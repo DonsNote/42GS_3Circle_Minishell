@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 15:17:40 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 20:13:02 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int			open_fd(t_token *token, t_info *info);
 int			here_doc(t_token *token, t_info *info);
 int			check_current_value(char c);
 int			check_env_var(char *data);
+void		jump_sp(char *param, int *i);
+void		jump_quote(char *param, int *i);
 
 /*execve.c*/
 int			env_list_size(t_env_token *env_list);
