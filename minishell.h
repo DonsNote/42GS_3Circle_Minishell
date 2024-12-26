@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 00:44:26 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:18:04 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,6 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # define PATH_MAX 4096
-
-# define READ 0
-# define WRITE 1
-
-# define STD_IN 0
-# define STD_OUT 1
 
 typedef struct s_env_token
 {
@@ -234,8 +228,6 @@ int			ft_strcmp(char *s1, char *s2);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 char		*ft_strjoin(char *s1, char *s2);
 char		**ft_split(char const *s, char c);
-int			ft_atoi(const char *str);
-char		*ft_itoa(int num);
 int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str, int flag);
@@ -245,5 +237,7 @@ void		free_info(t_info *info);
 void		free_env_token(t_env_token *token);
 int			ft_isalpha(char c);
 int			ft_isdigit(char c);
+int			ft_atoi(const char *str);
+char		*ft_itoa(int num);
 
 #endif

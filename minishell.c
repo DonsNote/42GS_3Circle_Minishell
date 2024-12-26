@@ -6,14 +6,14 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/24 23:34:49 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:24:03 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	input(t_info *info);
-void print_type(t_token *token);
+int		input(t_info *info);
+void	print_type(t_token *token);
 
 int	main(int ac, char **av, char **envp)
 {
@@ -61,7 +61,7 @@ int	input(t_info *info)
 	return (0);
 }
 
-void print_type(t_token *token)
+void	print_type(t_token *token)
 {
 	if (token->type == E_TYPE_CMD)
 		printf("CMD : %s\n", token->data);
