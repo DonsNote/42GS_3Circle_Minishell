@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 01:40:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 14:40:06 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ static void	change_match_exp(t_env_token *exp, char *key, char *val)
 	char	*new_value;
 
 	new_key = ft_strdup(key);
+	new_value = NULL;
 	if (!new_key)
 	{
 		free_data_val(NULL, NULL, key, val);
 		return ;
 	}
-	if (val)
+	if (val != NULL)
 	{
 		new_value = ft_strdup(val);
 		if (!new_value)
