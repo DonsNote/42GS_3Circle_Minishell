@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/21 23:21:05 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:31:25 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	free_token(t_token *token)
 	t_token	*tmp;
 	t_token	*temp;
 
+	if (token == NULL)
+		return ;
 	tmp = token;
 	temp = NULL;
 	while (tmp != NULL)
