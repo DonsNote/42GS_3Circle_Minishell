@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 16:04:40 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:42:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ int	print_cd_error(char *str, int flag)
 		printf("mini: cd: %s not set\n", str);
 	else if (flag == 4)
 		printf("mini: cd: %s\n", str);
+	return (1);
+}
+
+int	print_execve_error(char *str)
+{
+	printf("mini: Command \'%s\' not found\n", str);
 	return (1);
 }

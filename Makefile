@@ -6,7 +6,7 @@
 #    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/26 14:34:24 by junseyun         ###   ########.fr        #
+#    Updated: 2024/12/27 14:53:20 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS = minishell.c \
 		built_in/built_in.c \
 		built_in/echo.c \
 		built_in/env.c \
+		built_in/exec.c\
 		built_in/export.c \
 		built_in/export_sort.c \
 		built_in/pwd.c \
