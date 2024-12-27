@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 14:31:42 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:46:59 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	pipe_parse(t_token *token, t_info *info, char *file_name)
 	}
 	else if (pid > 0)
 	{
-		signal(SIGINT, sig_handler_pa);
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, NULL, 0);
 		signal(SIGINT, sig_handler_child);
 		token->data = file_name;
@@ -50,6 +50,8 @@ void	child_process(t_token *token, t_info *info)
 	while (1)
 	{
 		param = readline("heredoc>");
+		if (param == NULL)
+			break ;
 		if (param[0] == '\0')
 			continue ;
 		if (eof_check(token, eof, param))

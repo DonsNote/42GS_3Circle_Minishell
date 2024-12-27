@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:04:53 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 11:10:06 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:20:47 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 void	sig_handler_pa(int sig)
 {
 	if (sig == SIGINT)
-		signal(SIGINT, SIG_IGN);
+	{
+		rl_replace_line("", 1);
+        printf("\n");
+        rl_on_new_line();
+        rl_redisplay();
+	}
 	return ;
 }
 
