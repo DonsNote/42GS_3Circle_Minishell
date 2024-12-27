@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 20:47:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:55:59 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1 || av[1] != NULL)
 		return (print_error(1));
-	signal(SIGINT, sig_handler_child);
+	signal(SIGQUIT, SIG_IGN);
 	info = make_info(envp);
 	if (info == NULL)
 		return (print_error(1));
@@ -39,7 +39,10 @@ int	input(t_info *info)
 	token = NULL;
 	while (1)
 	{
+		signal(SIGINT, sig_handler_pa);
 		param = readline("DJ_Shell>");
+		if (param == NULL)
+			break ;
 		if (param[0] == '\0')
 			continue ;
 		else
