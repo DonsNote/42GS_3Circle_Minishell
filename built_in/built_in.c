@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 14:50:07 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:12:24 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ int	check_operator(t_token *token)
 	if (i == cnt)
 		return (1);
 	return (0);
+}
+
+int	check_redirection(t_token *token)
+{
+	t_token	*temp;
+	int		cnt;
+
+	cnt = 0;
+	temp = token;
+	while (temp != NULL)
+	{
+		if (temp->type == E_TYPE_GREAT || temp->type == E_TYPE_HERE_DOC \
+		|| temp->type == E_TYPE_IN || temp->type == E_TYPE_OUT)
+			cnt++;
+		temp = temp -> next;
+	}
+	return (cnt);
 }
 
 int	check_pipe(t_token *token)
@@ -78,8 +95,48 @@ int	built_in(t_token *token, t_info *info)
 	temp = token;
 	if (check_operator(temp))
 		execute_cmd(temp, info);
-	// else
+	else
+		execute_cmd_operator(temp, info);
+	return (1);
+}
+
+void	execute_cmd_operator(t_token *token, t_info *info)
+{
+	t_token	*temp;
+
+	temp = token;
+	// if (check_pipe(temp) && check_redirection(temp))
 	// {
 	// }
-	return (1);
+	// else if (check_pipe(temp) && !check_redirection(temp))
+	// {
+	// }
+	if (!check_pipe(temp) && check_redirection(temp))
+		redirection_cmd(temp, info);
+}
+
+void	redirection_cmd(t_token *token, t_info *info)
+{
+	t_token	*temp;
+	t_type	temp_type;
+	int		fd_val;
+	int		old;
+
+	old = dup(1);
+	temp = token;
+	while (temp)
+	{
+		temp_type = temp->type;
+		if (temp_type == E_TYPE_GREAT || temp_type == E_TYPE_IN \
+		|| temp_type == E_TYPE_OUT)
+		{
+			fd_val = temp->next->fd;
+			break ;
+		}
+		temp = temp -> next;
+	}
+	dup2(fd_val, 1);
+	execute_cmd(token, info);
+	dup2(old, 1);
+	close(fd_val);
 }

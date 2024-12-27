@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
 /*   Updated: 2024/12/27 20:55:59 by dohyuki2         ###   ########.fr       */
@@ -36,6 +36,7 @@ int	input(t_info *info)
 	char	*param;
 	t_token	*tmp;
 
+	token = NULL;
 	while (1)
 	{
 		signal(SIGINT, sig_handler_pa);
@@ -57,9 +58,9 @@ int	input(t_info *info)
 				tmp = tmp->next;
 			}
 			if (built_in(token, info))
-				continue ;
+				free_token(token);
+				// continue ;
 		}
-		free_token(token);
 	}
 	free_all(token, info);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 14:23:35 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:25:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,12 @@ int			execute_single_cmd(t_info *info, char **envp);
 
 /*built_in*/
 int			check_operator(t_token *token);
+int			check_redirection(t_token *token);
 int			check_pipe(t_token *token);
 void		execute_cmd(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
+void		execute_cmd_operator(t_token *token, t_info *info);
+void		redirection_cmd(t_token *token, t_info *info);
 
 /*ft_split.c*/
 char		**ft_split(char const *s, char c);
@@ -193,8 +196,6 @@ char		*create_env_data(char *data);
 void		free_env_val(t_env_token *list);
 void		free_exp_key_value(t_env_token *node);
 void		free_node_data(t_env_token *node);
-void		free_child(t_info *info);
-void		free_parent(t_info *info);
 void		free_envp(char **envp);
 
 /*list_utils.c*/
