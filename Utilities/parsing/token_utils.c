@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 17:06:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:34:49 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ t_type	check_type(t_token *token, t_check check, int i, char *param)
 
 t_type	first_type(char *param)
 {
-	if (param[0] == 39 || param[0] == 34)
-		return (E_TYPE_CMD);
 	if (param[0] == 32)
 		return (E_TYPE_SP);
 	if (param[0] == 45)
@@ -88,7 +86,7 @@ t_type	first_type(char *param)
 			return (E_TYPE_GREAT);
 		return (E_TYPE_OUT);
 	}
-	return (E_TYPE_PARAM);
+	return (E_TYPE_CMD);
 }
 
 t_check	check_first(char c)
