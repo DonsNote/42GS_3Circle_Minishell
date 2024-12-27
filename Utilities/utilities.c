@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 13:23:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 00:57:53 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_strncmp(const char *s1, const char *s2, int n)
 	int	i;
 
 	i = 0;
-	if (n == 0)
+	if (n <= 0)
 		return (0);
 	while (i < n - 1 && s1[i] && s2[i] && s1[i] == s2[i])
 		i++;

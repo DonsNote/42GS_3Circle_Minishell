@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:33:34 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:33:14 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,8 @@ char		*split_value(char *data);
 void		add_new_exp_node(t_env_token *list, char *data);
 void		add_exp_env_data(t_env_token *exp, t_env_token *env, char *data);
 char		*get_key(char *data);
-int			check_key(t_env_token *list, char *key);
+int			check_key_env(t_env_token *list, char *key);
+int			check_key_exp(t_env_token *list, char *key);
 void		change_exp_node(t_env_token *exp, char *key, char *data);
 
 /*export_utils4.c*/

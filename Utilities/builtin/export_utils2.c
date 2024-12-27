@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 01:45:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 01:49:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,62 @@ void	check_env_data(t_env_token *env_list, char *data, char *key, char *val)
 	add_new_exp_node(env_list, add_data);
 }
 
+static char	*get_new_value(t_env_token *temp, char *value)
+{
+	if (temp->env_value && value)
+		return (ft_strjoin(temp->env_value, value));
+	if (value != NULL)
+		return (ft_strdup(value));
+	return (NULL);
+}
+
+static char	*get_temp_data(char *data, char *key, char *value)
+{
+	char	*result;
+	char	*temp;
+
+	if (data != NULL && value != NULL)
+		result = ft_strjoin(data, value);
+	else if (data != NULL)
+		result = ft_strdup(data);
+	else if (value != NULL)
+	{
+		temp = ft_strjoin(key, "=");
+		result = ft_strjoin(temp, value);
+		free(temp);
+	}
+	else
+		result = NULL;
+	return (result);
+}
+
 void	update_exp_node(t_env_token *node, char *key, char *value)
 {
 	char		*new_value;
 	char		*temp_data;
 	t_env_token	*temp;
 
+	if (!node || !key)
+		return ;
 	temp = node;
 	while (temp)
 	{
-		if (ft_strcmp(temp->env_key, key) == 0)
+		if (temp->env_key && ft_strcmp(temp->env_key, key) == 0)
 		{
-			new_value = ft_strjoin(temp->env_value, value);
+			new_value = get_new_value(temp, value);
+			temp_data = get_temp_data(temp->env_data, key, value);
 			free_exp_key_value(temp);
 			temp->env_key = key;
 			temp->env_value = new_value;
-			temp_data = ft_strjoin(temp->env_data, value);
-			if (temp->env_data != NULL)
-				free(temp->env_data);
-			temp->env_data = ft_strdup(temp_data);
-			free(temp_data);
+			free(temp->env_data);
+			temp->env_data = temp_data;
 			return ;
 		}
 		temp = temp -> next;
 	}
+	free(key);
+	if (value != NULL)
+		free(value);
 }
 
 void	add_export(t_env_token *env, t_env_token *exp, char *data)

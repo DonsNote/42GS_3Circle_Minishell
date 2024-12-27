@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:13:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:59:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,36 @@ void	init_cmd_lines(t_token *token, t_info *info)
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
 	info->paths = find_value(info, "PATH");
 	info->cmd_paths = ft_split(info->paths, ':');
+	i = 0;
 	if (!info->cmd_lines)
 		return ;
 	while (temp)
 	{
 		if (temp->type == E_TYPE_CMD || temp->type == E_TYPE_OPTION \
 		|| temp->type == E_TYPE_PARAM)
+		{
 			info->cmd_lines[i] = ft_strdup(temp->data);
-		i++;
+			i++;
+		}
 		temp = temp -> next;
 	}
 	info->cmd_lines[i] = 0;
 }
+
+// int	execute_single_cmd(t_info *info, char **envp, t_token *token)
+// {
+// 	t_token	*temp;
+// 	pid_t	pid;
+
+// 	temp = token;
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (!info->paths)
+// 		{
+// 			print_cd_error(temp->data, 1);
+// 			return (1); // exit? signal?
+// 		}
+// 		execve(info->paths)
+// 	}
+// }
