@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 20:12:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 02:21:50 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,24 +119,49 @@ void	redirection_cmd(t_token *token, t_info *info)
 {
 	t_token	*temp;
 	t_type	temp_type;
-	int		fd_val;
-	int		old;
 
-	old = dup(1);
 	temp = token;
 	while (temp)
 	{
 		temp_type = temp->type;
-		if (temp_type == E_TYPE_GREAT || temp_type == E_TYPE_IN \
-		|| temp_type == E_TYPE_OUT)
-		{
-			fd_val = temp->next->fd;
-			break ;
-		}
+		if (temp_type == E_TYPE_GREAT || temp_type == E_TYPE_OUT)
+			redir_out_cmd(token, info, temp->next->fd);
+		else if (temp->type == E_TYPE_IN)
+			redir_in_cmd(token, info, temp->next->fd);
+		else if (temp->type == E_TYPE_HERE_DOC)
+			redir_here_cmd(token, info, temp->next->fd, temp->next->data);
 		temp = temp -> next;
 	}
-	dup2(fd_val, 1);
+}
+
+void	redir_out_cmd(t_token *token, t_info *info, pid_t fd)
+{
+	int		old;
+
+	old = dup(1);
+	dup2(fd, 1);
 	execute_cmd(token, info);
 	dup2(old, 1);
-	close(fd_val);
+	close(fd);
+}
+void	redir_in_cmd(t_token *token, t_info *info, pid_t fd)
+{
+	int		old;
+
+	old = dup(0);
+	dup2(fd, 0);
+	exec_cmd(token, info);
+	dup2(old, 0);
+	close(fd);
+}
+void	redir_here_cmd(t_token *token, t_info *info, pid_t fd, char *data)
+{
+	int		old;
+
+	old = dup(0);
+	dup2(fd, 0);
+	exec_cmd(token, info);
+	dup2(old, 0);
+	close(fd);
+	unlink(data);
 }
