@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:33:34 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:52:14 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ int			check_env_var(char *data);
 int			env_list_size(t_env_token *env_list);
 char		**create_envp(t_info *info);
 void		init_cmd_lines(t_token *token, t_info *info);
+char		*combine_cmd(char **path, char *cmd);
+int			check_paths(t_info *info);
+int			execute_single_cmd(t_info *info, char **envp);
 
 /*built_in*/
 int			check_operator(t_token *token);
@@ -133,6 +136,9 @@ void		cmd_echo(t_token *node);
 /*env.c*/
 void		cmd_env(t_env_token *list);
 void		print_exp_list(t_env_token *list);
+
+/*exec.c*/
+void		exec_cmd(t_token *token, t_info *info);
 
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
@@ -158,7 +164,8 @@ char		*split_value(char *data);
 void		add_new_exp_node(t_env_token *list, char *data);
 void		add_exp_env_data(t_env_token *exp, t_env_token *env, char *data);
 char		*get_key(char *data);
-int			check_key(t_env_token *list, char *key);
+int			check_key_env(t_env_token *list, char *key);
+int			check_key_exp(t_env_token *list, char *key);
 void		change_exp_node(t_env_token *exp, char *key, char *data);
 
 /*export_utils4.c*/
@@ -179,6 +186,9 @@ char		*create_env_data(char *data);
 void		free_env_val(t_env_token *list);
 void		free_exp_key_value(t_env_token *node);
 void		free_node_data(t_env_token *node);
+void		free_child(t_info *info);
+void		free_parent(t_info *info);
+void		free_envp(char **envp);
 
 /*list_utils.c*/
 t_env_token	*create_node(char *data);
@@ -232,6 +242,7 @@ char		**ft_split(char const *s, char c);
 int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str, int flag);
+int			print_execve_error(char *str);
 void		free_all(t_token *token, t_info *info);
 void		free_token(t_token *token);
 void		free_info(t_info *info);

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 14:40:06 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:44:05 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	join_exp_data(t_env_token *exp, t_env_token *env, char *data)
 	add_export(env, exp, data);
 }
 
-
 int	check_validation(char *data)
 {
 	int		i;
@@ -90,16 +89,6 @@ int	check_validation(char *data)
 		free(key);
 		return (-1);
 	}
-	else
-	{
-		while (data[i])
-		{
-			if (data[i] == '=')
-				break ;
-			i++;
-		}
-	}
-	free(key);
 	return (0);
 }
 

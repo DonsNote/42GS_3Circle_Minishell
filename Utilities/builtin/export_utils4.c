@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 21:46:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 00:26:28 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 00:57:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	change_env_node(t_env_token *env, char *key, char *data)
 	char		*new_data;
 	int			len;
 
+	if (!env || !key || !data)
+		return ;
 	temp = env;
 	len = ft_strlen(key);
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->env_data, key, len) == 0)
+		if (temp->env_data && ft_strncmp(temp->env_data, key, len) == 0)
 		{
 			new_data = ft_strdup(data);
 			if (!new_data)
@@ -65,7 +67,7 @@ void	set_split_exp_list(t_env_token *exp_list)
 	t_env_token	*node;
 
 	node = exp_list;
-	while (node != NULL)
+	while (node)
 	{
 		split_key_val(node);
 		node = node->next;
