@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:09:15 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 01:25:42 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:42:31 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,21 @@ void	add_exp_env_data(t_env_token *exp, t_env_token *env, char *data)
 	int			check;
 
 	key = get_key(data);
-	check = check_key(env, key);
+	check = check_key_env(env, key);
 	if (check == 1)
 		change_env_node(env, key, data);
 	else
 	{
 		new_node = create_node(data);
-		if (new_node != NULL)
-			add_node_back(env, new_node);
+		add_node_back(env, new_node);
 	}
-	check = check_key(exp, key);
+	check = check_key_exp(exp, key);
 	if (check == 1)
 		change_exp_node(exp, key, data);
 	else
 	{
 		new_node = create_node(data);
-		if (new_node != NULL)
-			add_node_back(exp, new_node);
+		add_node_back(exp, new_node);
 		set_split_exp_list(exp);
 	}
 	free(key);
@@ -58,29 +56,43 @@ char	*get_key(char *data)
 	int		idx;
 	char	*key;
 
-	i = 0;
+	i = -1;
 	idx = check_equal_idx(data);
 	key = (char *)malloc(sizeof(char) * (idx + 1));
-	while (i < idx)
-	{
+	while (++i < idx)
 		key[i] = data[i];
-		i++;
-	}
 	key[i] = 0;
 	return (key);
 }
 
-int	check_key(t_env_token *list, char *key)
+int	check_key_env(t_env_token *list, char *key)
 {
 	t_env_token	*temp;
 	int			len;
 
 	temp = list;
 	len = ft_strlen(key);
-	while (temp && temp->env_data)
+	while (temp)
 	{
 		if (ft_strncmp(key, temp->env_data, len) == 0 \
 		&& (temp->env_data[len] == '=' || temp->env_data[len] == 0))
+			return (1);
+		temp = temp -> next;
+	}
+	return (0);
+}
+
+int	check_key_exp(t_env_token *list, char *key)
+{
+	t_env_token	*temp;
+	int			len;
+
+	temp = list;
+	len = ft_strlen(key);
+	while (temp)
+	{
+		if (ft_strncmp(key, temp->env_key, len) == 0 \
+		&& temp->env_key[len] == 0)
 			return (1);
 		temp = temp -> next;
 	}
@@ -93,11 +105,13 @@ void	change_exp_node(t_env_token *exp, char *key, char *data)
 	char		*new_data;
 	int			len;
 
+	if (!exp || !key || !data)
+		return ;
 	temp = exp;
 	len = ft_strlen(key);
-	while (temp != NULL)
+	while (temp)
 	{
-		if (ft_strncmp(temp->env_data, key, len) == 0)
+		if (temp->env_data && ft_strncmp(temp->env_data, key, len) == 0)
 		{
 			new_data = ft_strdup(data);
 			if (!new_data)

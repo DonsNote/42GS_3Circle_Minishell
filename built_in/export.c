@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 01:38:09 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 00:48:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ int	find_exp_list(t_env_token *exp, char *data)
 	temp = exp;
 	while (temp)
 	{
-		if (ft_strncmp(temp->env_data, data, ft_strlen(data)) == 0)
+		if (temp->env_data != NULL \
+		&& ft_strncmp(temp->env_data, data, ft_strlen(data)) == 0)
 		{
-			if (ft_strncmp(temp->env_key, data, ft_strlen(data)) == 0)
+			if (temp->env_key != NULL \
+			&& ft_strncmp(temp->env_key, data, ft_strlen(data)) == 0)
 				return (1);
 			else
 			{
@@ -108,7 +110,8 @@ void	add_exp_data(t_env_token *exp_list, char *data)
 		add_node_back(exp_list, new_node);
 	while (temp)
 	{
-		if (ft_strcmp(temp->env_data, data) == 0)
+		if (temp->env_data != NULL \
+		&& ft_strncmp(temp->env_data, data, ft_strlen(data)) == 0)
 		{
 			temp->env_key = ft_strdup(data);
 			break ;
@@ -121,6 +124,8 @@ int	check_equal_idx(char *exp_data)
 {
 	int	i;
 
+	if (!exp_data)
+		return (0);
 	i = 0;
 	while (exp_data[i] != '=' && exp_data[i])
 		i++;

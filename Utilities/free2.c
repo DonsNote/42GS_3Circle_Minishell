@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:21 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/21 23:38:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:00:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,45 @@ void	free_env_val(t_env_token *list)
 		free(temp);
 		list = list -> next;
 	}
+}
+
+void	free_child(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (info->cmd_lines[i])
+	{
+		free(info->cmd_lines[i]);
+		i++;
+	}
+	free(info->cmd_lines);
+	if (info->cmd != NULL)
+		free(info->cmd);
+}
+
+void	free_parent(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (info->cmd_paths[i])
+	{
+		free(info->cmd_paths[i]);
+		i++;
+	}
+	free(info->cmd_paths);
+}
+
+void	free_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
 }

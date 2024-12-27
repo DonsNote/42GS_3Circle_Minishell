@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:52:47 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/23 00:51:25 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:42:27 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env_token	*create_node(char *data)
 	new_node = (t_env_token *)malloc(sizeof(t_env_token));
 	if (!new_node)
 		return (NULL);
-	new_node->env_data = data;
+	new_node->env_data = ft_strdup(data);
 	new_node->next = NULL;
 	new_node->env_key = NULL;
 	new_node->env_value = NULL;
@@ -32,7 +32,7 @@ t_env_token	*last_node(t_env_token *list)
 		return (0);
 	while (list)
 	{
-		if (!(list -> next))
+		if (!list->next)
 			return (list);
 		list = list -> next;
 	}

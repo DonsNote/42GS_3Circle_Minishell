@@ -38,6 +38,7 @@ SRCS = minishell.c \
 		built_in/built_in.c \
 		built_in/echo.c \
 		built_in/env.c \
+		built_in/exec.c\
 		built_in/export.c \
 		built_in/export_sort.c \
 		built_in/pwd.c \
