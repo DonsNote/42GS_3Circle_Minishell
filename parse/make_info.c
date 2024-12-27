@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:04:27 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 19:52:37 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:39:44 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ t_info	*make_info(char **envp)
 	info->oldpwd = init_info(info->exp, "OLDPWD");
 	if (!info->env || !info->exp || !info->home || !info->pwd || !info->oldpwd)
 		return (NULL);
+	info->paths = NULL;
+	info->cmd = NULL;
+	info->cmd_lines = NULL;
+	info->cmd_paths = NULL;
 	init_qustion_mark(info);
 	return (info);
 }
