@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:49:26 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/24 19:17:28 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:52:16 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	make_oper_token(t_token *token, char type)
 	i = 0;
 	while (token->data[i] == type && token->data[i] != '\0')
 		++i;
+	printf("Size : %d\n", i);
 	tmp = (char *)malloc(sizeof(char) * (i + 1));
 	i = 0;
 	while (token->data[i] == type && token->data[i] != '\0')
