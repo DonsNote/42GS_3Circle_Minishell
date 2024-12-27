@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 12:59:11 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 11:04:24 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac != 1 || av[1] != NULL)
 		return (print_error(1));
+	signal(SIGINT, sig_handler_child);
 	info = make_info(envp);
 	if (info == NULL)
 		return (print_error(1));
@@ -40,7 +41,7 @@ int	input(t_info *info)
 		param = readline("DJ_Shell>");
 		if (param[0] == '\0')
 			continue ;
-		else if (param)
+		else
 		{
 			add_history(param);
 			token = tokenize(param, info);

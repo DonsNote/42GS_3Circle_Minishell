@@ -6,15 +6,16 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 14:16:16 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:06:29 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 t_type	check_oper(t_token *token, int i);
-t_type	check_type(t_token *token, t_check check, int i);
+t_type	check_type(t_token *token, t_check check, int i, char *param);
 t_check	check_first(char c);
+t_type	first_type(char *param);
 
 t_token	*make_new_token(t_token *token, int i)
 {
@@ -26,8 +27,8 @@ t_token	*make_new_token(t_token *token, int i)
 	new = (t_token *)malloc(sizeof(t_token) * 1);
 	if (new == NULL)
 		return (NULL);
-	new->type = check_type(token, check_first(token->data[i]), i);
-	new->fd = 0;
+	new->type = check_type(token, check_first(token->data[i]), i, NULL);
+	new->fd = -1;
 	new->next = NULL;
 	new->data = (char *)malloc(sizeof(char) * (ft_strlen(token->data) - i + 1));
 	if (new->data == NULL)
@@ -44,11 +45,10 @@ t_token	*make_new_token(t_token *token, int i)
 	return (new);
 }
 
-t_type	check_type(t_token *token, t_check check, int i)
+t_type	check_type(t_token *token, t_check check, int i, char *param)
 {
-	if (token == NULL && (check == E_Q || check == E_DQ
-			|| check == E_STR))
-		return (E_TYPE_CMD);
+	if (token == NULL)
+		return (first_type(param));
 	if (token->type == E_TYPE_PIPE && (check == E_Q || check == E_DQ
 			|| check == E_STR))
 		return (E_TYPE_CMD);
@@ -63,6 +63,31 @@ t_type	check_type(t_token *token, t_check check, int i)
 		return (E_TYPE_SP);
 	if (check == E_OPER)
 		return (check_oper(token, i));
+	return (E_TYPE_PARAM);
+}
+
+t_type	first_type(char *param)
+{
+	if (param[0] == 39 || param[0] == 34)
+		return (E_TYPE_CMD);
+	if (param[0] == 32)
+		return (E_TYPE_SP);
+	if (param[0] == 45)
+		return (E_TYPE_OPTION);
+	if (param[0] == '|')
+		return (E_TYPE_PIPE);
+	if (param[0] == '<')
+	{
+		if (param[1] == '<')
+			return (E_TYPE_HERE_DOC);
+		return (E_TYPE_IN);
+	}
+	if (param[0] == '>')
+	{
+		if (param[1] == '>')
+			return (E_TYPE_GREAT);
+		return (E_TYPE_OUT);
+	}
 	return (E_TYPE_PARAM);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 14:52:14 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/27 14:23:35 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ typedef enum e_check
 	E_OPER
 }	t_check;
 
+
+/*Signal*/
+void		sig_handler_pa(int sig);
+void		sig_handler_child(int sig);
+
 /*parse*/
 t_token		*tokenize(char *param, t_info *info);
 t_env_token	*exp_tokenize(char **envp);
@@ -93,7 +98,7 @@ int			check_param(char *param);
 t_info		*make_info(char **envp);
 void		input_env_data(t_env_token *new, char *data);
 t_check		check_first(char c);
-t_type		check_type(t_token *token, t_check check, int i);
+t_type		check_type(t_token *token, t_check check, int i, char *param);
 t_type		check_oper(t_token *token, int i);
 t_token		*make_new_token(t_token *token, int i);
 int			is_quote(t_token *token);
@@ -105,9 +110,11 @@ int			is_oper(t_token *token);
 int			is_option(t_token *token, t_info *info);
 void		substitution(t_token *token, t_info *info, char *tmp);
 int			open_fd(t_token *token, t_info *info);
-int			here_doc(t_token *token, t_info *info);
+int			here_doc(t_token *head, t_token *token, t_info *info);
 int			check_current_value(char c);
 int			check_env_var(char *data);
+void		jump_sp(char *param, int *i);
+void		jump_quote(char *param, int *i);
 
 /*execve.c*/
 int			env_list_size(t_env_token *env_list);
