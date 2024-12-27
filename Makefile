@@ -6,7 +6,7 @@
 #    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/26 20:13:50 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/27 10:57:14 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = minishell.c \
 		Utilities/free.c \
 		Utilities/free2.c \
 		Utilities/error.c \
+		Utilities/signal.c \
 		Utilities/builtin/execve.c\
 		Utilities/builtin/export_utils.c \
 		Utilities/builtin/export_utils2.c \
