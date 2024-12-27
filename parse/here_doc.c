@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 16:46:59 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:21:47 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	pipe_parse(t_token *token, t_info *info, char *file_name)
 		return (0);
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, sig_handler_child);
 		child_process(token, info);
 		return (1);
@@ -34,7 +35,8 @@ int	pipe_parse(t_token *token, t_info *info, char *file_name)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, NULL, 0);
-		signal(SIGINT, sig_handler_child);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sig_handler_pa);
 		token->data = file_name;
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 17:06:22 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/27 20:49:38 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_token	*tokenize(char *param, t_info *info)
 		print_error(1);
 		return (NULL);
 	}
+	printf("TEST\n");
 	organize_token(token);
 	return (token);
 }
