@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 03:52:28 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 04:03:23 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,7 +338,6 @@ void	finish_execution(t_info *info, int pipe_cnt)
 		free(info->pids);
 		info->pids = NULL;
 	}
-	free_info(info);
 }
 
 t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
@@ -480,7 +479,6 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 	close_pipes(info, pipe_cnt, idx);
 	execute_pipeline_cmd(info, token, envp);
 	ft_putendl_fd("Command execution failed", 2);
-	free_info(info);
 	exit(1);
 }
 
