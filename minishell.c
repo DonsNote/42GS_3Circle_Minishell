@@ -55,6 +55,8 @@ int	input(t_info *info)
 			tmp = token;
 			while (tmp != NULL)
 			{
+				if (tmp->type != E_TYPE_SP)
+					printf("data = %s\n",tmp->data);
 				print_type(tmp);
 				tmp = tmp->next;
 			}
