@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:04:53 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 10:39:09 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 11:01:43 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sig_handler_pa(int sig)
 {
 	if (sig == SIGINT)
 	{
-		// rl_replace_line("", 1);
+		rl_replace_line("", 1);
 		printf("\n");
 		rl_on_new_line();
 		rl_redisplay();
