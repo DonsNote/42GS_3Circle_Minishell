@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 15:34:49 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:35:02 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ t_token	*make_new_token(t_token *token, int i)
 	t_token	*new;
 
 	if (token->data[i] == '\0')
+	{
+		free(token->data);
 		return (NULL);
+	}
 	new = (t_token *)malloc(sizeof(t_token) * 1);
 	if (new == NULL)
 		return (NULL);

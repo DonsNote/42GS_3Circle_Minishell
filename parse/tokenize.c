@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 20:49:38 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:29:41 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*tokenize(char *param, t_info *info)
 	token = (t_token *)malloc(sizeof(t_token) * 1);
 	if (token == NULL)
 		return (NULL);
-	token->data = ft_strdup(param);
+	token->data = param;
 	token->type = check_type(NULL, check_first(param[0]), 0, param);
 	token->fd = -1;
 	token->next = NULL;
@@ -39,7 +39,6 @@ t_token	*tokenize(char *param, t_info *info)
 		print_error(1);
 		return (NULL);
 	}
-	printf("TEST\n");
 	organize_token(token);
 	return (token);
 }
