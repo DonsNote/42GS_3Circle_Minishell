@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 10:52:21 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:11:58 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_info
 	char		*cmd;
 	char		**cmd_paths;
 	char		**cmd_lines;
+	int			**pipes;
+	pid_t		*pids;
 }	t_info;
 
 typedef enum e_type
