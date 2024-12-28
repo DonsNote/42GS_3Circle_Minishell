@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/29 03:49:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 07:59:48 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_token(t_token *token);
 void	free_info(t_info *info);
-void	free_env_token(t_env_token *token);
+char	*free_env_token(t_env_token *token);
 void	free_execve(char **data);
 
 void	free_all(t_token *token, t_info *info)
@@ -96,18 +96,18 @@ void	free_execve(char **data)
 	}
 }
 
-void	free_env_token(t_env_token *token)
+char	*free_env_token(t_env_token *token)
 {
-	t_env_token	*temp;
+	t_env_token	*tmp;
 
 	while (token != NULL)
 	{
-		temp = token;
+		tmp = token;
 		token = token->next;
-		free(temp->env_data);
-		free(temp->env_key);
-		free(temp->env_value);
-		free(temp);
+		free(tmp->env_data);
+		free(tmp->env_key);
+		free(tmp->env_value);
+		free(tmp);
 	}
-	return ;
+	return (NULL);
 }

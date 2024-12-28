@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 03:10:45 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 07:57:44 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,7 @@ int			print_execve_error(char *str);
 void		free_all(t_token *token, t_info *info);
 void		free_token(t_token *token);
 void		free_info(t_info *info);
-void		free_env_token(t_env_token *token);
+char		*free_env_token(t_env_token *token);
 int			ft_isalpha(char c);
 int			ft_isdigit(char c);
 int			ft_atoi(const char *str);

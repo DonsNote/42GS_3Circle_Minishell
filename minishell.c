@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 13:16:08 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 08:30:02 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:54:44 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/24 23:46:29 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/29 08:29:25 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,29 @@ char	*make_tail(char *data);
 
 void	substitution(t_token *token, t_info *info, char *tmp)
 {
-	char	*temp;
 	char	*head;
 	char	*tail;
 	char	*value;
 
-	temp = ft_strdup(token->data);
-	while (check_env_var(temp))
+	while (check_env_var(token->data))
 	{
-		head = make_head(temp);
-		value = find_value_parse(make_key(temp), info);
-		tail = make_tail(temp);
+		head = make_head(token->data);
+		value = find_value_parse(make_key(token->data), info);
+		tail = make_tail(token->data);
+		if (head == NULL && value == NULL && tail == NULL)
+		{
+			free(token->data);
+			token->data = (char *)malloc(sizeof(char) * 1);
+			token->data[0] = '\0';
+			return ;
+		}
 		tmp = ft_strjoin(head, value);
-		free(head);
+		free(token->data);
 		free(value);
-		temp = ft_strjoin(tmp, tail);
+		token->data = ft_strjoin(tmp, tail);
 		free(tmp);
 		free(tail);
 	}
-	free(token->data);
-	token->data = temp;
 	return ;
 }
 
@@ -77,7 +80,7 @@ char	*make_key(char *data)
 
 	i = 0;
 	size = 0;
-	while (data[i] != '$')
+	while (data[i] != '$' && data[i] != '\0')
 		++i;
 	++i;
 	while (check_current_value(data[i]))
@@ -147,10 +150,12 @@ char	*find_value_parse(char *key, t_info *info)
 	{
 		if (ft_strcmp(tmp->env_key, key) == 0)
 		{
+			free(key);
 			value = ft_strdup(tmp->env_value);
 			return (value);
 		}
 		tmp = tmp->next;
 	}
+	free(key);
 	return (NULL);
 }
