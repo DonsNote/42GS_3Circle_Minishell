@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 17:05:42 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 02:22:50 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ int	execute_single_cmd(t_info *info, char **envp)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
-///
 int	check_builtin(char *cmd)
 {
 	if (!cmd)
@@ -159,32 +158,61 @@ int	check_builtin(char *cmd)
 	return (0);
 }
 
+void	handle_argv_error(void)
+{
+	ft_putendl_fd("minishell: malloc error in argv creation", 2);
+	exit(1);
+}
+
+void	handle_builtin(t_info *info, t_token *token, char **argv)
+{
+	execute_cmd(token, info);
+	free_execve(argv);
+	exit(0);
+}
+
+void	handle_execution(char *cmd, char **argv, char **envp)
+{
+	execve(cmd, argv, envp);
+	ft_putendl_fd("minishell: execve failed", 2);
+	free_execve(argv);
+	exit(1);
+}
+
+void	handle_command_not_found(t_info *info, char **argv, char **envp)
+{
+	info->cmd = combine_cmd(info->cmd_paths, argv[0]);
+	if (!info->cmd)
+	{
+		print_error_free(argv[0], info, envp);
+		free_execve(argv);
+		exit(1);
+	}
+	handle_execution(info->cmd, argv, envp);
+}
+
 void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 {
 	char	**argv;
+	int		i;
 
+	i = 0;
 	argv = make_argv(token);
+	if (!argv)
+		handle_argv_error();
 	if (check_builtin(token->data))
-	{
-		execute_cmd(token, info);
-		free_execve(argv);
-		exit(0);
-	}
+		handle_builtin(info, token, argv);
 	if (access(token->data, X_OK) == 0)
-	{
-		execve(token->data, argv, envp);
-		exit(1);
-	}
+		handle_execution(token->data, argv, envp);
 	else
+		handle_command_not_found(info, argv, envp);
+	while (argv[i])
 	{
-		info->cmd = combine_cmd(info->cmd_paths, argv[0]);
-		if (!info->cmd)
-			print_error_free(argv[0], info, envp);
-		execve(info->cmd, argv, envp);
-		exit(1);
+		free(argv[i]);
+		i++;
 	}
-	free_execve(argv);
-	exit(1);
+	free(argv);
+	exit(0);
 }
 
 void	handle_redirect_in(t_token *token)
@@ -212,15 +240,17 @@ void	handle_redirections(t_token *token)
 	}
 }
 
-void	close_pipes(t_info *info, int pipe_cnt)
+void	close_pipes(t_info *info, int pipe_cnt, int idx)
 {
 	int	i;
 
 	i = 0;
 	while (i < pipe_cnt)
 	{
-		close(info->pipes[i][0]);
-		close(info->pipes[i][1]);
+		if (i != idx - 1)
+			close(info->pipes[i][0]);
+		if (i != idx)
+			close(info->pipes[i][1]);
 		i++;
 	}
 }
@@ -264,9 +294,9 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 	int		status;
 
 	cur = 0;
-	pipe_cnt = check_pipe(token);
-	init_pipe_line(info, pipe_cnt + 1);
-	cur = exec_command(token, info, pipe_cnt + 1, envp);
+	pipe_cnt = count_commands(token);
+	init_pipe_line(info, pipe_cnt);
+	cur = exec_command(token, info, pipe_cnt, envp);
 	if (cur)
 	{
 		ft_putendl_fd("Warning: Unused tokens after pipeline: ", 2);
@@ -279,14 +309,14 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		ft_putendl_fd("\n", 2);
 	}
 	status = wait_command(info, pipe_cnt);
-	finish_execution(info, pipe_cnt);
+	finish_execution(info, pipe_cnt - 1);
 	return (status);
 }
 
-void malloc_error(void)
+void	malloc_error(void)
 {
-    ft_putendl_fd("minishell: malloc error", 2);
-    exit(1);
+	ft_putendl_fd("minishell: malloc error", 2);
+	exit(1);
 }
 
 void	pipe_error(void)
@@ -307,8 +337,6 @@ void	finish_execution(t_info *info, int pipe_cnt)
 	}
 	free(info->pipes);
 	free(info->pids);
-	info->pipes = 0;
-	info->pids = 0;
 }
 
 t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
@@ -320,22 +348,46 @@ t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
 	cur = token;
 	while (cur && cmd_idx < cnt)
 	{
+		cur = skip_non_command_tokens(cur);
+		if (!cur)
+			break ;
 		info->pids[cmd_idx] = fork();
+		if (info->pids[cmd_idx] < 0)
+		{
+			ft_putendl_fd("minishell: fork failed", 2);
+			finish_execution(info, cnt - 1);
+			exit(1);
+		}
 		if (info->pids[cmd_idx] == 0)
+		{
+			if (cmd_idx < cnt - 1)
+				close(info->pipes[cmd_idx][0]);
 			exec_child(info, cur, cmd_idx, envp);
+		}
+		if (cmd_idx > 0)
+			close(info->pipes[cmd_idx - 1][0]);
+		if (cmd_idx < cnt - 1)
+			close(info->pipes[cmd_idx][1]);
 		cur = move_next_cmd(cur);
 		cmd_idx++;
 	}
 	return (cur);
 }
 
+t_token	*skip_non_command_tokens(t_token *token)
+{
+	while (token && !is_argv_token(token->type))
+		token = token->next;
+	return (token);
+}
+
 t_token	*move_next_cmd(t_token *token)
 {
 	while (token && token->type != E_TYPE_PIPE)
-		token = token -> next;
-	if (token != NULL)
-		return (token->next);
-	return (NULL);
+		token = token->next;
+	if (token && token->type == E_TYPE_PIPE)
+		token = token->next;
+	return (skip_non_command_tokens(token));
 }
 
 int	wait_command(t_info *info, int cmd_cnt)
@@ -347,7 +399,7 @@ int	wait_command(t_info *info, int cmd_cnt)
 	cmd_idx = 0;
 	while (cmd_idx < cmd_cnt)
 	{
-		if (waitpid(info->pids[cmd_cnt], &status, 0) == -1)
+		if (waitpid(info->pids[cmd_idx], &status, 0) == -1)
 			break ;
 		cmd_idx++;
 	}
@@ -382,15 +434,27 @@ char	**create_argv_array(int cnt, t_token *token)
 	t_token	*cur;
 
 	arg = malloc(sizeof(char *) * (cnt + 1));
+	if (!arg)
+		return (NULL);
 	i = 0;
 	cur = token;
 	while (cur && cur->type != E_TYPE_PIPE)
 	{
 		if (is_argv_token(cur->type))
-			arg[i++] = ft_strdup(cur->data);
+		{
+			arg[i] = ft_strdup(cur->data);
+			if (!arg[i])
+			{
+				while (--i >= 0)
+					free(arg[i]);
+				free(arg);
+				return (NULL);
+			}
+			i++;
+		}
 		cur = cur -> next;
 	}
-	arg[i] = 0;
+	arg[i] = NULL;
 	return (arg);
 }
 
@@ -405,10 +469,37 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 {
 	int	pipe_cnt;
 
-	pipe_cnt = check_pipe(token);
+	token = skip_non_command_tokens(token);
+	if (!token)
+		exit(1);
+	pipe_cnt = count_commands(token) - 1;
 	set_pipe_io(info, idx, pipe_cnt);
+	close_pipes(info, pipe_cnt, idx);
 	handle_redirections(token);
-	if (info->pipes != NULL)
-		close_pipes(info, pipe_cnt);
 	execute_pipeline_cmd(info, token, envp);
+	ft_putendl_fd("Command execution failed", 2);
+	exit(1);
+}
+
+int	count_commands(t_token *token)
+{
+	int		count;
+	t_token	*cur;
+
+	count = 1;
+	cur = token;
+	while (cur)
+	{
+		if (cur->type == E_TYPE_PIPE)
+		{
+			count++;
+			cur = cur->next;
+			while (cur && cur->type == E_TYPE_SP)
+				cur = cur->next;
+			if (!cur)
+				break ;
+		}
+		cur = cur->next;
+	}
+	return (count);
 }

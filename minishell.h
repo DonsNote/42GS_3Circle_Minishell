@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 18:09:11 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/29 02:11:55 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
 void		handle_redirect_in(t_token *token);
 void		handle_redirect_out(t_token *token);
 void		handle_redirections(t_token *token);
-void		close_pipes(t_info *info, int pipe_cnt);
+void		close_pipes(t_info *info, int pipe_cnt, int idx);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
 void		create_pipes(t_info *info, int pipe_cnt);
 void		init_pipe_line(t_info *info, int cnt);
@@ -172,11 +172,17 @@ void		finish_execution(t_info *info, int pipe_cnt);
 t_token		*exec_command(t_token *token, t_info *info, int cnt, char **envp);
 t_token		*move_next_cmd(t_token *token);
 int			wait_command(t_info *info, int cmd_cnt);
+int			count_commands(t_token *token);
 char		**make_argv(t_token *token);
 int			count_argv(t_token *token);
 char		**create_argv_array(int cnt, t_token *token);
 int			is_argv_token(t_type type);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
+t_token		*skip_non_command_tokens(t_token *token);
+void		handle_argv_error(void);
+void		handle_builtin(t_info *info, t_token *token, char **argv);
+void		handle_execution(char *cmd, char **argv, char **envp);
+void		handle_command_not_found(t_info *info, char **argv, char **envp);
 
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
