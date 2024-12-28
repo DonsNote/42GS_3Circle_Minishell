@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 02:22:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:51:26 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,3 +132,14 @@ int	execute_single_cmd(t_info *info, char **envp)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
+
+// int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
+// {
+// 	t_token	*temp;
+// 	int		pipe_cnt;
+
+// 	if (check_paths(info))
+// 		return (1);
+// 	temp = token;
+// 	pipe_cnt = check_pipe(temp);
+// }
