@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 20:25:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 10:52:21 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef enum e_check
 	E_OPER
 }	t_check;
 
-
 /*Signal*/
 void		sig_handler_pa(int sig);
 void		sig_handler_child(int sig);
@@ -132,6 +131,9 @@ void		execute_cmd(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
 void		execute_cmd_operator(t_token *token, t_info *info);
 void		redirection_cmd(t_token *token, t_info *info);
+void		redir_out_cmd(t_token *token, t_info *info, pid_t fd);
+void		redir_in_cmd(t_token *token, t_info *info, pid_t fd);
+void		redir_here_cmd(t_token *token, t_info *info, pid_t fd, char *data);
 
 /*ft_split.c*/
 char		**ft_split(char const *s, char c);
