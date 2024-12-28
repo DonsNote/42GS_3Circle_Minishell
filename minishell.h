@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 17:04:45 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:09:11 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void		close_pipes(t_info *info, int pipe_cnt);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
 void		create_pipes(t_info *info, int pipe_cnt);
 void		init_pipe_line(t_info *info, int cnt);
-void 		malloc_error(void);
+void		malloc_error(void);
 int			execute_pipe_cmd(t_token *token, t_info *info, char **envp);
 void		pipe_error(void);
 void		finish_execution(t_info *info, int pipe_cnt);
