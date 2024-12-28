@@ -58,11 +58,11 @@ int	input(t_info *info)
 				print_type(tmp);
 				tmp = tmp->next;
 			}
-			// if (built_in(token, info))
-			// {
-			// 	free_token(token);
-			// 	continue ;
-			// }
+			if (built_in(token, info))
+			{
+				free_token(token);
+				continue ;
+			}
 		}
 		free_token(token);
 	}

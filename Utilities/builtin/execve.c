@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 20:56:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 02:22:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	execute_single_cmd(t_info *info, char **envp)
 	pid = fork();
 	if (pid == -1)
 		return (1);
-	else if (pid == 0)
+	if (pid == 0)
 	{
 		if (access(info->cmd_lines[0], X_OK) == 0)
 			execve(info->cmd_lines[0], info->cmd_lines, envp);
@@ -122,9 +122,9 @@ int	execute_single_cmd(t_info *info, char **envp)
 		if (!info->cmd)
 		{
 			print_execve_error(info->cmd_lines[0]);
-			free_envp(envp);
 			free_info(info);
-			return (1);
+			free_envp(envp);
+			exit (1);
 		}
 		execve(info->cmd, info->cmd_lines, envp);
 	}

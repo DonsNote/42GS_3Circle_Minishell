@@ -15,6 +15,7 @@
 void	free_token(t_token *token);
 void	free_info(t_info *info);
 void	free_env_token(t_env_token *token);
+void	free_execve(char **data);
 
 void	free_all(t_token *token, t_info *info)
 {
@@ -55,8 +56,30 @@ void	free_info(t_info *info)
 	free(info->home);
 	free(info->pwd);
 	free(info->oldpwd);
+	if (info->cmd != NULL)
+		free(info->cmd);
+	if (info->paths != NULL)
+		free(info->paths);
+	free_execve(info->cmd_lines);
+	free_execve(info->cmd_paths);
 	free(info);
 	return ;
+}
+
+void	free_execve(char **data)
+{
+	int	i;
+
+	if (data != NULL)
+	{
+		i = 0;
+		while (data[i])
+		{
+			free(data[i]);
+			i++;
+		}
+		free(data);
+	}
 }
 
 void	free_env_token(t_env_token *token)
