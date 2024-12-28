@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 14:08:23 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 03:49:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,25 @@ void	free_info(t_info *info)
 	free_execve(info->cmd_paths);
 	free_execve(info->cmd_lines);
 	free_pipe_info(info->pipes);
-	free(info->pids);
+	if (info->pids != NULL)
+		free(info->pids);
 	free(info);
 	return ;
 }
 
-void	free_pipe_info(int **data)
+void	free_pipe_info(int **pipes)
 {
 	int	i;
 
-	if (data != NULL)
+	if (pipes != NULL)
 	{
 		i = 0;
-		while (data[i])
+		while (pipes[i])
 		{
-			free(data[i]);
+			free(pipes[i]);
 			i++;
 		}
-		free(data);
+		free(pipes);
 	}
 }
 

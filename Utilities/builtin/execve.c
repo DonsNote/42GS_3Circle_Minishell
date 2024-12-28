@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 02:22:50 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 03:52:28 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,24 +194,17 @@ void	handle_command_not_found(t_info *info, char **argv, char **envp)
 void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 {
 	char	**argv;
-	int		i;
 
-	i = 0;
 	argv = make_argv(token);
 	if (!argv)
 		handle_argv_error();
 	if (check_builtin(token->data))
 		handle_builtin(info, token, argv);
-	if (access(token->data, X_OK) == 0)
+	else if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
 	else
 		handle_command_not_found(info, argv, envp);
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
+	free_execve(argv);
 	exit(0);
 }
 
@@ -227,16 +220,16 @@ void	handle_redirect_out(t_token *token)
 		dup2(token->next->fd, STDOUT_FILENO);
 }
 
-void	handle_redirections(t_token *token)
+void	handle_redirections(t_token *token, int last)
 {
 	while (token)
 	{
 		if (token->type == E_TYPE_IN || token->type == E_TYPE_HERE_DOC)
 			handle_redirect_in(token);
-		else if (token->type == E_TYPE_OUT || token->type == E_TYPE_GREAT)
+		else if ((token->type == E_TYPE_OUT || token->type == E_TYPE_GREAT) \
+		&& last)
 			handle_redirect_out(token);
-		if (token != NULL)
-			token = token -> next;
+		token = token->next;
 	}
 }
 
@@ -330,13 +323,22 @@ void	finish_execution(t_info *info, int pipe_cnt)
 	int	i;
 
 	i = 0;
-	while (i < pipe_cnt)
+	if (info->pipes != NULL)
 	{
-		free(info->pipes[i]);
-		i++;
+		while (i < pipe_cnt)
+		{
+			free(info->pipes[i]);
+			i++;
+		}
+		free(info->pipes);
+		info->pipes = NULL;
 	}
-	free(info->pipes);
-	free(info->pids);
+	if (info->pids != NULL)
+	{
+		free(info->pids);
+		info->pids = NULL;
+	}
+	free_info(info);
 }
 
 t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
@@ -473,11 +475,12 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 	if (!token)
 		exit(1);
 	pipe_cnt = count_commands(token) - 1;
+	handle_redirections(token, 1);
 	set_pipe_io(info, idx, pipe_cnt);
 	close_pipes(info, pipe_cnt, idx);
-	handle_redirections(token);
 	execute_pipeline_cmd(info, token, envp);
 	ft_putendl_fd("Command execution failed", 2);
+	free_info(info);
 	exit(1);
 }
 
