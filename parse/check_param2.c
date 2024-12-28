@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_param2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:11:44 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 20:14:45 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 18:02:51 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	jump_sp(char *param, int *i)
 {
 	while (param[*i] == 32 && param[*i] != '\0')
 		++*i;
+	if (param[*i] == '\0')
+		--*i;
 	return ;
 }
 
