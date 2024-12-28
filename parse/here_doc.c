@@ -6,18 +6,18 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 18:21:47 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 10:51:41 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int		eof_check(t_token *token, char *eof, char *param);
-int		pipe_parse(t_token *token, t_info *info, char *file_name);
+int		pipe_parse(t_token *token, t_info *info);
 char	*make_file_name(char *file_name);
 void	child_process(t_token *token, t_info *info);
 
-int	pipe_parse(t_token *token, t_info *info, char *file_name)
+int	pipe_parse(t_token *token, t_info *info)
 {
 	pid_t	pid;
 
@@ -37,7 +37,6 @@ int	pipe_parse(t_token *token, t_info *info, char *file_name)
 		waitpid(pid, NULL, 0);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sig_handler_pa);
-		token->data = file_name;
 		return (0);
 	}
 	return (0);
@@ -106,10 +105,13 @@ int	here_doc(t_token *head, t_token *token, t_info *info)
 		file_name = make_file_name(file_name);
 		token->fd = open(file_name, O_RDWR | O_CREAT | O_EXCL, 0777);
 	}
-	if (pipe_parse(token, info, file_name))
+	if (pipe_parse(token, info))
 	{
+		free(file_name);
 		free_all(head, info);
-		exit(0);
+		exit(1);
 	}
+	free(token->data); // 이게 지금 프리가 안됨
+	token->data = file_name;
 	return (0);
 }
