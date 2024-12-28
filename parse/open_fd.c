@@ -6,14 +6,15 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 18:21:05 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 20:53:14 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 10:48:45 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	read_open(t_token *token);
-int	create_open(t_token *token);
+int	in_open(t_token *token);
+int	out_open(t_token *token);
+int	great_open(t_token *token);
 
 int	open_fd(t_token *token, t_info *info)
 {
@@ -24,17 +25,17 @@ int	open_fd(t_token *token, t_info *info)
 	{
 		if (tmp->type == E_TYPE_IN)
 		{
-			if (read_open(tmp->next))
+			if (in_open(tmp->next))
 				return (1);
 		}
 		else if (tmp->type == E_TYPE_GREAT)
 		{
-			if (create_open(tmp->next))
+			if (great_open(tmp->next))
 				return (1);
 		}
 		else if (tmp->type == E_TYPE_OUT)
 		{
-			if (create_open(tmp->next))
+			if (out_open(tmp->next))
 				return (1);
 		}
 		else if (tmp->type == E_TYPE_HERE_DOC)
@@ -45,7 +46,7 @@ int	open_fd(t_token *token, t_info *info)
 	return (0);
 }
 
-int	read_open(t_token *token)
+int	in_open(t_token *token)
 {
 	token->fd = open(token->data, O_RDONLY);
 	if (token->fd == -1)
@@ -53,9 +54,17 @@ int	read_open(t_token *token)
 	return (0);
 }
 
-int	create_open(t_token *token)
+int	out_open(t_token *token)
 {
 	token->fd = open(token->data, O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (token->fd == -1)
+		return (1);
+	return (0);
+}
+
+int	great_open(t_token *token)
+{
+	token->fd = open(token->data, O_RDWR | O_CREAT | O_APPEND, 0777);
 	if (token->fd == -1)
 		return (1);
 	return (0);
