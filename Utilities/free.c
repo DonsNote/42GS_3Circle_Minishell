@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 12:38:55 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 14:08:23 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,32 @@ void	free_info(t_info *info)
 	free(info->home);
 	free(info->pwd);
 	free(info->oldpwd);
-	if (info->cmd != NULL)
-		free(info->cmd);
 	if (info->paths != NULL)
 		free(info->paths);
-	free_execve(info->cmd_lines);
+	if (info->cmd != NULL)
+		free(info->cmd);
 	free_execve(info->cmd_paths);
+	free_execve(info->cmd_lines);
+	free_pipe_info(info->pipes);
+	free(info->pids);
 	free(info);
 	return ;
+}
+
+void	free_pipe_info(int **data)
+{
+	int	i;
+
+	if (data != NULL)
+	{
+		i = 0;
+		while (data[i])
+		{
+			free(data[i]);
+			i++;
+		}
+		free(data);
+	}
 }
 
 void	free_execve(char **data)

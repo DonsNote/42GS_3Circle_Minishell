@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 12:47:42 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 13:49:37 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	here_doc(t_token *head, t_token *token, t_info *info)
 		free_all(head, info);
 		exit(1);
 	}
+	close(token->fd);
+	token->fd = open(file_name, O_RDWR | O_APPEND, 0777);
 	free(token->data);
 	token->data = file_name;
 	return (0);

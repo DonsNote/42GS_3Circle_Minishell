@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:04:27 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/27 15:39:44 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 14:05:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_info	*make_info(char **envp)
 	info->cmd = NULL;
 	info->cmd_lines = NULL;
 	info->cmd_paths = NULL;
+	info->pipes = 0;
+	info->pids = 0;
 	init_qustion_mark(info);
 	return (info);
 }

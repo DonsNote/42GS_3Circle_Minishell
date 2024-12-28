@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 12:11:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 17:04:45 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # define PATH_MAX 4096
+# define ERR_PIPE "Fail pipe create \n"
 
 typedef struct s_env_token
 {
@@ -153,6 +154,29 @@ void		print_exp_list(t_env_token *list);
 
 /*exec.c*/
 void		exec_cmd(t_token *token, t_info *info);
+void		print_error_free(char *data, t_info *info, char **envp);
+int			execute_single_cmd(t_info *info, char **envp);
+int			check_builtin(char *cmd);
+void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
+void		handle_redirect_in(t_token *token);
+void		handle_redirect_out(t_token *token);
+void		handle_redirections(t_token *token);
+void		close_pipes(t_info *info, int pipe_cnt);
+void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
+void		create_pipes(t_info *info, int pipe_cnt);
+void		init_pipe_line(t_info *info, int cnt);
+void 		malloc_error(void);
+int			execute_pipe_cmd(t_token *token, t_info *info, char **envp);
+void		pipe_error(void);
+void		finish_execution(t_info *info, int pipe_cnt);
+t_token		*exec_command(t_token *token, t_info *info, int cnt, char **envp);
+t_token		*move_next_cmd(t_token *token);
+int			wait_command(t_info *info, int cmd_cnt);
+char		**make_argv(t_token *token);
+int			count_argv(t_token *token);
+char		**create_argv_array(int cnt, t_token *token);
+int			is_argv_token(t_type type);
+void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
@@ -201,6 +225,8 @@ void		free_env_val(t_env_token *list);
 void		free_exp_key_value(t_env_token *node);
 void		free_node_data(t_env_token *node);
 void		free_envp(char **envp);
+void		free_pipe_info(int **data);
+void		free_execve(char **data);
 
 /*list_utils.c*/
 t_env_token	*create_node(char *data);
@@ -263,5 +289,6 @@ int			ft_isalpha(char c);
 int			ft_isdigit(char c);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int num);
+void		ft_putendl_fd(char *s, int fd);
 
 #endif

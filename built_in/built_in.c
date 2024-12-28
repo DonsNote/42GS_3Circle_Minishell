@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 11:40:30 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 16:40:50 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,10 @@ void	execute_cmd_operator(t_token *token, t_info *info)
 	t_token	*temp;
 
 	temp = token;
-	// if (check_pipe(temp) && check_redirection(temp))
-	// {
-	// }
-	// else if (check_pipe(temp) && !check_redirection(temp))
-	// {
-	// }
 	if (!check_pipe(temp) && check_redirection(temp))
 		redirection_cmd(temp, info);
+	else
+		execute_cmd(temp, info);
 }
 
 void	redirection_cmd(t_token *token, t_info *info)
