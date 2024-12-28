@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 10:51:41 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:39:13 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	eof_check(t_token *token, char *eof, char *param)
 		free(param);
 		return (1);
 	}
+printf("will free: %s\n", token->data);
 	free(token->data);
 	token->data = ft_strdup(param);
 	return (0);
@@ -111,7 +112,7 @@ int	here_doc(t_token *head, t_token *token, t_info *info)
 		free_all(head, info);
 		exit(1);
 	}
-	free(token->data); // 이게 지금 프리가 안됨
+	free(token->data);
 	token->data = file_name;
 	return (0);
 }

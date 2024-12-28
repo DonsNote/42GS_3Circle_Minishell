@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 00:57:10 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 11:32:55 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	input(t_info *info)
 				print_type(tmp);
 				tmp = tmp->next;
 			}
-			if (built_in(token, info))
-			{
-				free_token(token);
-				continue ;
-			}
+			// if (built_in(token, info))
+			// {
+			// 	free_token(token);
+			// 	continue ;
+			// }
 		}
 		free_token(token);
 	}
