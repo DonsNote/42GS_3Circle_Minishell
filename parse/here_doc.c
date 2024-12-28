@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 18:37:13 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/28 20:41:27 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	child_process(t_token *token, t_info *info)
 		if (param[0] == '\0')
 			continue ;
 		if (eof_check(token, eof, param))
-			break ;
+			return ;
 		substitution(token, info, NULL);
 		write(token->fd, token->data, ft_strlen(token->data));
 		write(token->fd, "\n", 1);
