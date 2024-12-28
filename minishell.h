@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 02:24:07 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/28 10:52:21 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void		redirection_cmd(t_token *token, t_info *info);
 void		redir_out_cmd(t_token *token, t_info *info, pid_t fd);
 void		redir_in_cmd(t_token *token, t_info *info, pid_t fd);
 void		redir_here_cmd(t_token *token, t_info *info, pid_t fd, char *data);
-
 
 /*ft_split.c*/
 char		**ft_split(char const *s, char c);
