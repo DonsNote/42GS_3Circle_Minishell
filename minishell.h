@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 14:03:52 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:12:36 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -134,10 +135,6 @@ void		execute_cmd(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
 void		execute_cmd_operator(t_token *token, t_info *info);
 void		redirection_cmd(t_token *token, t_info *info);
-void		handle_output_redirection(int *fd, int new_fd);
-void		handle_input_redirection(int *fd, int new_fd);
-void		apply_redirections(int *fd, int std_fd);
-void		setup_redirections(t_token *token);
 void		cleanup_fds(t_token *token);
 
 /*ft_split.c*/

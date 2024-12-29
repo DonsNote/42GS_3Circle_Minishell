@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 14:26:16 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:12:48 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,66 +111,31 @@ void	execute_cmd_operator(t_token *token, t_info *info)
 		exec_cmd(temp, info);
 }
 
-void	handle_output_redirection(int *fd, int new_fd)
-{
-	if (*fd != 1)
-		close(*fd);
-	*fd = new_fd;
-}
-
-void	handle_input_redirection(int *fd, int new_fd)
-{
-	if (*fd != 0)
-		close(*fd);
-	*fd = new_fd;
-}
-
-void	apply_redirections(int *fd, int std_fd)
-{
-	if (*fd != std_fd)
-	{
-		dup2(*fd, std_fd);
-		if (*fd > 2)
-			close(*fd);
-		*fd = std_fd;
-	}
-}
-
-void	setup_redirections(t_token *token)
+void	setup_redirections(t_token *token, int *in_fd, int *out_fd)
 {
 	t_token	*temp;
-	int		out_fd;
-	int		in_fd;
 
+	*out_fd = 1;
+	*in_fd = 0;
 	temp = token;
-	out_fd = 1;
-	in_fd = 0;
-	while (temp && temp->next)
+	while (temp)
 	{
-		if (temp->type == E_TYPE_GREAT || temp->type == E_TYPE_OUT)
-		{
-			handle_output_redirection(&out_fd, temp->next->fd);
-			apply_redirections(&out_fd, 1);
-		}
+		if (temp->type == E_TYPE_GREAT)
+			*out_fd = temp->next->fd;
+		else if (temp->type == E_TYPE_OUT)
+			*out_fd = temp->next->fd;
 		else if (temp->type == E_TYPE_IN)
-		{
-			handle_input_redirection(&in_fd, temp->next->fd);
-			apply_redirections(&in_fd, 0);
-		}
+			*in_fd = temp->next->fd;
 		else if (temp->type == E_TYPE_HERE_DOC)
-		{
-			handle_input_redirection(&in_fd, temp->next->fd);
-			apply_redirections(&in_fd, 0);
-		}
-		temp = temp->next->next;
+			*in_fd = temp->next->fd;
+		temp = temp->next;
 	}
 }
 
 void	cleanup_fds(t_token *token)
 {
-	t_token	*temp;
+	t_token	*temp = token;
 
-	temp = token;
 	while (temp)
 	{
 		if (temp->next && temp->next->fd > 2)
@@ -181,18 +146,30 @@ void	cleanup_fds(t_token *token)
 	}
 }
 
-void redirection_cmd(t_token *token, t_info *info)
+void	redirection_cmd(t_token *token, t_info *info)
 {
 	int	old_in;
 	int	old_out;
+	int	in_fd;
+	int	out_fd;
 
 	old_in = dup(0);
 	old_out = dup(1);
-	setup_redirections(token);
+	in_fd = 0;
+	out_fd = 0;
+	setup_redirections(token, &in_fd, &out_fd);
+	if (in_fd > 0)
+		dup2(in_fd, 0);
+	if (out_fd > 1)
+		dup2(out_fd, 1);
 	execute_cmd(token, info);
 	dup2(old_in, 0);
 	dup2(old_out, 1);
 	close(old_in);
 	close(old_out);
+	if (in_fd > 0)
+		close(in_fd);
+	if (out_fd > 1)
+		close(out_fd);
 	cleanup_fds(token);
 }
