@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 07:57:44 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/29 14:03:52 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,11 @@ void		execute_cmd(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
 void		execute_cmd_operator(t_token *token, t_info *info);
 void		redirection_cmd(t_token *token, t_info *info);
-void		redir_out_cmd(t_token *token, t_info *info, pid_t fd);
-void		redir_in_cmd(t_token *token, t_info *info, pid_t fd);
-void		redir_here_cmd(t_token *token, t_info *info, pid_t fd, char *data);
+void		handle_output_redirection(int *fd, int new_fd);
+void		handle_input_redirection(int *fd, int new_fd);
+void		apply_redirections(int *fd, int std_fd);
+void		setup_redirections(t_token *token);
+void		cleanup_fds(t_token *token);
 
 /*ft_split.c*/
 char		**ft_split(char const *s, char c);

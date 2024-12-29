@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 04:03:23 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 14:12:31 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int	execute_single_cmd(t_info *info, char **envp)
 		else
 			info->cmd = info->cmd_lines[0];
 		execve(info->cmd, info->cmd_lines, envp);
+		free_info(info);
+		free_envp(envp);
 		exit(1);
 	}
 	else if (pid != 0)
