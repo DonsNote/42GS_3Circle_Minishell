@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/29 19:00:43 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/29 19:04:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_redirect(char *param, int *i)
 			++*i;
 			jump_sp(param, i);
 		}
-		if (param[*i + 1] == '\0' || param[*i] == '|')
+		if (param[*i + 1] == '\0' || param[*i + 1] == '|')
 			return (1);
 	}
 	if (param[*i] == '<')
@@ -87,7 +87,7 @@ int	check_redirect(char *param, int *i)
 			++*i;
 			jump_sp(param, i);
 		}
-		if (param[*i + 1] == '\0' || param[*i] == '|')
+		if (param[*i + 1] == '\0' || param[*i + 1] == '|')
 			return (1);
 	}
 	return (0);
