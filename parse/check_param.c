@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 20:13:19 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:47:55 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ int	check_redirect(char *param, int *i)
 {
 	if (param[*i] == '>')
 	{
-		if (param[*i + 1] == '\0')
+		jump_sp(param, i);
+		if (param[*i] == '\0' || param[*i] == '|')
 			return (1);
 	}
 	if (param[*i] == '<')
 	{
-		if (param[*i + 1] == '\0')
+		jump_sp(param, i);
+		if (param[*i] == '\0' || param[*i] == '|')
 			return (1);
 	}
 	return (0);
