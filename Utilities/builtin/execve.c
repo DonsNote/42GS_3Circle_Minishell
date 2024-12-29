@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 16:31:59 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 18:17:31 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int	execute_single_cmd(t_info *info, char **envp)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
+///
+
 int	check_builtin(char *cmd)
 {
 	if (!cmd)
