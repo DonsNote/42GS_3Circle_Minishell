@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 02:48:53 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 04:02:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int			is_argv_token(t_type type);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 t_token		*skip_non_command_tokens(t_token *token);
 void		handle_argv_error(void);
-void		handle_builtin(t_token *token, t_info *info, char **argv);
+void		handle_builtin(t_info *info, t_token *token, char **argv);
 void		handle_execution(char *cmd, char **argv, char **envp);
 void		handle_command_not_found(t_info *info, char **argv, char **envp);
 
