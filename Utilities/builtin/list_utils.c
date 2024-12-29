@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:52:47 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 12:42:27 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:48:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,23 @@ void	create_list(t_env_token *list, char **envp)
 }
 
 int	check_token_size(t_token *node)
+{
+	t_token	*temp;
+	int		size;
+
+	size = 0;
+	temp = node;
+	while (temp && temp->type != E_TYPE_PIPE)
+	{
+		if (temp->type == E_TYPE_CMD || temp->type == E_TYPE_PARAM \
+		|| temp->type == E_TYPE_OPTION)
+			size++;
+		temp = temp -> next;
+	}
+	return (size);
+}
+
+int	check_pipe_token_size(t_token *node)
 {
 	t_token	*temp;
 	int		size;

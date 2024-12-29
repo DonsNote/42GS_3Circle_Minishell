@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 02:33:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 03:47:14 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_cmd_lines(t_token *token, t_info *info)
 
 	i = 0;
 	temp = token;
-	size = check_token_size(temp);
+	size = check_pipe_token_size(temp);
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!info->cmd_lines)
 		return ;
@@ -177,9 +177,9 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 		handle_argv_error();
 	if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
-	else if (access(token->data, X_OK) != 0)
+	else if (access(token->data, X_OK) != 0 && ! check_builtin(token->data))
 		handle_command_not_found(info, argv, envp);
-	else if (check_builtin(token->data))
+	else
 		handle_builtin(token, info, argv);
 	free_execve(argv);
 	exit(0);

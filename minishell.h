@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 02:32:57 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:48:53 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ t_env_token	*last_node(t_env_token *list);
 void		add_node_back(t_env_token *list, t_env_token *new_node);
 void		create_list(t_env_token *list, char **envp);
 int			check_token_size(t_token *node);
+int			check_pipe_token_size(t_token *node);
 
 /*utils.c*/
 int			ft_strlen(const char *str);
