@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 20:19:46 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 23:53:54 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,42 +215,24 @@ void	handle_command_not_found(t_info *info, char **argv, char **envp)
 	handle_execution(info->cmd, argv, envp);
 }
 
-void	handle_redirections(t_token *token, int last)
+void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 {
-	while (token)
-	{
-		if (token->type == E_TYPE_IN || token->type == E_TYPE_HERE_DOC)
-			handle_redirect_in(token);
-		else if ((token->type == E_TYPE_OUT || token->type == E_TYPE_GREAT) \
-		&& last)
-			handle_redirect_out(token);
-		token = token->next;
-	}
-}
+	t_token	*temp;
 
-void	handle_redirect_in(t_token *token)
-{
-	int	here_pipe[2];
-
-	if (token->type == E_TYPE_HERE_DOC)
+	*out_fd = 1;
+	*in_fd = 0;
+	temp = token;
+	while (temp)
 	{
-		if (pipe(here_pipe) < 0)
-			pipe_error();
-		write(here_pipe[1], token->next->data, ft_strlen(token->next->data));
-		close(here_pipe[1]);
-		dup2(here_pipe[0], STDIN_FILENO);
-		close(here_pipe[0]);
-	}
-	else if (token->next && token->next->fd > 0)
-		dup2(token->next->fd, STDIN_FILENO);
-}
-
-void	handle_redirect_out(t_token *token)
-{
-	if (token->type == E_TYPE_OUT || token->type == E_TYPE_GREAT)
-	{
-		dup2(token->next->fd, STDOUT_FILENO);
-		close(token->next->fd);
+		if (temp->type == E_TYPE_GREAT)
+			*out_fd = temp->next->fd;
+		else if (temp->type == E_TYPE_OUT)
+			*out_fd = temp->next->fd;
+		else if (temp->type == E_TYPE_IN)
+			*in_fd = temp->next->fd;
+		else if (temp->type == E_TYPE_HERE_DOC)
+			*in_fd = temp->next->fd;
+		temp = temp->next;
 	}
 }
 
@@ -259,12 +241,11 @@ void	close_pipes(t_info *info, int pipe_cnt, int idx)
 	int	i;
 
 	i = 0;
+	(void)idx;
 	while (i < pipe_cnt)
 	{
-		if (i != idx - 1)
-			close(info->pipes[i][0]);
-		if (i != idx)
-			close(info->pipes[i][1]);
+		close(info->pipes[i][0]);
+		close(info->pipes[i][1]);
 		i++;
 	}
 }
@@ -322,6 +303,7 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		}
 		ft_putendl_fd("\n", 2);
 	}
+	close_pipes(info, pipe_cnt - 1, 0);
 	status = wait_command(info, pipe_cnt);
 	finish_execution(info, pipe_cnt - 1);
 	return (status);
@@ -382,14 +364,9 @@ t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
 		}
 		if (info->pids[cmd_idx] == 0)
 		{
-			if (cmd_idx < cnt - 1)
-				close(info->pipes[cmd_idx][0]);
 			exec_child(info, cur, cmd_idx, envp);
+			exit (1);
 		}
-		if (cmd_idx > 0)
-			close(info->pipes[cmd_idx - 1][0]);
-		if (cmd_idx < cnt - 1)
-			close(info->pipes[cmd_idx][1]);
 		cur = move_next_cmd(cur);
 		cmd_idx++;
 	}
@@ -416,16 +393,22 @@ int	wait_command(t_info *info, int cmd_cnt)
 {
 	int	cmd_idx;
 	int	status;
+	int	last_status;
 
 	status = 0;
 	cmd_idx = 0;
+	last_status = 0;
 	while (cmd_idx < cmd_cnt)
 	{
 		if (waitpid(info->pids[cmd_idx], &status, 0) == -1)
 			break ;
+		if (WIFSIGNALED(status))
+			last_status = 128 + WTERMSIG(status);
+		else
+			last_status = WEXITSTATUS(status);
 		cmd_idx++;
 	}
-	return (WEXITSTATUS(status));
+	return (last_status);
 }
 
 char	**make_argv(t_token *token)
@@ -487,19 +470,50 @@ int	is_argv_token(t_type type)
 	return (0);
 }
 
+void	cleanup_fds_child(t_token *token)
+{
+	t_token	*temp;
+
+	temp = token;
+	while (temp && temp->next->type != E_TYPE_PIPE)
+	{
+		if (temp->next && temp->next->fd > 2)
+			close(temp->next->fd);
+		if (temp->type == E_TYPE_HERE_DOC && temp->next)
+			unlink(temp->next->data);
+		temp = temp->next;
+	}
+}
+
 void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 {
 	int	pipe_cnt;
+	// int	old_in;
+	// int	old_out;
+	int	in_fd;
+	int	out_fd;
 
+	// old_in = dup(0);
+	// old_out = dup(1);
+	in_fd = 0;
+	out_fd = 0;
 	token = skip_non_command_tokens(token);
 	if (!token)
 		exit(1);
 	pipe_cnt = count_commands(token) - 1;
-	handle_redirections(token, 1);
 	set_pipe_io(info, idx, pipe_cnt);
 	close_pipes(info, pipe_cnt, idx);
+	handle_redirections(token, &in_fd, &out_fd);
+	if (in_fd > 0)
+		dup2(in_fd, 0);
+	if (out_fd > 1)
+		dup2(out_fd, 1);
 	execute_pipeline_cmd(info, token, envp);
-	ft_putendl_fd("Command execution failed", 2);
+	cleanup_fds_child(token);
+	// dup2(old_in, 0);
+	// dup2(old_out, 1);
+	// close(old_in);
+	// close(old_out);
 	exit(1);
 }
 

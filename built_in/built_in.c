@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 18:12:48 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 21:47:43 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,9 @@ void	setup_redirections(t_token *token, int *in_fd, int *out_fd)
 
 void	cleanup_fds(t_token *token)
 {
-	t_token	*temp = token;
+	t_token	*temp;
 
+	temp = token;
 	while (temp)
 	{
 		if (temp->next && temp->next->fd > 2)

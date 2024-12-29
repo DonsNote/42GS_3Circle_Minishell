@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 18:12:36 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 21:58:13 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,7 @@ void		print_error_free(char *data, t_info *info, char **envp);
 int			execute_single_cmd(t_info *info, char **envp);
 int			check_builtin(char *cmd);
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
-void		handle_redirect_in(t_token *token);
-void		handle_redirect_out(t_token *token);
-void		handle_redirections(t_token *token, int last);
+void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
 void		close_pipes(t_info *info, int pipe_cnt, int idx);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
 void		create_pipes(t_info *info, int pipe_cnt);
