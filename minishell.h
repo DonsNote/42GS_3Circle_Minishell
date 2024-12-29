@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 21:58:13 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:32:57 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_info
 	char		**cmd_paths;
 	char		**cmd_lines;
 	int			**pipes;
+	int			pipe_cnt;
 	pid_t		*pids;
 }	t_info;
 
@@ -158,7 +159,7 @@ int			execute_single_cmd(t_info *info, char **envp);
 int			check_builtin(char *cmd);
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
 void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
-void		close_pipes(t_info *info, int pipe_cnt, int idx);
+void		close_pipes(t_info *info, int pipe_cnt);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
 void		create_pipes(t_info *info, int pipe_cnt);
 void		init_pipe_line(t_info *info, int cnt);
@@ -177,7 +178,7 @@ int			is_argv_token(t_type type);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 t_token		*skip_non_command_tokens(t_token *token);
 void		handle_argv_error(void);
-void		handle_builtin(t_info *info, t_token *token, char **argv);
+void		handle_builtin(t_token *token, t_info *info, char **argv);
 void		handle_execution(char *cmd, char **argv, char **envp);
 void		handle_command_not_found(t_info *info, char **argv, char **envp);
 

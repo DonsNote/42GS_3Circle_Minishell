@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 19:04:27 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 14:05:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:22:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_info	*make_info(char **envp)
 	info->cmd_paths = NULL;
 	info->pipes = 0;
 	info->pids = 0;
+	info->pipe_cnt = 0;
 	init_qustion_mark(info);
 	return (info);
 }

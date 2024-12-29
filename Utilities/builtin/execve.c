@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 23:53:54 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 02:33:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,24 +175,21 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	argv = make_argv(token);
 	if (!argv)
 		handle_argv_error();
-	if (check_builtin(token->data))
-		handle_builtin(info, token, argv);
-	else if (access(token->data, X_OK) == 0)
+	if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
-	else
+	else if (access(token->data, X_OK) != 0)
 		handle_command_not_found(info, argv, envp);
+	else if (check_builtin(token->data))
+		handle_builtin(token, info, argv);
 	free_execve(argv);
 	exit(0);
 }
 
-void	handle_builtin(t_info *info, t_token *token, char **argv)
+void	handle_builtin(t_token *token, t_info *info, char **argv)
 {
-	if (fork() == 0)
-	{
-		execute_cmd(token, info);
-		free_execve(argv);
-		exit(0);
-	}
+	exec_cmd(token, info);
+	free_execve(argv);
+	exit(0);
 }
 
 void	handle_execution(char *cmd, char **argv, char **envp)
@@ -236,12 +233,11 @@ void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 	}
 }
 
-void	close_pipes(t_info *info, int pipe_cnt, int idx)
+void	close_pipes(t_info *info, int pipe_cnt)
 {
 	int	i;
 
 	i = 0;
-	(void)idx;
 	while (i < pipe_cnt)
 	{
 		close(info->pipes[i][0]);
@@ -285,13 +281,12 @@ void	init_pipe_line(t_info *info, int cnt)
 int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 {
 	t_token	*cur;
-	int		pipe_cnt;
 	int		status;
 
 	cur = 0;
-	pipe_cnt = count_commands(token);
-	init_pipe_line(info, pipe_cnt);
-	cur = exec_command(token, info, pipe_cnt, envp);
+	info->pipe_cnt = count_commands(token);
+	init_pipe_line(info, info->pipe_cnt);
+	cur = exec_command(token, info, info->pipe_cnt, envp);
 	if (cur)
 	{
 		ft_putendl_fd("Warning: Unused tokens after pipeline: ", 2);
@@ -303,9 +298,10 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		}
 		ft_putendl_fd("\n", 2);
 	}
-	close_pipes(info, pipe_cnt - 1, 0);
-	status = wait_command(info, pipe_cnt);
-	finish_execution(info, pipe_cnt - 1);
+	close_pipes(info, info->pipe_cnt - 1);
+	cleanup_fds(token);
+	status = wait_command(info, info->pipe_cnt);
+	finish_execution(info, info->pipe_cnt - 1);
 	return (status);
 }
 
@@ -487,22 +483,16 @@ void	cleanup_fds_child(t_token *token)
 
 void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 {
-	int	pipe_cnt;
-	// int	old_in;
-	// int	old_out;
 	int	in_fd;
 	int	out_fd;
 
-	// old_in = dup(0);
-	// old_out = dup(1);
 	in_fd = 0;
 	out_fd = 0;
 	token = skip_non_command_tokens(token);
 	if (!token)
 		exit(1);
-	pipe_cnt = count_commands(token) - 1;
-	set_pipe_io(info, idx, pipe_cnt);
-	close_pipes(info, pipe_cnt, idx);
+	set_pipe_io(info, idx, info->pipe_cnt - 1);
+	close_pipes(info, info->pipe_cnt - 1);
 	handle_redirections(token, &in_fd, &out_fd);
 	if (in_fd > 0)
 		dup2(in_fd, 0);
@@ -510,10 +500,6 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 		dup2(out_fd, 1);
 	execute_pipeline_cmd(info, token, envp);
 	cleanup_fds_child(token);
-	// dup2(old_in, 0);
-	// dup2(old_out, 1);
-	// close(old_in);
-	// close(old_out);
 	exit(1);
 }
 
