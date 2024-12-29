@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/29 19:04:44 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:49:24 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ int	check_redirect(char *param, int *i)
 		{
 			++*i;
 			jump_sp(param, i);
+			if (param[*i] == '\0' || param[*i] == '|')
+				return (1);
 		}
-		if (param[*i + 1] == '\0' || param[*i + 1] == '|')
+		else if (param[*i + 1] == '\0' || param[*i + 1] == '|')
 			return (1);
 	}
 	if (param[*i] == '<')
@@ -86,8 +88,10 @@ int	check_redirect(char *param, int *i)
 		{
 			++*i;
 			jump_sp(param, i);
+			if (param[*i] == '\0' || param[*i] == '|')
+				return (1);
 		}
-		if (param[*i + 1] == '\0' || param[*i + 1] == '|')
+		else if (param[*i + 1] == '\0' || param[*i + 1] == '|')
 			return (1);
 	}
 	return (0);

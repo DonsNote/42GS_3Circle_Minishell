@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 18:17:31 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/29 20:19:46 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,11 +168,31 @@ void	handle_argv_error(void)
 	exit(1);
 }
 
-void	handle_builtin(t_info *info, t_token *token, char **argv)
+void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 {
-	execute_cmd(token, info);
+	char	**argv;
+
+	argv = make_argv(token);
+	if (!argv)
+		handle_argv_error();
+	if (check_builtin(token->data))
+		handle_builtin(info, token, argv);
+	else if (access(token->data, X_OK) == 0)
+		handle_execution(token->data, argv, envp);
+	else
+		handle_command_not_found(info, argv, envp);
 	free_execve(argv);
 	exit(0);
+}
+
+void	handle_builtin(t_info *info, t_token *token, char **argv)
+{
+	if (fork() == 0)
+	{
+		execute_cmd(token, info);
+		free_execve(argv);
+		exit(0);
+	}
 }
 
 void	handle_execution(char *cmd, char **argv, char **envp)
@@ -195,35 +215,6 @@ void	handle_command_not_found(t_info *info, char **argv, char **envp)
 	handle_execution(info->cmd, argv, envp);
 }
 
-void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
-{
-	char	**argv;
-
-	argv = make_argv(token);
-	if (!argv)
-		handle_argv_error();
-	if (check_builtin(token->data))
-		handle_builtin(info, token, argv);
-	else if (access(token->data, X_OK) == 0)
-		handle_execution(token->data, argv, envp);
-	else
-		handle_command_not_found(info, argv, envp);
-	free_execve(argv);
-	exit(0);
-}
-
-void	handle_redirect_in(t_token *token)
-{
-	if (token->next && token->next->fd > 0)
-		dup2(token->next->fd, STDIN_FILENO);
-}
-
-void	handle_redirect_out(t_token *token)
-{
-	if (token->next && token->next->fd > 0)
-		dup2(token->next->fd, STDOUT_FILENO);
-}
-
 void	handle_redirections(t_token *token, int last)
 {
 	while (token)
@@ -234,6 +225,32 @@ void	handle_redirections(t_token *token, int last)
 		&& last)
 			handle_redirect_out(token);
 		token = token->next;
+	}
+}
+
+void	handle_redirect_in(t_token *token)
+{
+	int	here_pipe[2];
+
+	if (token->type == E_TYPE_HERE_DOC)
+	{
+		if (pipe(here_pipe) < 0)
+			pipe_error();
+		write(here_pipe[1], token->next->data, ft_strlen(token->next->data));
+		close(here_pipe[1]);
+		dup2(here_pipe[0], STDIN_FILENO);
+		close(here_pipe[0]);
+	}
+	else if (token->next && token->next->fd > 0)
+		dup2(token->next->fd, STDIN_FILENO);
+}
+
+void	handle_redirect_out(t_token *token)
+{
+	if (token->type == E_TYPE_OUT || token->type == E_TYPE_GREAT)
+	{
+		dup2(token->next->fd, STDOUT_FILENO);
+		close(token->next->fd);
 	}
 }
 
