@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 04:01:31 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:36:34 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 	*out_fd = 1;
 	*in_fd = 0;
 	temp = token;
-	while (temp)
+	while (temp && temp->type != E_TYPE_PIPE)
 	{
 		if (temp->type == E_TYPE_GREAT)
 			*out_fd = temp->next->fd;
@@ -302,6 +302,7 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		ft_putendl_fd("\n", 2);
 	}
 	close_pipes(info, info->pipe_cnt - 1);
+	cleanup_fds(token);
 	status = wait_command(info, info->pipe_cnt);
 	finish_execution(info, info->pipe_cnt - 1);
 	return (status);
@@ -473,7 +474,7 @@ void	cleanup_fds_child(t_token *token)
 	t_token	*temp;
 
 	temp = token;
-	while (temp && temp->next->type != E_TYPE_PIPE)
+	while (temp && temp->type != E_TYPE_PIPE)
 	{
 		if (temp->next && temp->next->fd > 2)
 			close(temp->next->fd);
