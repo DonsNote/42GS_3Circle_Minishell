@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 13:58:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:24:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	if (!argv)
 		handle_argv_error();
 	if (check_builtin(token->data))
-		handle_builtin(info, token, argv);
+		handle_builtin(info, token, argv, envp);
 	else if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
 	else
@@ -189,14 +189,12 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	exit(0);
 }
 
-void	handle_builtin(t_info *info, t_token *token, char **argv)
+void	handle_builtin(t_info *info, t_token *token, char **argv, char **envp)
 {
-	if (fork() == 0)
-	{
-		execute_cmd(token, info);
-		free_execve(argv);
-		exit(0);
-	}
+	execute_cmd(token, info);
+	free_child_var(info, token, envp);
+	free_execve(argv);
+	exit(0);
 }
 
 void	handle_execution(char *cmd, char **argv, char **envp)
@@ -240,7 +238,7 @@ void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 	}
 }
 
-void	close_pipes(t_info *info, int pipe_cnt)
+void	close_pipes_parent(t_info *info, int pipe_cnt)
 {
 	int	i;
 
@@ -249,6 +247,21 @@ void	close_pipes(t_info *info, int pipe_cnt)
 	{
 		close(info->pipes[i][0]);
 		close(info->pipes[i][1]);
+		i++;
+	}
+}
+
+void	close_pipes_child(t_info *info, int pipe_cnt, int idx)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipe_cnt)
+	{
+		if (i != idx - 1)
+			close(info->pipes[i][0]);
+		if (i != idx)
+			close(info->pipes[i][1]);
 		i++;
 	}
 }
@@ -305,7 +318,7 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		}
 		ft_putendl_fd("\n", 2);
 	}
-	close_pipes(info, info->pipe_cnt - 1);
+	close_pipes_parent(info, info->pipe_cnt - 1);
 	cleanup_fds(token);
 	status = wait_command(info, info->pipe_cnt);
 	finish_execution(info, info->pipe_cnt - 1);
@@ -501,13 +514,16 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 		exit(1);
 	pipe_cnt = info->pipe_cnt - 1;
 	set_pipe_io(info, idx, pipe_cnt);
-	close_pipes(info, pipe_cnt);
+	close_pipes_child(info, pipe_cnt, idx);
 	handle_redirections(token, &in_fd, &out_fd);
 	if (in_fd > 0)
 		dup2(in_fd, 0);
 	if (out_fd > 1)
 		dup2(out_fd, 1);
 	execute_pipeline_cmd(info, token, envp);
+	if (idx - 1 >= 0)
+		close(info->pipes[idx - 1][0]);
+	close(info->pipes[idx][0]);
 	cleanup_fds_child(token);
 	exit(1);
 }
