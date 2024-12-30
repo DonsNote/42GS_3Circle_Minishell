@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utilities3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 14:53:35 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 04:29:54 by junseyun         ###   ########.fr       */
+/*   Created: 2024/12/31 05:14:57 by junseyun          #+#    #+#             */
+/*   Updated: 2024/12/31 05:15:27 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	cmd_env(t_env_token *list)
+void	ft_putendl_fd(char *s, int fd)
 {
-	t_env_token	*node;
+	int	i;
 
-	node = list;
-	while (node != NULL)
+	i = 0;
+	while (s[i] != 0)
 	{
-		printf("%s\n", node->env_data);
-		node = node->next;
+		write(fd, &s[i], 1);
+		i++;
 	}
+	write(fd, "\n", 1);
 }
 
-void	print_exp_list(t_env_token *list)
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_env_token	*node;
+	int	i;
 
-	node = list;
-	while (node != NULL)
+	i = 0;
+	while (s[i] != 0)
 	{
-		if (node->env_value != NULL)
-			printf("declare -x %s=\"%s\"\n", node->env_key, node->env_value);
-		else
-			printf("declare -x %s\n", node->env_key);
-		node = node->next;
+		write(fd, &s[i], 1);
+		i++;
 	}
 }

@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   built_in_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 11:31:15 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 12:01:09 by dohyuki2         ###   ########.fr       */
+/*   Created: 2024/12/31 04:27:52 by junseyun          #+#    #+#             */
+/*   Updated: 2024/12/31 06:58:46 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-char	*char_malloc(int size)
+void	execute_cmd_operator(t_token *token, t_info *info)
 {
-	char	*str;
+	t_token	*temp;
 
-	str = (char *)malloc(sizeof(char) * size + 1);
-	if (str == NULL)
-		return (NULL);
-	return (str);
+	temp = token;
+	if (!check_pipe(temp) && check_redirection(temp))
+		redirection_cmd(temp, info);
+	else
+		exec_cmd(temp, info);
 }

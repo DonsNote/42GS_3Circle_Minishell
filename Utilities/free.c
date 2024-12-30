@@ -6,25 +6,11 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 19:47:15 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:16:26 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	free_token(t_token *token);
-void	free_info(t_info *info);
-char	*free_env_token(t_env_token *token);
-void	free_execve(char **data);
-
-void	free_all(t_token *token, t_info *info)
-{
-	if (token != NULL)
-		free_token(token);
-	if (info != NULL)
-		free_info(info);
-	return ;
-}
 
 void	free_token(t_token *token)
 {
@@ -66,20 +52,23 @@ void	free_info(t_info *info)
 	return ;
 }
 
-void	free_pipe_info(int **pipes, int cnt)
+char	*free_env_token(t_env_token *token)
 {
-	int	i;
+	t_env_token	*tmp;
 
-	if (pipes != NULL)
+	while (token != NULL)
 	{
-		i = 0;
-		while (i < cnt - 1)
-		{
-			free(pipes[i]);
-			i++;
-		}
-		free(pipes);
+		tmp = token;
+		token = token->next;
+		if (tmp->env_data != NULL)
+			free(tmp->env_data);
+		if (tmp->env_key != NULL)
+			free(tmp->env_key);
+		if (tmp->env_value != NULL)
+			free(tmp->env_value);
+		free(tmp);
 	}
+	return (NULL);
 }
 
 void	free_execve(char **data)
@@ -98,21 +87,11 @@ void	free_execve(char **data)
 	}
 }
 
-char	*free_env_token(t_env_token *token)
+void	free_all(t_token *token, t_info *info)
 {
-	t_env_token	*tmp;
-
-	while (token != NULL)
-	{
-		tmp = token;
-		token = token->next;
-		if (tmp->env_data != NULL)
-			free(tmp->env_data);
-		if (tmp->env_key != NULL)
-			free(tmp->env_key);
-		if (tmp->env_value != NULL)
-			free(tmp->env_value);
-		free(tmp);
-	}
-	return (NULL);
+	if (token != NULL)
+		free_token(token);
+	if (info != NULL)
+		free_info(info);
+	return ;
 }

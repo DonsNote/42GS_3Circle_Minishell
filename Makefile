@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+         #
+#    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/31 02:56:49 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/31 05:39:58 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,27 +21,41 @@ INC = minishell.h
 SRCS = minishell.c \
 		Utilities/utilities.c \
 		Utilities/utilities2.c \
+		Utilities/utilities3.c \
 		Utilities/free.c \
 		Utilities/free2.c \
 		Utilities/error.c \
 		Utilities/signal.c \
-		Utilities/builtin/execve.c\
+		Utilities/builtin/built_in_utils.c \
+		Utilities/builtin/built_in_utils2.c \
+		Utilities/builtin/exec_utils.c \
+		Utilities/builtin/execve_utils.c \
+		Utilities/builtin/execve_utils2.c \
+		Utilities/builtin/execve_utils3.c \
+		Utilities/builtin/execve_utils4.c \
+		Utilities/builtin/execve_utils5.c \
+		Utilities/builtin/execve_utils6.c \
 		Utilities/builtin/export_utils.c \
 		Utilities/builtin/export_utils2.c \
 		Utilities/builtin/export_utils3.c \
 		Utilities/builtin/export_utils4.c \
+		Utilities/builtin/export_utils5.c \
+		Utilities/builtin/export_utils6.c \
 		Utilities/builtin/list_utils.c \
+		Utilities/builtin/list_utils2.c \
 		Utilities/builtin/pwd_utils.c \
 		Utilities/builtin/pwd_utils2.c \
+		Utilities/builtin/pwd_utils3.c \
 		Utilities/parsing/split.c \
 		Utilities/parsing/token_utils.c \
 		built_in/built_in.c \
 		built_in/echo.c \
 		built_in/env.c \
 		built_in/exec.c\
+		built_in/execve.c \
 		built_in/exit.c\
-		built_in/export.c \
 		built_in/export_sort.c \
+		built_in/export.c \
 		built_in/pwd.c \
 		built_in/unset.c \
 		parse/check_param.c \

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 01:49:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:24:14 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	check_env_data(t_env_token *env_list, char *data, char *key, char *val)
 	add_new_exp_node(env_list, add_data);
 }
 
-static char	*get_new_value(t_env_token *temp, char *value)
+char	*get_new_value(t_env_token *temp, char *value)
 {
 	if (temp->env_value && value)
 		return (ft_strjoin(temp->env_value, value));
@@ -48,7 +48,7 @@ static char	*get_new_value(t_env_token *temp, char *value)
 	return (NULL);
 }
 
-static char	*get_temp_data(char *data, char *key, char *value)
+char	*get_temp_data(char *data, char *key, char *value)
 {
 	char	*result;
 	char	*temp;
@@ -102,41 +102,4 @@ void	add_export(t_env_token *env, t_env_token *exp, char *data)
 	add_new_exp_node(exp, data);
 	add_new_exp_node(env, data);
 	set_split_exp_list(exp);
-}
-
-char	*split_key(char *data)
-{
-	int		i;
-	int		idx;
-	char	*key;
-
-	i = -1;
-	idx = check_plus_operator_idx(data);
-	key = (char *)malloc(sizeof(char) * (idx + 1));
-	while (++i < idx)
-		key[i] = data[i];
-	key[i] = 0;
-	return (key);
-}
-
-char	*split_value(char *data)
-{
-	int		i;
-	int		idx;
-	int		len;
-	char	*value;
-
-	i = 0;
-	idx = check_plus_operator_idx(data);
-	len = ft_strlen(data);
-	value = (char *)malloc(sizeof(char) * (len - idx - 1));
-	idx += 2;
-	while (data[idx])
-	{
-		value[i] = data[idx];
-		i++;
-		idx++;
-	}
-	value[i] = 0;
-	return (value);
 }

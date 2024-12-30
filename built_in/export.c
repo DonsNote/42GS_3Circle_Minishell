@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 19:58:54 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 16:42:55 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:49:56 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,38 +124,4 @@ void	add_exp_data(t_env_token *exp_list, char *data)
 		}
 		temp = temp -> next;
 	}
-}
-
-int	check_equal_idx(char *exp_data)
-{
-	int	i;
-
-	if (!exp_data)
-		return (0);
-	i = 0;
-	while (exp_data[i] != '=' && exp_data[i])
-		i++;
-	return (i);
-}
-
-char	*create_env_data(char *data)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*new_str;
-
-	len = ft_strlen(data);
-	new_str = (char *)malloc(sizeof(char) * len + 1);
-	i = 0;
-	j = 0;
-	while (data[i])
-	{
-		if (data[i] == '+')
-			i++;
-		else
-			new_str[j++] = data[i++];
-	}
-	new_str[j] = 0;
-	return (new_str);
 }

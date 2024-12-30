@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 23:57:33 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:48:31 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,23 @@ int	print_cd_error(char *str, int flag)
 	return (1);
 }
 
-int	print_exit_error(char *str, int type)
+int	print_exit_error(int type)
 {
 	if (type == 0)
-		printf("mini: %s: too many arguments\n", str);
+	{
+		ft_putstr_fd("mini: exit : too many arguments", 2);
+		ft_putendl_fd("\n", 2);
+	}
 	else if (type == 1)
-		printf("mini: exit: %s: numeric argument requiered\n", str);
+	{
+		ft_putstr_fd("mini: exit: numeric argument requiered", 2);
+		ft_putendl_fd("\n", 2);
+	}
 	return (1);
 }
 
 int	print_execve_error(char *str)
 {
 	printf("mini: Command \'%s\' not found\n", str);
-	return (1);
-}
-
-int	exception_msg(char *str)
-{
-	write(2, str, ft_strlen(str));
 	return (1);
 }
