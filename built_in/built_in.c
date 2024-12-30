@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 21:47:43 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 03:11:53 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute_cmd(t_token *token, t_info *info)
 	else if (ft_strcmp(temp->data, "unset") == 0)
 		cmd_unset(token, info);
 	else
-		exec_cmd(temp, info);
+		exec_cmd(token, info);
 }
 
 int	built_in(t_token *token, t_info *info)

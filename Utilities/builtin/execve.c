@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 23:53:54 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:24:02 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_cmd_lines(t_token *token, t_info *info)
 
 	i = 0;
 	temp = token;
-	size = check_token_size(temp);
+	size = check_pipe_token_size(temp);
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!info->cmd_lines)
 		return ;
@@ -103,15 +103,21 @@ int	check_paths(t_info *info)
 	}
 	return (0);
 }
-void	print_error_free(char *data, t_info *info, char **envp)
+void	print_error_free(char *data, t_info *info, t_token *token, char **envp)
 {
 	print_execve_error(data);
-	free_info(info);
-	free_envp(envp);
+	free_child_var(info, token, envp);
 	exit(127);
 }
 
-int	execute_single_cmd(t_info *info, char **envp)
+void	free_child_var(t_info *info, t_token *token, char **envp)
+{
+	free_info(info);
+	free_envp(envp);
+	free_token(token);
+}
+
+int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 {
 	pid_t	pid;
 
@@ -126,20 +132,18 @@ int	execute_single_cmd(t_info *info, char **envp)
 		{
 			info->cmd = combine_cmd(info->cmd_paths, info->cmd_lines[0]);
 			if (!info->cmd)
-				print_error_free(info->cmd_lines[0], info, envp);
+				print_error_free(info->cmd_lines[0], info, token, envp);
 		}
 		else
 			info->cmd = info->cmd_lines[0];
 		execve(info->cmd, info->cmd_lines, envp);
-		free_info(info);
-		free_envp(envp);
+		free_child_var(info, token, envp);
 		exit(1);
 	}
 	else if (pid != 0)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
-///
 
 int	check_builtin(char *cmd)
 {
@@ -176,23 +180,21 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	if (!argv)
 		handle_argv_error();
 	if (check_builtin(token->data))
-		handle_builtin(info, token, argv);
+		handle_builtin(info, token, argv, envp);
 	else if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
 	else
-		handle_command_not_found(info, argv, envp);
+		handle_command_not_found(info, token ,argv, envp);
 	free_execve(argv);
 	exit(0);
 }
 
-void	handle_builtin(t_info *info, t_token *token, char **argv)
+void	handle_builtin(t_info *info, t_token *token, char **argv, char **envp)
 {
-	if (fork() == 0)
-	{
-		execute_cmd(token, info);
-		free_execve(argv);
-		exit(0);
-	}
+	execute_cmd(token, info);
+	free_child_var(info, token, envp);
+	free_execve(argv);
+	exit(0);
 }
 
 void	handle_execution(char *cmd, char **argv, char **envp)
@@ -203,12 +205,12 @@ void	handle_execution(char *cmd, char **argv, char **envp)
 	exit(1);
 }
 
-void	handle_command_not_found(t_info *info, char **argv, char **envp)
+void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp)
 {
 	info->cmd = combine_cmd(info->cmd_paths, argv[0]);
 	if (!info->cmd)
 	{
-		print_error_free(argv[0], info, envp);
+		print_error_free(argv[0], info, token, envp);
 		free_execve(argv);
 		exit(1);
 	}
@@ -222,7 +224,7 @@ void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 	*out_fd = 1;
 	*in_fd = 0;
 	temp = token;
-	while (temp)
+	while (temp && temp->type != E_TYPE_PIPE)
 	{
 		if (temp->type == E_TYPE_GREAT)
 			*out_fd = temp->next->fd;
@@ -236,16 +238,30 @@ void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
 	}
 }
 
-void	close_pipes(t_info *info, int pipe_cnt, int idx)
+void	close_pipes_parent(t_info *info, int pipe_cnt)
 {
 	int	i;
 
 	i = 0;
-	(void)idx;
 	while (i < pipe_cnt)
 	{
 		close(info->pipes[i][0]);
 		close(info->pipes[i][1]);
+		i++;
+	}
+}
+
+void	close_pipes_child(t_info *info, int pipe_cnt, int idx)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipe_cnt)
+	{
+		if (i != idx - 1)
+			close(info->pipes[i][0]);
+		if (i != idx)
+			close(info->pipes[i][1]);
 		i++;
 	}
 }
@@ -285,13 +301,12 @@ void	init_pipe_line(t_info *info, int cnt)
 int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 {
 	t_token	*cur;
-	int		pipe_cnt;
 	int		status;
 
 	cur = 0;
-	pipe_cnt = count_commands(token);
-	init_pipe_line(info, pipe_cnt);
-	cur = exec_command(token, info, pipe_cnt, envp);
+	info->pipe_cnt = count_commands(token);
+	init_pipe_line(info, info->pipe_cnt);
+	cur = exec_command(token, info, info->pipe_cnt, envp);
 	if (cur)
 	{
 		ft_putendl_fd("Warning: Unused tokens after pipeline: ", 2);
@@ -303,9 +318,10 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 		}
 		ft_putendl_fd("\n", 2);
 	}
-	close_pipes(info, pipe_cnt - 1, 0);
-	status = wait_command(info, pipe_cnt);
-	finish_execution(info, pipe_cnt - 1);
+	close_pipes_parent(info, info->pipe_cnt - 1);
+	cleanup_fds(token);
+	status = wait_command(info, info->pipe_cnt);
+	finish_execution(info, info->pipe_cnt - 1);
 	return (status);
 }
 
@@ -475,7 +491,7 @@ void	cleanup_fds_child(t_token *token)
 	t_token	*temp;
 
 	temp = token;
-	while (temp && temp->next->type != E_TYPE_PIPE)
+	while (temp && temp->type != E_TYPE_PIPE)
 	{
 		if (temp->next && temp->next->fd > 2)
 			close(temp->next->fd);
@@ -488,32 +504,27 @@ void	cleanup_fds_child(t_token *token)
 void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 {
 	int	pipe_cnt;
-	// int	old_in;
-	// int	old_out;
 	int	in_fd;
 	int	out_fd;
 
-	// old_in = dup(0);
-	// old_out = dup(1);
 	in_fd = 0;
 	out_fd = 0;
 	token = skip_non_command_tokens(token);
 	if (!token)
 		exit(1);
-	pipe_cnt = count_commands(token) - 1;
+	pipe_cnt = info->pipe_cnt - 1;
 	set_pipe_io(info, idx, pipe_cnt);
-	close_pipes(info, pipe_cnt, idx);
+	close_pipes_child(info, pipe_cnt, idx);
 	handle_redirections(token, &in_fd, &out_fd);
 	if (in_fd > 0)
 		dup2(in_fd, 0);
 	if (out_fd > 1)
 		dup2(out_fd, 1);
 	execute_pipeline_cmd(info, token, envp);
+	if (idx - 1 >= 0)
+		close(info->pipes[idx - 1][0]);
+	close(info->pipes[idx][0]);
 	cleanup_fds_child(token);
-	// dup2(old_in, 0);
-	// dup2(old_out, 1);
-	// close(old_in);
-	// close(old_out);
 	exit(1);
 }
 

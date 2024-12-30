@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/29 21:58:13 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:27:37 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_info
 	char		**cmd_paths;
 	char		**cmd_lines;
 	int			**pipes;
+	int			pipe_cnt;
 	pid_t		*pids;
 }	t_info;
 
@@ -125,7 +126,8 @@ char		**create_envp(t_info *info);
 void		init_cmd_lines(t_token *token, t_info *info);
 char		*combine_cmd(char **path, char *cmd);
 int			check_paths(t_info *info);
-int			execute_single_cmd(t_info *info, char **envp);
+int			execute_single_cmd(t_info *info, t_token *token, char **envp);
+void		free_child_var(t_info *info, t_token *token, char **envp);
 
 /*built_in*/
 int			check_operator(t_token *token);
@@ -153,12 +155,12 @@ void		print_exp_list(t_env_token *list);
 
 /*exec.c*/
 void		exec_cmd(t_token *token, t_info *info);
-void		print_error_free(char *data, t_info *info, char **envp);
-int			execute_single_cmd(t_info *info, char **envp);
+void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
 int			check_builtin(char *cmd);
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
 void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
-void		close_pipes(t_info *info, int pipe_cnt, int idx);
+void		close_pipes_parent(t_info *info, int pipe_cnt);
+void		close_pipes_child(t_info *info, int pipe_cnt, int idx);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
 void		create_pipes(t_info *info, int pipe_cnt);
 void		init_pipe_line(t_info *info, int cnt);
@@ -177,9 +179,9 @@ int			is_argv_token(t_type type);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 t_token		*skip_non_command_tokens(t_token *token);
 void		handle_argv_error(void);
-void		handle_builtin(t_info *info, t_token *token, char **argv);
+void		handle_builtin(t_info *info, t_token *token, char **argv, char **envp);
 void		handle_execution(char *cmd, char **argv, char **envp);
-void		handle_command_not_found(t_info *info, char **argv, char **envp);
+void		handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp);
 
 /*export_sort.c*/
 int			cmp_len(char *s1, char *s2);
@@ -237,6 +239,7 @@ t_env_token	*last_node(t_env_token *list);
 void		add_node_back(t_env_token *list, t_env_token *new_node);
 void		create_list(t_env_token *list, char **envp);
 int			check_token_size(t_token *node);
+int			check_pipe_token_size(t_token *node);
 
 /*utils.c*/
 int			ft_strlen(const char *str);
