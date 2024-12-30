@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 19:24:10 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 12:35:02 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:56:00 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_type	first_type(char *param);
 
 t_token	*make_new_token(t_token *token, int i)
 {
-	int		j;
 	t_token	*new;
 
 	if (token->data[i] == '\0')
@@ -33,19 +32,30 @@ t_token	*make_new_token(t_token *token, int i)
 	new->type = check_type(token, check_first(token->data[i]), i, NULL);
 	new->fd = -1;
 	new->next = NULL;
-	new->data = (char *)malloc(sizeof(char) * (ft_strlen(token->data) - i + 1));
+	new->data = init_new_token_data(token, i);
 	if (new->data == NULL)
+		return (NULL);
+	free(token->data);
+	return (new);
+}
+
+char	*init_new_token_data(t_token *token, int i)
+{
+	char	*new_data;
+	int		j;
+
+	new_data = (char *)malloc(sizeof(char) * (ft_strlen(token->data) - i + 1));
+	if (new_data == NULL)
 		return (NULL);
 	j = 0;
 	while (token->data[i] != '\0')
 	{
-		new->data[j] = token->data[i];
+		new_data[j] = token->data[i];
 		++i;
 		++j;
 	}
-	new->data[j] = '\0';
-	free(token->data);
-	return (new);
+	new_data[j] = '\0';
+	return (new_data);
 }
 
 t_type	check_type(t_token *token, t_check check, int i, char *param)
@@ -109,21 +119,4 @@ t_check	check_first(char c)
 	if (c == '<' || c == '>')
 		return (E_OPER);
 	return (E_STR);
-}
-
-t_type	check_oper(t_token *token, int i)
-{
-	if (token->data[i] == '<')
-	{
-		if (token->data[i + 1] == '<')
-			return (E_TYPE_HERE_DOC);
-		return (E_TYPE_IN);
-	}
-	if (token->data[i] == '>')
-	{
-		if (token->data[i + 1] == '>')
-			return (E_TYPE_GREAT);
-		return (E_TYPE_OUT);
-	}
-	return (E_TYPE_PARAM);
 }
