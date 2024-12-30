@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 07:01:33 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 07:12:16 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ int			check_current_value(char c);
 int			check_env_var(char *data);
 void		jump_sp(char *param, int *i);
 void		jump_quote(char *param, int *i);
+char		*init_new_token_data(t_token *token, int i);
+int			jump_current(char *param, int *i);
+int			tail_size(char *data, int *i);
 
 /*built_in*/
 void		execute_cmd(t_token *token, t_info *info);

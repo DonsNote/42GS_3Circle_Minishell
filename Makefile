@@ -6,7 +6,7 @@
 #    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/31 05:39:58 by junseyun         ###   ########.fr        #
+#    Updated: 2024/12/31 07:13:55 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRCS = minishell.c \
 		Utilities/builtin/pwd_utils3.c \
 		Utilities/parsing/split.c \
 		Utilities/parsing/token_utils.c \
+		Utilities/parsing/token_utils2.c \
 		built_in/built_in.c \
 		built_in/echo.c \
 		built_in/env.c \

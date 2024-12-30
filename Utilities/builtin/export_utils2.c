@@ -6,20 +6,20 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:06:56 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 06:24:14 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 07:06:27 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_env_data(t_env_token *env_list, char *data, char *key, char *val)
+void	check_env_data(t_env_token *env, char *data, char *key, char *val)
 {
 	int			len;
 	char		*temp;
 	char		*add_data;
 	t_env_token	*node;
 
-	node = env_list;
+	node = env;
 	add_data = create_env_data(data);
 	len = ft_strlen(key);
 	while (node != NULL)
@@ -36,7 +36,7 @@ void	check_env_data(t_env_token *env_list, char *data, char *key, char *val)
 		}
 		node = node -> next;
 	}
-	add_new_exp_node(env_list, add_data);
+	add_new_exp_node(env, add_data);
 }
 
 char	*get_new_value(t_env_token *temp, char *value)

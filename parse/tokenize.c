@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/31 04:45:52 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 07:11:12 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		make_token(t_token *token, t_info *info);
 void	organize_token(t_token *token);
 void	delete_token(t_token *token);
-t_token	*make_head_token(t_token *token, char *param);
+t_token	*make_head_token(char *param);
 
 t_token	*tokenize(char *param, t_info *info)
 {
@@ -27,7 +27,7 @@ t_token	*tokenize(char *param, t_info *info)
 		init_exit_code(info);
 		return (NULL);
 	}
-	token = make_head_token(token, param);
+	token = make_head_token(param);
 	if (token == NULL)
 		return (NULL);
 	if (make_token(token, info))
@@ -46,7 +46,7 @@ t_token	*tokenize(char *param, t_info *info)
 	return (token);
 }
 
-t_token	*make_head_token(t_token *token, char *param)
+t_token	*make_head_token(char *param)
 {
 	t_token	*head;
 
