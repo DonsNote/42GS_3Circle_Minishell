@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 23:24:44 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 01:49:00 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 02:03:07 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int	cmd_exit(t_token *token, t_info *info)
 	}
 	printf("exit\n");
 	free_all_exit(info->head, info, data);
-	exit (1);
+	exit (0);
 }

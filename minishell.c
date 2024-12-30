@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 01:35:28 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 02:16:30 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		g_dj;
 int		input(t_info *info);
 void	print_type(t_token *token);
 
@@ -35,7 +36,6 @@ int	input(t_info *info)
 {
 	t_token	*token;
 	char	*param;
-	t_token	*tmp;
 
 	token = NULL;
 	while (1)
@@ -52,40 +52,9 @@ int	input(t_info *info)
 			token = tokenize(param, info);
 			if (token == NULL)
 				continue ;
-			tmp = token;
-			while (tmp != NULL)
-			{
-				print_type(tmp);
-				tmp = tmp->next;
-			}
 			built_in(token, info);
 		}
 		free_token(token);
 	}
 	return (0);
-}
-
-void	print_type(t_token *token)
-{
-	if (token->type == E_TYPE_CMD)
-		printf("CMD : %s\n", token->data);
-	else if (token->type == E_TYPE_OPTION)
-		printf("OPTION : %s\n", token->data);
-	else if (token->type == E_TYPE_PARAM)
-		printf("PARAM : %s\n", token->data);
-	else if (token->type == E_TYPE_PIPE)
-		printf("PIPE : %s\n", token->data);
-	else if (token->type == E_TYPE_FILE)
-		printf("FILE : %s\n", token->data);
-	else if (token->type == E_TYPE_SP)
-		printf("SP : %s\n", token->data);
-	else if (token->type == E_TYPE_IN)
-		printf("IN : %s\n", token->data);
-	else if (token->type == E_TYPE_OUT)
-		printf("OUT : %s\n", token->data);
-	else if (token->type == E_TYPE_HERE_DOC)
-		printf("HERE_DOC : %s\n", token->data);
-	else if (token->type == E_TYPE_GREAT)
-		printf("GREAT : %s\n", token->data);
-	return ;
 }

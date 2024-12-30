@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 12:42:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 20:41:27 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 02:31:53 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	child_process(t_token *token, t_info *info);
 int	pipe_parse(t_token *token, t_info *info)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
 		return (0);
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sig_handler_child);
 		child_process(token, info);
 		return (1);
@@ -34,7 +34,9 @@ int	pipe_parse(t_token *token, t_info *info)
 	else if (pid > 0)
 	{
 		signal(SIGINT, SIG_IGN);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		g_dj = WEXITSTATUS(status);
+		init_exit_code(info);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sig_handler_pa);
 		return (0);
@@ -111,7 +113,7 @@ int	here_doc(t_token *head, t_token *token, t_info *info)
 	{
 		free(file_name);
 		free_all(head, info);
-		exit(1);
+		exit(0);
 	}
 	close(token->fd);
 	token->fd = open(file_name, O_RDWR | O_APPEND, 0777);

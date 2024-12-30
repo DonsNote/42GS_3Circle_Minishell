@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   utilities2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:33:40 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/26 17:16:45 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 02:38:42 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	init_exit_code(t_info *info)
+{
+	t_env_token	*tmp;
+
+	tmp = info->exp;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(tmp->env_key, "?") == 0)
+		{
+			free(tmp->env_value);
+			tmp->env_value = ft_itoa(g_dj);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	return ;
+}
 
 int	ft_isalpha(char c)
 {

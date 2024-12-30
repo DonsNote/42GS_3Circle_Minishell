@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 20:04:53 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 12:15:24 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 02:18:22 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sig_handler_child(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "^C\n", 3);
-		exit(0);
+		exit(130);
 	}
 	return ;
 }
