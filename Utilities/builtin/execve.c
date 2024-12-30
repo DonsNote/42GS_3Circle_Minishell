@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 13:36:34 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:58:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,21 @@ int	check_paths(t_info *info)
 	}
 	return (0);
 }
-void	print_error_free(char *data, t_info *info, char **envp)
+void	print_error_free(char *data, t_info *info, t_token *token, char **envp)
 {
 	print_execve_error(data);
-	free_info(info);
-	free_envp(envp);
+	free_child_var(info, token, envp);
 	exit(127);
 }
 
-int	execute_single_cmd(t_info *info, char **envp)
+void	free_child_var(t_info *info, t_token *token, char **envp)
+{
+	free_info(info);
+	free_envp(envp);
+	free_token(token);
+}
+
+int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 {
 	pid_t	pid;
 
@@ -126,20 +132,18 @@ int	execute_single_cmd(t_info *info, char **envp)
 		{
 			info->cmd = combine_cmd(info->cmd_paths, info->cmd_lines[0]);
 			if (!info->cmd)
-				print_error_free(info->cmd_lines[0], info, envp);
+				print_error_free(info->cmd_lines[0], info, token, envp);
 		}
 		else
 			info->cmd = info->cmd_lines[0];
 		execve(info->cmd, info->cmd_lines, envp);
-		free_info(info);
-		free_envp(envp);
+		free_child_var(info, token, envp);
 		exit(1);
 	}
 	else if (pid != 0)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
-///
 
 int	check_builtin(char *cmd)
 {
@@ -180,7 +184,7 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	else if (access(token->data, X_OK) == 0)
 		handle_execution(token->data, argv, envp);
 	else
-		handle_command_not_found(info, argv, envp);
+		handle_command_not_found(info, token ,argv, envp);
 	free_execve(argv);
 	exit(0);
 }
@@ -203,12 +207,12 @@ void	handle_execution(char *cmd, char **argv, char **envp)
 	exit(1);
 }
 
-void	handle_command_not_found(t_info *info, char **argv, char **envp)
+void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp)
 {
 	info->cmd = combine_cmd(info->cmd_paths, argv[0]);
 	if (!info->cmd)
 	{
-		print_error_free(argv[0], info, envp);
+		print_error_free(argv[0], info, token, envp);
 		free_execve(argv);
 		exit(1);
 	}

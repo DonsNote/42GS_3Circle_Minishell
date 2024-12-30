@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:41:30 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 16:38:18 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 13:51:09 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_cmd(t_token *token, t_info *info)
 	envp = create_envp(info);
 	init_cmd_lines(token, info);
 	if (check_pipe(temp) == 0)
-		execute_single_cmd(info, envp);
+		execute_single_cmd(info, token, envp);
 	else
 		execute_pipe_cmd(token, info, envp);
 	free_envp(envp);
