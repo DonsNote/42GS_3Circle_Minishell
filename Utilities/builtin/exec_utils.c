@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 05:25:04 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 06:29:36 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:53:44 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execute_single_child(t_info *info, t_token *token, char **envp)
 	info->cmd = combine_cmd(info->cmd_paths, info->cmd_lines[0]);
 	if (!info->cmd)
 	{
-		print_error_free(info->cmd_lines[0], info, token, envp);
+		print_err_free(info->cmd_lines[0], info, token, envp);
 		exit (127);
 	}
 }

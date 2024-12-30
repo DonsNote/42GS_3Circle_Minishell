@@ -6,14 +6,12 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 06:32:14 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 07:01:33 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-extern int	g_dj;
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -33,6 +31,8 @@ extern int	g_dj;
 # include <sys/wait.h>
 # define PATH_MAX 4096
 # define ERR_PIPE "Fail pipe create \n"
+
+extern int	g_dj;
 
 typedef struct s_env_token
 {
@@ -213,7 +213,7 @@ void		finish_execution(t_info *info, int pipe_cnt);
 t_token		*exec_command(t_token *token, t_info *info, int cnt, char **envp);
 
 /*execve_utils2.c*/
-void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
+void		print_err_free(char *data, t_info *info, t_token *tmp, char **envp);
 void		free_child_var(t_info *info, t_token *token, char **envp);
 int			check_builtin(char *cmd);
 int			check_builtin_argv(char *cmd, char **argv, char **envp);
@@ -221,7 +221,7 @@ void		handle_argv_error(void);
 
 /*execve_utils3.c*/
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
-void		handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp);
+void		com_not_find(t_info *info, char **argv, char **envp);
 void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
 void		close_pipes_child(t_info *info, int pipe_cnt, int idx);
 void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
@@ -245,34 +245,7 @@ int			is_argv_token(t_type type);
 void		cleanup_fds_child(t_token *token);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 int			count_commands(t_token *token);
-int 		is_argv_token(t_type type);
-
-
-void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
-int			check_builtin(char *cmd);
-int			check_builtin_argv(char *cmd, char **argv, char **envp);
-void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
-void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
-void		close_pipes_parent(t_info *info, int pipe_cnt);
-void		close_pipes_child(t_info *info, int pipe_cnt, int idx);
-void		set_pipe_io(t_info *info, int idx, int pipe_cnt);
-void		create_pipes(t_info *info, int pipe_cnt);
-void		init_pipe_line(t_info *info, int cnt);
-void		malloc_error(void);
-void		pipe_error(void);
-void		finish_execution(t_info *info, int pipe_cnt);
-t_token		*exec_command(t_token *token, t_info *info, int cnt, char **envp);
-t_token		*move_next_cmd(t_token *token);
-int			wait_command(t_info *info, int cmd_cnt);
-int			count_commands(t_token *token);
-char		**make_argv(t_token *token);
-int			count_argv(t_token *token);
-char		**create_argv_array(int cnt, t_token *token);
 int			is_argv_token(t_type type);
-void		exec_child(t_info *info, t_token *token, int idx, char **envp);
-t_token		*skip_non_command_tokens(t_token *token);
-void		handle_argv_error(void);
-void		handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp);
 
 /*export_utils.c*/
 void		free_data_val(char *new_key, char *new_val, char *key, char *val);
@@ -282,7 +255,7 @@ int			check_validation(char *data);
 int			cnt_equal(char *data);
 
 /*export_utils2.c*/
-void		check_env_data(t_env_token *env_list, char *data, char *key, char *val);
+void		check_env_data(t_env_token *env, char *data, char *key, char *val);
 void		update_exp_node(t_env_token *node, char *key, char *value);
 void		add_export(t_env_token *env, t_env_token *exp, char *data);
 char		*get_new_value(t_env_token *temp, char *value);
@@ -294,13 +267,6 @@ void		add_exp_env_data(t_env_token *exp, t_env_token *env, char *data);
 char		*get_key(char *data);
 int			check_key_env(t_env_token *list, char *key);
 int			check_key_exp(t_env_token *list, char *key);
-
-
-// void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
-// void		free_child_var(t_info *info, t_token *token, char **envp);
-// int			check_builtin(char *cmd);
-// int			check_builtin_argv(char *cmd, char **argv, char **envp);
-// void		handle_argv_error(void);
 
 /*export_utils4.c*/
 void		change_env_node(t_env_token *env, char *key, char *data);
@@ -350,7 +316,7 @@ void		execute_size_two(t_token *token, t_info *info);
 int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str, int flag);
-int			print_exit_error(char *str, int type);
+int			print_exit_error(int type);
 int			print_execve_error(char *str);
 
 /*free.c*/
@@ -388,26 +354,5 @@ char		*ft_itoa(int num);
 /*Utilities3*/
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putstr_fd(char *s, int fd);
-
-
-// int			print_error(int i);
-// int			ft_strlen(const char *str);
-// char		*ft_strdup(const char *s);
-// int			ft_strcmp(char *s1, char *s2);
-// int			ft_strncmp(const char *s1, const char *s2, int n);
-// char		*ft_strjoin(char *s1, char *s2);
-// char		**ft_split(char const *s, char c);
-// int			print_error(int i);
-// int			print_export_error(char *str);
-// int			print_cd_error(char *str, int flag);
-// int			print_execve_error(char *str);
-// int			print_exit_error(char *str, int type);
-// int			ft_isalpha(char c);
-// int			ft_isdigit(char c);
-// int			ft_atoi(const char *str);
-// char		*ft_itoa(int num);
-// void		ft_putendl_fd(char *s, int fd);
-// void		ft_putstr_fd(char *s, int fd);
-// void		init_exit_code(t_info *info);
 
 #endif

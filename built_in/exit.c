@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 23:24:44 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 05:28:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:47:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	cmd_exit(t_token *token, t_info *info)
 	exit_code = 0;
 	if (check_token_size(token) == 2 && !is_numeric(data))
 	{
-		print_exit_error(data, 1);
+		print_exit_error(1);
 		free_all_exit(info->head, info, data);
 		exit (2);
 	}
@@ -82,9 +82,9 @@ int	cmd_exit(t_token *token, t_info *info)
 void	print_error_cmd_exit(t_info *info, char *data)
 {
 	if (!is_numeric(data))
-		print_exit_error(data, 1);
+		print_exit_error(1);
 	else
-		print_exit_error("exit", 0);
+		print_exit_error(0);
 	free_all_exit(info->head, info, data);
 	exit(1);
 }

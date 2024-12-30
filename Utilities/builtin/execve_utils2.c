@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve3.c                                          :+:      :+:    :+:   */
+/*   execve_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 05:01:32 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 05:02:43 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:52:48 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	print_error_free(char *data, t_info *info, t_token *token, char **envp)
+void	print_err_free(char *data, t_info *info, t_token *tmp, char **envp)
 {
 	print_execve_error(data);
-	free_child_var(info, token, envp);
+	free_child_var(info, tmp, envp);
 	return ;
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execve4.c                                          :+:      :+:    :+:   */
+/*   execve_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 05:03:03 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 05:03:15 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:58:24 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	else if (check_builtin_argv(token->data, argv, envp))
 		execute_cmd_pipe(token, info);
 	else
-		handle_command_not_found(info, token, argv, envp);
+		com_not_find(info, argv, envp);
 	free_execve(argv);
 }
 
-void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp)
+void	com_not_find(t_info *info, char **argv, char **envp)
 {
-	(void)token;
 	info->cmd = combine_cmd(info->cmd_paths, argv[0]);
 	if (!info->cmd)
 	{
