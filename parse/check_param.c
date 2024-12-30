@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/29 20:49:24 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:27:03 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ int		check_redirect(char *param, int *i);
 
 int	check_param(char *param)
 {
-	if (param == NULL)
-		return (1);
 	if (check_quote(param, 34) || check_quote(param, 39))
+	{
+		free(param);
 		return (print_error(1));
+	}
 	if (check_grammer(param))
+	{
+		free(param);
 		return (print_error(1));
+	}
 	return (0);
 }
 
