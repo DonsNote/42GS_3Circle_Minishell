@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 04:47:42 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 21:40:16 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:34:24 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	is_str(t_token *token, t_info *info)
 	next = make_new_token(token, i);
 	token->data = tmp;
 	token->next = next;
-	// if (token->type == E_TYPE_FILE)
-	// 	return (0);
 	substitution(token, info, NULL);
 	return (0);
 }

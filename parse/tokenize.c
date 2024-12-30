@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/31 04:02:59 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:45:52 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		make_token(t_token *token, t_info *info);
 void	organize_token(t_token *token);
 void	delete_token(t_token *token);
+t_token	*make_head_token(t_token *token, char *param);
 
 t_token	*tokenize(char *param, t_info *info)
 {
@@ -26,13 +27,9 @@ t_token	*tokenize(char *param, t_info *info)
 		init_exit_code(info);
 		return (NULL);
 	}
-	token = (t_token *)malloc(sizeof(t_token) * 1);
+	token = make_head_token(token, param);
 	if (token == NULL)
 		return (NULL);
-	token->data = param;
-	token->type = check_type(NULL, check_first(param[0]), 0, param);
-	token->fd = -1;
-	token->next = NULL;
 	if (make_token(token, info))
 	{
 		print_error(1);
@@ -47,6 +44,20 @@ t_token	*tokenize(char *param, t_info *info)
 	organize_token(token);
 	info->head = token;
 	return (token);
+}
+
+t_token	*make_head_token(t_token *token, char *param)
+{
+	t_token	*head;
+
+	head = (t_token *)malloc(sizeof(t_token) * 1);
+	if (head == NULL)
+		return (NULL);
+	head->data = param;
+	head->type = check_type(NULL, check_first(param[0]), 0, param);
+	head->fd = -1;
+	head->next = NULL;
+	return (head);
 }
 
 int	make_token(t_token *token, t_info *info)

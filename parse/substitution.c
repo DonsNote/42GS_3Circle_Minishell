@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:54:44 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/29 08:29:25 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:41:23 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,10 @@ char	*make_key(char *data)
 	char	*key;
 
 	i = 0;
-	size = 0;
 	while (data[i] != '$' && data[i] != '\0')
 		++i;
 	++i;
-	while (check_current_value(data[i]))
-	{
-		++i;
-		++size;
-	}
+	size = jump_current(data, &i);
 	key = (char *)malloc(sizeof(char) * (size + 1));
 	if (key == NULL)
 		return (NULL);
@@ -110,17 +105,11 @@ char	*make_tail(char *data)
 	char	*tail;
 
 	i = 0;
-	size = 0;
 	while (data[i] != '$')
 		++i;
 	++i;
-	while (check_current_value(data[i]))
-		++i;
-	while (data[i] != '\0')
-	{
-		++i;
-		++size;
-	}
+	jump_current(data, &i);
+	size = tail_size(data, &i);
 	if (size == 0)
 		return (NULL);
 	tail = (char *)malloc(sizeof(char) * (size + 1));

@@ -6,7 +6,7 @@
 /*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 15:24:12 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/24 20:33:43 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:40:56 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,30 @@ int	check_env_var(char *data)
 		++i;
 	}
 	return (0);
+}
+
+int	jump_current(char *param, int *i)
+{
+	int	size;
+
+	size = 0;
+	while (check_current_value(param[*i]))
+	{
+		++*i;
+		++size;
+	}
+	return (size);
+}
+
+int	tail_size(char *data, int *i)
+{
+	int	size;
+
+	size = 0;
+	while (data[*i] != '\0')
+	{
+		++*i;
+		++size;
+	}
+	return (size);
 }
