@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 23:24:44 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 02:03:07 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 05:28:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,7 @@ int	cmd_exit(t_token *token, t_info *info)
 		exit (2);
 	}
 	else if (check_token_size(token) >= 3)
-	{
-		if (!is_numeric(data))
-			print_exit_error(data, 1);
-		else
-			print_exit_error("exit", 0);
-		free_all_exit(info->head, info, data);
-		exit (1);
-	}
+		print_error_cmd_exit(info, data);
 	if (data != NULL)
 	{
 		exit_code = ft_atoi(data);
@@ -84,4 +77,14 @@ int	cmd_exit(t_token *token, t_info *info)
 	printf("exit\n");
 	free_all_exit(info->head, info, data);
 	exit (0);
+}
+
+void	print_error_cmd_exit(t_info *info, char *data)
+{
+	if (!is_numeric(data))
+		print_exit_error(data, 1);
+	else
+		print_exit_error("exit", 0);
+	free_all_exit(info->head, info, data);
+	exit(1);
 }

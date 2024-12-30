@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 20:44:49 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 03:50:32 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:16:25 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	free_data_val(char *new_key, char *new_val, char *key, char *val)
+void	free_data_val(char *new_key, char *new_val, char *key, char *val)
 {
 	if (new_key != NULL)
 		free(new_key);
@@ -24,7 +24,7 @@ static void	free_data_val(char *new_key, char *new_val, char *key, char *val)
 		free(val);
 }
 
-static void	change_match_exp(t_env_token *exp, char *key, char *val)
+void	change_match_exp(t_env_token *exp, char *key, char *val)
 {
 	char	*new_key;
 	char	*new_value;
@@ -107,28 +107,4 @@ int	cnt_equal(char *data)
 		i++;
 	}
 	return (cnt);
-}
-
-int	check_plus_operator(char *data)
-{
-	int	i;
-
-	i = 0;
-	while (data[i])
-	{
-		if (data[i] == '+' && data[i + 1] == '=')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_plus_operator_idx(char *data)
-{
-	int	i;
-
-	i = 0;
-	while (data[i] != '+')
-		i++;
-	return (i);
 }

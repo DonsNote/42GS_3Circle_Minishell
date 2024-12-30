@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:54:58 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/31 01:05:42 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 05:20:00 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,29 +90,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	new_str[i] = 0;
 	s1 = 0;
 	return (new_str);
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != 0)
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	write(fd, "\n", 1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != 0)
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
 }

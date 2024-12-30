@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 21:46:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 00:57:03 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:53:32 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,30 @@ int	check_key_validation(char *key)
 		i++;
 	}
 	return (0);
+}
+
+void	change_exp_node(t_env_token *exp, char *key, char *data)
+{
+	t_env_token	*temp;
+	char		*new_data;
+	int			len;
+
+	if (!exp || !key || !data)
+		return ;
+	temp = exp;
+	len = ft_strlen(key);
+	while (temp)
+	{
+		if (temp->env_data && ft_strncmp(temp->env_data, key, len) == 0)
+		{
+			new_data = ft_strdup(data);
+			if (!new_data)
+				return ;
+			free(temp->env_data);
+			temp->env_data = new_data;
+			split_key_val(temp);
+			return ;
+		}
+		temp = temp -> next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:12:21 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/27 20:24:32 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 06:11:01 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,20 @@ void	free_envp(char **envp)
 		i++;
 	}
 	free(envp);
+}
+
+void	free_pipe_info(int **pipes, int cnt)
+{
+	int	i;
+
+	if (pipes != NULL)
+	{
+		i = 0;
+		while (i < cnt - 1)
+		{
+			free(pipes[i]);
+			i++;
+		}
+		free(pipes);
+	}
 }
