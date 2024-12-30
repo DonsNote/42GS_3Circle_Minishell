@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 01:30:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:42:03 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void		print_exp_list(t_env_token *list);
 void		exec_cmd(t_token *token, t_info *info);
 void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
 int			check_builtin(char *cmd);
-int			check_builtin_argv(char *cmd, char **argv);
+int			check_builtin_argv(char *cmd, char **argv, char **envp);
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
 void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
 void		close_pipes_parent(t_info *info, int pipe_cnt);

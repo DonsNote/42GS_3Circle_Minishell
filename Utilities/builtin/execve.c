@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 01:30:19 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:41:42 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ int	check_builtin(char *cmd)
 	return (0);
 }
 
-int	check_builtin_argv(char *cmd, char **argv)
+int	check_builtin_argv(char *cmd, char **argv, char **envp)
 {
 	if (!cmd)
 		return (0);
@@ -205,6 +205,7 @@ int	check_builtin_argv(char *cmd, char **argv)
 	if (ft_strcmp(cmd, "exit") == 0)
 	{
 		free_execve(argv);
+		free_envp(envp);
 		return (1);
 	}
 	return (0);
@@ -225,7 +226,7 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 		handle_argv_error();
 	if (access(token->data, X_OK) == 0)
 		execve(token->data, argv, envp);
-	else if (check_builtin_argv(token->data, argv))
+	else if (check_builtin_argv(token->data, argv, envp))
 		execute_cmd_pipe(token, info);
 	else
 		handle_command_not_found(info, token, argv, envp);
