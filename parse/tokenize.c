@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 22:07:16 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:02:59 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ t_token	*tokenize(char *param, t_info *info)
 	t_token	*token;
 
 	if (check_param(param))
+	{
+		g_dj = 2;
+		init_exit_code(info);
 		return (NULL);
+	}
 	token = (t_token *)malloc(sizeof(t_token) * 1);
 	if (token == NULL)
 		return (NULL);

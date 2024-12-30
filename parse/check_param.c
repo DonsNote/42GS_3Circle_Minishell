@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:29:17 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 14:27:03 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/31 04:05:33 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	check_grammer(char *param)
 		if (check_pipe_parse(param, &i))
 			return (1);
 		if (check_redirect(param, &i))
+			return (1);
+		if (param[i] == ';')
 			return (1);
 		++i;
 	}

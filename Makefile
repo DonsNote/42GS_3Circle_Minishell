@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
+#    By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/31 00:31:47 by junseyun         ###   ########.fr        #
+#    Updated: 2024/12/31 02:56:49 by dohyuki2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

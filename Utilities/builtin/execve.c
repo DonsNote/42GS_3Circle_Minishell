@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/31 01:41:42 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 03:56:02 by dohyuki2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	free_child_var(t_info *info, t_token *token, char **envp)
 int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 {
 	pid_t	pid;
+	int		status;
 
 	if (check_paths(info))
 		return (1);
@@ -144,6 +145,8 @@ int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 		return (1);
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, sig_handler_child);
 		if (access(info->cmd_lines[0], X_OK) != 0)
 		{
 			info->cmd = combine_cmd(info->cmd_paths, info->cmd_lines[0]);
@@ -151,7 +154,7 @@ int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 			if (!info->cmd)
 			{
 				print_error_free(info->cmd_lines[0], info, token, envp);
-				exit (1);
+				exit (127);
 			}
 		}
 		else
@@ -161,7 +164,14 @@ int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 		exit(1);
 	}
 	else if (pid != 0)
-		waitpid(pid, NULL, 0);
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		g_dj = WEXITSTATUS(status);
+		init_exit_code(info);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, sig_handler_pa);
+	}
 	return (0);
 }
 
@@ -244,12 +254,14 @@ void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **
 			ft_putstr_fd("mini: ", 2);
 			ft_putstr_fd(argv[0], 2);
 			ft_putendl_fd(": command not found\n", 2);
+			g_dj = 127;
+			init_exit_code(info);
 		}
 		free_token(info->head);
 		free_info(info);
 		free_envp(envp);
 		free_execve(argv);
-		exit (1);
+		exit (127);
 	}
 	execve(info->cmd, argv, envp);
 }
@@ -413,9 +425,12 @@ t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
 			finish_execution(info, cnt - 1);
 		if (info->pids[cmd_idx] == 0)
 		{
+			signal(SIGQUIT, SIG_DFL);
+			signal(SIGINT, sig_handler_child);
 			exec_child(info, cur, cmd_idx, envp);
-			exit (1);
+			exit (0);
 		}
+		signal(SIGINT, SIG_IGN);
 		cur = move_next_cmd(cur);
 		cmd_idx++;
 	}
@@ -442,22 +457,26 @@ int	wait_command(t_info *info, int cmd_cnt)
 {
 	int	cmd_idx;
 	int	status;
-	int	last_status;
+	// int	last_status;
 
-	status = 0;
+	// status = 0;
 	cmd_idx = 0;
-	last_status = 0;
+	// last_status = 0;
 	while (cmd_idx < cmd_cnt)
 	{
 		if (waitpid(info->pids[cmd_idx], &status, 0) == -1)
 			break ;
-		if (WIFSIGNALED(status))
-			last_status = 128 + WTERMSIG(status);
-		else
-			last_status = WEXITSTATUS(status);
+		// if (WIFSIGNALED(status))
+		// 	last_status = 128 + WTERMSIG(status);
+		// else
+		// 	last_status = WEXITSTATUS(status);
 		cmd_idx++;
 	}
-	return (last_status);
+	g_dj = WEXITSTATUS(status);
+	init_exit_code(info);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sig_handler_pa);
+	return (0);
 }
 
 char	**make_argv(t_token *token)
