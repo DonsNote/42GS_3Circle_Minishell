@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 16:34:41 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:30:58 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_info
 {
 	t_env_token	*env;
 	t_env_token	*exp;
+	struct s_token	*head;
 	char		*home;
 	char		*pwd;
 	char		*oldpwd;
@@ -128,19 +129,27 @@ char		*combine_cmd(char **path, char *cmd);
 int			check_paths(t_info *info);
 int			execute_single_cmd(t_info *info, t_token *token, char **envp);
 void		free_child_var(t_info *info, t_token *token, char **envp);
+void		free_pipe_cmd(t_info *info);
 
 /*built_in*/
 int			check_operator(t_token *token);
 int			check_redirection(t_token *token);
 int			check_pipe(t_token *token);
 void		execute_cmd(t_token *token, t_info *info);
+void		execute_cmd_pipe(t_token *token, t_info *info);
 int			built_in(t_token *token, t_info *info);
 void		execute_cmd_operator(t_token *token, t_info *info);
 void		redirection_cmd(t_token *token, t_info *info);
 void		cleanup_fds(t_token *token);
+int			check_pipe_cmd(t_info *info);
 
 /*ft_split.c*/
 char		**ft_split(char const *s, char c);
+
+/*exit.c*/
+int			is_numeric(char *data);
+char		*return_token_param(t_token *token);
+int			cmd_exit(t_token *token, t_info *info);
 
 /*echo.c*/
 int			check_option(t_token *token);
@@ -157,6 +166,7 @@ void		print_exp_list(t_env_token *list);
 void		exec_cmd(t_token *token, t_info *info);
 void		print_error_free(char *data, t_info *info, t_token *token, char **envp);
 int			check_builtin(char *cmd);
+int			check_builtin_argv(char *cmd, char **argv);
 void		execute_pipeline_cmd(t_info *info, t_token *token, char **envp);
 void		handle_redirections(t_token *token, int *in_fd, int *out_fd);
 void		close_pipes_parent(t_info *info, int pipe_cnt);
@@ -285,6 +295,7 @@ int			print_error(int i);
 int			print_export_error(char *str);
 int			print_cd_error(char *str, int flag);
 int			print_execve_error(char *str);
+int			print_exit_error(char *str, int type);
 void		free_all(t_token *token, t_info *info);
 void		free_token(t_token *token);
 void		free_info(t_info *info);
@@ -294,5 +305,6 @@ int			ft_isdigit(char c);
 int			ft_atoi(const char *str);
 char		*ft_itoa(int num);
 void		ft_putendl_fd(char *s, int fd);
+void		ft_putstr_fd(char *s, int fd);
 
 #endif

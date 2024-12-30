@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dohyuki2 <dohyuki2@student.42Gyeongsan.    +#+  +:+       +#+         #
+#    By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/19 13:00:35 by dohyuki2          #+#    #+#              #
-#    Updated: 2024/12/27 17:42:50 by dohyuki2         ###   ########.fr        #
+#    Updated: 2024/12/31 00:31:47 by junseyun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS = minishell.c \
 		built_in/echo.c \
 		built_in/env.c \
 		built_in/exec.c\
+		built_in/exit.c\
 		built_in/export.c \
 		built_in/export_sort.c \
 		built_in/pwd.c \

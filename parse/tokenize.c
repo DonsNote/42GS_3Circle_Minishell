@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dohyuki2 <dohyuki2@student.42gyeongsan.    +#+  +:+       +#+        */
+/*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:29:14 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/28 12:29:41 by dohyuki2         ###   ########.fr       */
+/*   Updated: 2024/12/30 22:07:16 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ t_token	*tokenize(char *param, t_info *info)
 	}
 	if (open_fd(token, info))
 	{
+		free_token(token);
 		print_error(1);
 		return (NULL);
 	}
 	organize_token(token);
+	info->head = token;
 	return (token);
 }
 

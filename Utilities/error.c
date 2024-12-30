@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:09:01 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/28 13:57:58 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 23:57:33 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ int	print_cd_error(char *str, int flag)
 		printf("mini: cd: %s not set\n", str);
 	else if (flag == 4)
 		printf("mini: cd: %s\n", str);
+	return (1);
+}
+
+int	print_exit_error(char *str, int type)
+{
+	if (type == 0)
+		printf("mini: %s: too many arguments\n", str);
+	else if (type == 1)
+		printf("mini: exit: %s: numeric argument requiered\n", str);
 	return (1);
 }
 

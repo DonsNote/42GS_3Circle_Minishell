@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 16:13:22 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:31:52 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,39 @@ void	execute_cmd(t_token *token, t_info *info)
 		cmd_cd(token, info);
 	else if (ft_strcmp(temp->data, "unset") == 0)
 		cmd_unset(token, info);
+	else if (ft_strcmp(temp->data, "exit") == 0)
+		cmd_exit(token, info);
 	else
 		exec_cmd(token, info);
+}
+
+void	execute_cmd_pipe(t_token *token, t_info *info)
+{
+	t_token	*temp;
+
+	temp = token;
+	if (ft_strcmp(temp->data, "echo") == 0)
+		cmd_echo(temp);
+	else if (ft_strcmp(temp->data, "export") == 0)
+		cmd_export(temp, info);
+	else if (ft_strcmp(temp->data, "env") == 0)
+		cmd_env(info->env);
+	else if (ft_strcmp(temp->data, "pwd") == 0)
+		cmd_pwd();
+	else if (ft_strcmp(temp->data, "cd") == 0)
+		cmd_cd(token, info);
+	else if (ft_strcmp(temp->data, "unset") == 0)
+		cmd_unset(token, info);
+	else if (ft_strcmp(temp->data, "exit") == 0)
+		cmd_exit(token, info);
+}
+
+int	check_pipe_cmd(t_info *info)
+{
+	if (info->cmd != NULL || info->cmd_lines != NULL \
+	|| info->cmd_paths != NULL || info->paths != NULL)
+		return (1);
+	return (0);
 }
 
 int	built_in(t_token *token, t_info *info)
@@ -93,11 +124,24 @@ int	built_in(t_token *token, t_info *info)
 	t_token	*temp;
 
 	temp = token;
-	if (check_operator(temp))
+	if (check_pipe_cmd(info))
+	{
+		if (info->paths != NULL)
+			free(info->paths);
+		if (info->cmd != NULL)
+			free(info->cmd);
+		free_execve(info->cmd_paths);
+		free_execve(info->cmd_lines);
+		info->cmd = NULL;
+		info->cmd_paths = NULL;
+		info->cmd_lines = NULL;
+		info->paths = NULL;
+	}
+	if (check_operator(temp) && check_builtin(temp->data))
 		execute_cmd(temp, info);
 	else
 		execute_cmd_operator(temp, info);
-	return (1);
+	return (0);
 }
 
 void	execute_cmd_operator(t_token *token, t_info *info)

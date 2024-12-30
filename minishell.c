@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:42:18 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 17:18:04 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:35:28 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,7 @@ int	input(t_info *info)
 				print_type(tmp);
 				tmp = tmp->next;
 			}
-			if (built_in(token, info))
-			{
-				free_token(token);
-				continue ;
-			}
+			built_in(token, info);
 		}
 		free_token(token);
 	}

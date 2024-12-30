@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 17:35:10 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:30:19 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ char	**create_envp(t_info *info)
 	return (envp);
 }
 
+void	free_pipe_cmd(t_info *info)
+{
+	if (info->cmd_lines != NULL)
+		free_execve(info->cmd_lines);
+	free(info->cmd_lines);
+	if (info->paths != NULL)
+		free(info->paths);
+	if (info->cmd_paths != NULL)
+		free_execve(info->cmd_paths);
+	free(info->cmd_paths);
+	if (info->cmd != NULL)
+		free(info->cmd);
+}
+
 void	init_cmd_lines(t_token *token, t_info *info)
 {
 	int		i;
@@ -58,8 +72,7 @@ void	init_cmd_lines(t_token *token, t_info *info)
 	i = 0;
 	temp = token;
 	size = check_pipe_token_size(temp);
-	if (info->cmd_lines != NULL || info->cmd_paths != NULL)
-		return ;
+	// free_pipe_cmd(info);
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!info->cmd_lines)
 		return ;
@@ -114,9 +127,10 @@ void	print_error_free(char *data, t_info *info, t_token *token, char **envp)
 
 void	free_child_var(t_info *info, t_token *token, char **envp)
 {
+	(void)token;
+	free_token(info->head);
 	free_info(info);
 	free_envp(envp);
-	free_token(token);
 }
 
 int	execute_single_cmd(t_info *info, t_token *token, char **envp)
@@ -133,8 +147,12 @@ int	execute_single_cmd(t_info *info, t_token *token, char **envp)
 		if (access(info->cmd_lines[0], X_OK) != 0)
 		{
 			info->cmd = combine_cmd(info->cmd_paths, info->cmd_lines[0]);
+			printf("info->cmd => %s\n", info->cmd);
 			if (!info->cmd)
+			{
 				print_error_free(info->cmd_lines[0], info, token, envp);
+				exit (1);
+			}
 		}
 		else
 			info->cmd = info->cmd_lines[0];
@@ -168,6 +186,30 @@ int	check_builtin(char *cmd)
 	return (0);
 }
 
+int	check_builtin_argv(char *cmd, char **argv)
+{
+	if (!cmd)
+		return (0);
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "exit") == 0)
+	{
+		free_execve(argv);
+		return (1);
+	}
+	return (0);
+}
+
 void	handle_argv_error(void)
 {
 	ft_putendl_fd("minishell: malloc error in argv creation", 2);
@@ -181,10 +223,10 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	argv = make_argv(token);
 	if (!argv)
 		handle_argv_error();
-	if (check_builtin(token->data))
-		execute_cmd(token, info);
-	else if (access(token->data, X_OK) == 0)
+	if (access(token->data, X_OK) == 0)
 		execve(token->data, argv, envp);
+	else if (check_builtin_argv(token->data, argv))
+		execute_cmd_pipe(token, info);
 	else
 		handle_command_not_found(info, token, argv, envp);
 	free_execve(argv);
@@ -192,11 +234,21 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 
 void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp)
 {
+	(void)token;
 	info->cmd = combine_cmd(info->cmd_paths, argv[0]);
 	if (!info->cmd)
 	{
-		print_error_free(argv[0], info, token, envp);
-		return ;
+		if (isatty(STDERR_FILENO))
+		{
+			ft_putstr_fd("mini: ", 2);
+			ft_putstr_fd(argv[0], 2);
+			ft_putendl_fd(": command not found\n", 2);
+		}
+		free_token(info->head);
+		free_info(info);
+		free_envp(envp);
+		free_execve(argv);
+		exit (1);
 	}
 	execve(info->cmd, argv, envp);
 }

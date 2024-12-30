@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:18:24 by dohyuki2          #+#    #+#             */
-/*   Updated: 2024/12/30 17:30:46 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 19:47:15 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ void	free_token(t_token *token)
 
 void	free_info(t_info *info)
 {
+	free(info->pwd);
+	info->pwd = NULL;
 	free_env_token(info->env);
 	free_env_token(info->exp);
-	free(info->home);
-	free(info->pwd);
 	free(info->oldpwd);
+	info->oldpwd = NULL;
+	free(info->home);
 	if (info->paths != NULL)
 		free(info->paths);
 	if (info->cmd != NULL)
@@ -68,7 +70,7 @@ void	free_pipe_info(int **pipes, int cnt)
 {
 	int	i;
 
-	if (pipes != NULL || *pipes != NULL)
+	if (pipes != NULL)
 	{
 		i = 0;
 		while (i < cnt - 1)
@@ -84,7 +86,7 @@ void	free_execve(char **data)
 {
 	int	i;
 
-	if (data != NULL || *data != NULL)
+	if (data != NULL)
 	{
 		i = 0;
 		while (data[i])
@@ -104,9 +106,12 @@ char	*free_env_token(t_env_token *token)
 	{
 		tmp = token;
 		token = token->next;
-		free(tmp->env_data);
-		free(tmp->env_key);
-		free(tmp->env_value);
+		if (tmp->env_data != NULL)
+			free(tmp->env_data);
+		if (tmp->env_key != NULL)
+			free(tmp->env_key);
+		if (tmp->env_value != NULL)
+			free(tmp->env_value);
 		free(tmp);
 	}
 	return (NULL);
