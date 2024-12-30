@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 23:09:12 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 14:24:02 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:35:10 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	init_cmd_lines(t_token *token, t_info *info)
 	i = 0;
 	temp = token;
 	size = check_pipe_token_size(temp);
+	if (info->cmd_lines != NULL || info->cmd_paths != NULL)
+		return ;
 	info->cmd_lines = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!info->cmd_lines)
 		return ;
@@ -107,7 +109,7 @@ void	print_error_free(char *data, t_info *info, t_token *token, char **envp)
 {
 	print_execve_error(data);
 	free_child_var(info, token, envp);
-	exit(127);
+	return ;
 }
 
 void	free_child_var(t_info *info, t_token *token, char **envp)
@@ -169,7 +171,7 @@ int	check_builtin(char *cmd)
 void	handle_argv_error(void)
 {
 	ft_putendl_fd("minishell: malloc error in argv creation", 2);
-	exit(1);
+	return ;
 }
 
 void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
@@ -180,29 +182,12 @@ void	execute_pipeline_cmd(t_info *info, t_token *token, char **envp)
 	if (!argv)
 		handle_argv_error();
 	if (check_builtin(token->data))
-		handle_builtin(info, token, argv, envp);
+		execute_cmd(token, info);
 	else if (access(token->data, X_OK) == 0)
-		handle_execution(token->data, argv, envp);
+		execve(token->data, argv, envp);
 	else
-		handle_command_not_found(info, token ,argv, envp);
+		handle_command_not_found(info, token, argv, envp);
 	free_execve(argv);
-	exit(0);
-}
-
-void	handle_builtin(t_info *info, t_token *token, char **argv, char **envp)
-{
-	execute_cmd(token, info);
-	free_child_var(info, token, envp);
-	free_execve(argv);
-	exit(0);
-}
-
-void	handle_execution(char *cmd, char **argv, char **envp)
-{
-	execve(cmd, argv, envp);
-	ft_putendl_fd("minishell: execve failed", 2);
-	free_execve(argv);
-	exit(1);
 }
 
 void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp)
@@ -211,10 +196,9 @@ void	handle_command_not_found(t_info *info, t_token *token, char **argv, char **
 	if (!info->cmd)
 	{
 		print_error_free(argv[0], info, token, envp);
-		free_execve(argv);
-		exit(1);
+		return ;
 	}
-	handle_execution(info->cmd, argv, envp);
+	execve(info->cmd, argv, envp);
 }
 
 void	handle_redirections(t_token *token, int *in_fd, int *out_fd)
@@ -328,13 +312,13 @@ int	execute_pipe_cmd(t_token *token, t_info *info, char **envp)
 void	malloc_error(void)
 {
 	ft_putendl_fd("minishell: malloc error", 2);
-	exit(1);
+	return ;
 }
 
 void	pipe_error(void)
 {
 	ft_putendl_fd("minishell: pipe error", 2);
-	exit(1);
+	return ;
 }
 
 void	finish_execution(t_info *info, int pipe_cnt)
@@ -373,11 +357,7 @@ t_token	*exec_command(t_token *token, t_info *info, int cnt, char **envp)
 			break ;
 		info->pids[cmd_idx] = fork();
 		if (info->pids[cmd_idx] < 0)
-		{
-			ft_putendl_fd("minishell: fork failed", 2);
 			finish_execution(info, cnt - 1);
-			exit(1);
-		}
 		if (info->pids[cmd_idx] == 0)
 		{
 			exec_child(info, cur, cmd_idx, envp);
@@ -511,7 +491,7 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 	out_fd = 0;
 	token = skip_non_command_tokens(token);
 	if (!token)
-		exit(1);
+		return ;
 	pipe_cnt = info->pipe_cnt - 1;
 	set_pipe_io(info, idx, pipe_cnt);
 	close_pipes_child(info, pipe_cnt, idx);
@@ -521,11 +501,12 @@ void	exec_child(t_info *info, t_token *token, int idx, char **envp)
 	if (out_fd > 1)
 		dup2(out_fd, 1);
 	execute_pipeline_cmd(info, token, envp);
-	if (idx - 1 >= 0)
+	if (idx - 1 >= 0 && pipe_cnt > 1)
 		close(info->pipes[idx - 1][0]);
-	close(info->pipes[idx][0]);
+	if (idx < info->pipe_cnt - 1)
+		close(info->pipes[idx][1]);
 	cleanup_fds_child(token);
-	exit(1);
+	free_child_var(info, token, envp);
 }
 
 int	count_commands(t_token *token)

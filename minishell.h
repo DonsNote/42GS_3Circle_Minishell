@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 18:22:36 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 14:27:37 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:34:41 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,6 @@ int			is_argv_token(t_type type);
 void		exec_child(t_info *info, t_token *token, int idx, char **envp);
 t_token		*skip_non_command_tokens(t_token *token);
 void		handle_argv_error(void);
-void		handle_builtin(t_info *info, t_token *token, char **argv, char **envp);
-void		handle_execution(char *cmd, char **argv, char **envp);
 void		handle_command_not_found(t_info *info, t_token *token, char **argv, char **envp);
 
 /*export_sort.c*/
@@ -230,7 +228,7 @@ void		free_env_val(t_env_token *list);
 void		free_exp_key_value(t_env_token *node);
 void		free_node_data(t_env_token *node);
 void		free_envp(char **envp);
-void		free_pipe_info(int **data);
+void		free_pipe_info(int **data, int cnt);
 void		free_execve(char **data);
 
 /*list_utils.c*/

@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:50:59 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/30 03:11:53 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:13:22 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,20 @@ void	setup_redirections(t_token *token, int *in_fd, int *out_fd)
 	temp = token;
 	while (temp)
 	{
-		if (temp->type == E_TYPE_GREAT)
+		if ((temp->type == E_TYPE_GREAT || temp->type == E_TYPE_OUT) \
+		&& temp->next)
+		{
+			if (*out_fd > 1)
+				close(*out_fd);
 			*out_fd = temp->next->fd;
-		else if (temp->type == E_TYPE_OUT)
-			*out_fd = temp->next->fd;
-		else if (temp->type == E_TYPE_IN)
+		}
+		else if ((temp->type == E_TYPE_IN || temp->type == E_TYPE_HERE_DOC) \
+		&& temp->next)
+		{
+			if (*in_fd > 0)
+				close(*in_fd);
 			*in_fd = temp->next->fd;
-		else if (temp->type == E_TYPE_HERE_DOC)
-			*in_fd = temp->next->fd;
+		}
 		temp = temp->next;
 	}
 }
@@ -139,8 +145,11 @@ void	cleanup_fds(t_token *token)
 	temp = token;
 	while (temp)
 	{
-		if (temp->next && temp->next->fd > 2)
-			close(temp->next->fd);
+		if (temp && temp->fd > 2)
+		{
+			close(temp->fd);
+			temp->fd = -1;
+		}
 		if (temp->type == E_TYPE_HERE_DOC && temp->next)
 			unlink(temp->next->data);
 		temp = temp->next;
@@ -168,9 +177,5 @@ void	redirection_cmd(t_token *token, t_info *info)
 	dup2(old_out, 1);
 	close(old_in);
 	close(old_out);
-	if (in_fd > 0)
-		close(in_fd);
-	if (out_fd > 1)
-		close(out_fd);
 	cleanup_fds(token);
 }

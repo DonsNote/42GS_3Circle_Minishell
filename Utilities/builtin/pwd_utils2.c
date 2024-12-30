@@ -6,7 +6,7 @@
 /*   By: junseyun <junseyun@student.42gyeongsan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:33:09 by junseyun          #+#    #+#             */
-/*   Updated: 2024/12/26 01:04:26 by junseyun         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:41:01 by junseyun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ int	cd_validation(t_token *token)
 
 void	execute_tilde(t_info *info)
 {
+	char	*find;
+
+	find = find_value(info, "HOME");
 	if (find_key(info->exp, "HOME") == 1)
 	{
-		if (chdir(find_value(info, "HOME")) != 0)
-			print_cd_error(find_value(info, "HOME"), 1);
+		if (chdir(find) != 0)
+			print_cd_error(find, 1);
 		else
 			update_pwd(info);
 	}
@@ -62,6 +65,7 @@ void	execute_tilde(t_info *info)
 		else
 			update_pwd(info);
 	}
+	free(find);
 }
 
 void	execute_single_hypen(t_info *info)
